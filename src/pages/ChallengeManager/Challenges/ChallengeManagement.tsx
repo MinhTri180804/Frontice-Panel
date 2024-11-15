@@ -1,6 +1,6 @@
-import { ChallengeDetailsPage } from './Details';
-import { ChallengeListPage } from './List';
-import { ChallengeUploadPage } from './Upload';
+import { ChallengeDetailsPage } from "./Details";
+import { ChallengeListPage } from "./List";
+import { ChallengeUploadPage } from "./Upload";
 
 const ChallengeManagement = () => {
   return ChallengeListPage;

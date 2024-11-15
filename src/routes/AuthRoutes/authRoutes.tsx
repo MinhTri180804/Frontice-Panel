@@ -1,11 +1,11 @@
-import { RouteObject, Navigate } from 'react-router-dom';
-import constantRoutesAuth from '../../constants/routes/authentication';
-import { AuthLayout } from '../../layout/Auth';
-import LoginPage from '../../pages/Auth/Login';
-import { OptionsRolePage } from '../../pages/Auth/Options';
-import { RegisterPage } from '../../pages/Auth/Register';
-import { notMatchRoute } from '../CommonRoutes';
-import { GuestOnlyWrapper } from '../../components/Wrapper/GuestOnly';
+import { RouteObject, Navigate } from "react-router-dom";
+import { LoginPage } from "../../pages/Auth/Login";
+import constantRoutesAuth from "../../constants/routes/authentication";
+import { AuthLayout } from "../../layout/Auth";
+import { OptionsRolePage } from "../../pages/Auth/Options";
+import { RegisterPage } from "../../pages/Auth/Register";
+import { notMatchRoute } from "../CommonRoutes";
+import { GuestOnlyWrapper } from "../../components/Wrapper/GuestOnly";
 
 const extendAuthRoutes: RouteObject[] = [
   {
@@ -15,7 +15,14 @@ const extendAuthRoutes: RouteObject[] = [
   },
   {
     path: constantRoutesAuth.challengeManager.root,
+    // TODO: refactor routes in here
     children: [
+      {
+        index: true,
+        element: (
+          <Navigate to={constantRoutesAuth.challengeManager.login} replace />
+        ),
+      },
       {
         path: constantRoutesAuth.challengeManager.login,
         element: <LoginPage />,
@@ -28,6 +35,10 @@ const extendAuthRoutes: RouteObject[] = [
     path: constantRoutesAuth.mentor.root,
     children: [
       {
+        index: true,
+        element: <Navigate to={constantRoutesAuth.mentor.login} replace />,
+      },
+      {
         path: constantRoutesAuth.mentor.login,
         element: <LoginPage />,
       },
@@ -38,6 +49,10 @@ const extendAuthRoutes: RouteObject[] = [
   {
     path: constantRoutesAuth.tasker.root,
     children: [
+      {
+        index: true,
+        element: <Navigate to={constantRoutesAuth.tasker.login} replace />,
+      },
       {
         path: constantRoutesAuth.tasker.login,
         element: <LoginPage />,
@@ -58,7 +73,7 @@ const extendAuthRoutes: RouteObject[] = [
 
 const authRoutes: RouteObject[] = [
   {
-    path: '/',
+    path: "/",
     element: (
       <GuestOnlyWrapper>
         <AuthLayout />

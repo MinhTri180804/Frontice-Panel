@@ -1,6 +1,7 @@
 const constantRoutesGlobal = {
+  default: "/",
   errorPage: {
-    404: '404',
+    404: "404",
   },
 };
 

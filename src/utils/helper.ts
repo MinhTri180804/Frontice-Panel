@@ -51,11 +51,11 @@
 //   document.body.removeChild(link);
 // };
 
-// const logOnDev = (message: string) => {
-//   if (import.meta.env.MODE === 'development') {
-//     console.log(message);
-//   }
-// };
+const logOnDev = (message: string) => {
+  if (import.meta.env.MODE === "development") {
+    console.log(message);
+  }
+};
 
 // const calculateTimeLeft = (timestamp: number) => {
 //   const targetTime = new Date(timestamp).getTime();
@@ -79,6 +79,8 @@
 //   checkRefreshTokenValidity,
 //   i18nHelper,
 //   handleDownloadFile,
-//   logOnDev,
+// logOnDev,
 //   calculateTimeLeft,
 // };
+//
+export { logOnDev };

@@ -1,11 +1,7 @@
-import { FC } from 'react';
+import { FC } from "react";
 
 const ChallengeListPage: FC = () => {
-  return (
-    <div>
-      <div>This is challenge list page</div>
-    </div>
-  );
+  return <section>this is page challenges list of manager challenge</section>;
 };
 
 export default ChallengeListPage;

@@ -1,21 +1,21 @@
-import { create } from 'zustand';
-import { RoleType } from '../../types/base/role';
-import { ProfileEntityType } from '../../types/entity/profile';
+import { create } from "zustand";
+import { IMeInfo } from "../../types/entity/meInfo";
+import { RoleType } from "../../types/base/role";
 
 type State = {
-  isAuthentication: boolean;
-  profile: ProfileEntityType | null;
+  isAuthenticated: boolean;
+  profile: IMeInfo | null;
   role: RoleType | null;
 };
 
 type Action = {
-  updateProfile: (profile: ProfileEntityType | null) => void;
-  login: (profile: ProfileEntityType) => void;
+  updateProfile: (profile: IMeInfo | null) => void;
+  login: (profile: IMeInfo) => void;
   logout: () => void;
 };
 
 const initialState: State = {
-  isAuthentication: false,
+  isAuthenticated: false,
   profile: null,
   role: null,
 };
@@ -29,8 +29,8 @@ const useAuthStore = create<State & Action>((set) => ({
   login: (profile) =>
     set(() => ({
       profile: profile,
-      isAuthentication: true,
-      role: profile.role,
+      isAuthenticated: true,
+      role: profile.adminRole,
     })),
   logout: () => set(() => initialState),
 }));

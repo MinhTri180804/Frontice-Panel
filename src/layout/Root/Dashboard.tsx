@@ -1,86 +1,115 @@
-import React, { useState } from 'react';
-import {
-  DesktopOutlined,
-  FileOutlined,
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
-  PieChartOutlined,
-  TeamOutlined,
-  UserOutlined,
-} from '@ant-design/icons';
-import type { MenuProps } from 'antd';
-import { Breadcrumb, Button, Layout, Menu, theme } from 'antd';
+import React, { useState } from "react";
+import { Breadcrumb, Button, Layout, Menu, MenuProps, theme } from "antd";
+import { Outlet, useNavigate } from "react-router-dom";
+import { BrandColorLogo } from "../../assets/images/logos/locals";
+import useAuthStore from "../../store/Auth/authStore";
+import useDashboardLogic from "./dashboard.logic";
+import { RoleType } from "../../types/base/role";
+import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 
 const { Header, Content, Footer, Sider } = Layout;
 
-type MenuItem = Required<MenuProps>['items'][number];
-
-function getItem(
-  label: React.ReactNode,
-  key: React.Key,
-  icon?: React.ReactNode,
-  children?: MenuItem[]
-): MenuItem {
-  return {
-    key,
-    icon,
-    children,
-    label,
-  } as MenuItem;
-}
-
-const items: MenuItem[] = [
-  getItem('Option 1', '1', <PieChartOutlined />),
-  getItem('Option 2', '2', <DesktopOutlined />),
-  getItem('User', 'sub1', <UserOutlined />, [
-    getItem('Tom', '3'),
-    getItem('Bill', '4'),
-    getItem('Alex', '5'),
-  ]),
-  getItem('Team', 'sub2', <TeamOutlined />, [
-    getItem('Team 1', '6'),
-    getItem('Team 2', '8'),
-  ]),
-  getItem('Files', '9', <FileOutlined />),
-];
+//FIX: Fix type in here
+type CustomMenuItem = MenuProps["items"][number] & {
+  path?: string;
+};
 
 const DashboardLayout: React.FC = () => {
+  const role = useAuthStore((state) => state.role);
+  const { dashboardMenuContent } = useDashboardLogic(role as RoleType);
   const [collapsed, setCollapsed] = useState(false);
+  const navigate = useNavigate();
+
   const {
-    token: {  borderRadiusLG },
+    token: { borderRadiusLG },
   } = theme.useToken();
 
+  const onMenuClick: MenuProps["onClick"] = (e) => {
+    const findMenuItem = (
+      items: CustomMenuItem[] | undefined,
+    ): CustomMenuItem | undefined => {
+      if (!items) return undefined;
+
+      for (const item of items) {
+        if (item.key === e.key) {
+          return item;
+        }
+        if ("children" in item && Array.isArray(item.children)) {
+          const childItem = findMenuItem(item.children as CustomMenuItem[]);
+          if (childItem) {
+            return childItem;
+          }
+        }
+      }
+
+      return undefined;
+    };
+
+    const selectedItem = findMenuItem(dashboardMenuContent as CustomMenuItem[]);
+
+    if (selectedItem?.path) {
+      navigate(selectedItem.path);
+    }
+  };
+
   return (
-    <Layout style={{ minHeight: '100vh' }}>
+    <Layout style={{ minHeight: "100vh" }}>
       <Sider
         collapsible
         collapsed={collapsed}
         onCollapse={(value) => setCollapsed(value)}
         theme="light"
       >
-        <div className="demo-logo-vertical" />
+        <div
+          style={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            overflow: "hidden",
+          }}
+        >
+          <div
+            className="demo-logo-vertical"
+            style={{
+              width: "154px",
+              height: "auto",
+            }}
+          >
+            <img
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                objectPosition: "center",
+              }}
+              src={BrandColorLogo}
+            />
+          </div>
+        </div>
         <Menu
           theme="light"
-          defaultSelectedKeys={['1']}
+          defaultSelectedKeys={["1"]}
           mode="inline"
-          items={items}
+          items={dashboardMenuContent}
+          onClick={onMenuClick}
         />
       </Sider>
       <Layout>
-        <Header style={{ padding: 0, background: 'white' }}>
+        <Header style={{ padding: 0, background: "white" }}>
           <Button
             type="text"
             icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
             onClick={() => setCollapsed(!collapsed)}
             style={{
-              fontSize: '16px',
+              fontSize: "16px",
               width: 64,
               height: 64,
             }}
           />
         </Header>
-        <Content style={{ margin: '0 16px' }}>
-          <Breadcrumb style={{ margin: '16px 0' }}>
+        <Content style={{ margin: "0 16px" }}>
+          <Breadcrumb style={{ margin: "16px 0" }}>
             <Breadcrumb.Item>User</Breadcrumb.Item>
             <Breadcrumb.Item>Bill</Breadcrumb.Item>
           </Breadcrumb>
@@ -88,14 +117,14 @@ const DashboardLayout: React.FC = () => {
             style={{
               padding: 24,
               minHeight: 360,
-              background: 'white',
+              background: "white",
               borderRadius: borderRadiusLG,
             }}
           >
-            Bill is a cat.
+            <Outlet />
           </div>
         </Content>
-        <Footer style={{ textAlign: 'center' }}>
+        <Footer style={{ textAlign: "center" }}>
           Ant Design ©{new Date().getFullYear()} Created by Ant UED
         </Footer>
       </Layout>
