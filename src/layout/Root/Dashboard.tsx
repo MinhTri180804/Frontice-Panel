@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Breadcrumb, Button, Layout, Menu, MenuProps, theme } from "antd";
+import { Breadcrumb, Button, Flex, Layout, Menu, MenuProps, theme } from "antd";
 import { Outlet, useNavigate } from "react-router-dom";
 import { BrandColorLogo } from "../../assets/images/logos/locals";
 import useAuthStore from "../../store/Auth/authStore";
@@ -53,7 +53,7 @@ const DashboardLayout: React.FC = () => {
   };
 
   return (
-    <Layout style={{ minHeight: "100vh" }}>
+    <Layout style={{ maxHeight: "100dvh", overflow: "hidden" }}>
       <Sider
         collapsible
         collapsed={collapsed}
@@ -108,25 +108,27 @@ const DashboardLayout: React.FC = () => {
             }}
           />
         </Header>
-        <Content style={{ margin: "0 16px" }}>
-          <Breadcrumb style={{ margin: "16px 0" }}>
-            <Breadcrumb.Item>User</Breadcrumb.Item>
-            <Breadcrumb.Item>Bill</Breadcrumb.Item>
-          </Breadcrumb>
-          <div
-            style={{
-              padding: 24,
-              minHeight: 360,
-              background: "white",
-              borderRadius: borderRadiusLG,
-            }}
-          >
-            <Outlet />
-          </div>
+        <Content
+          style={{ margin: "0 16px", height: "100dvh", overflow: "auto" }}
+        >
+          <Flex vertical>
+            <Breadcrumb style={{ margin: "16px 0" }}>
+              <Breadcrumb.Item>User</Breadcrumb.Item>
+              <Breadcrumb.Item>Bill</Breadcrumb.Item>
+            </Breadcrumb>
+            <div
+              style={{
+                padding: 24,
+                minHeight: 360,
+                background: "white",
+                borderRadius: borderRadiusLG,
+                flex: "1",
+              }}
+            >
+              <Outlet />
+            </div>
+          </Flex>
         </Content>
-        <Footer style={{ textAlign: "center" }}>
-          Ant Design ©{new Date().getFullYear()} Created by Ant UED
-        </Footer>
       </Layout>
     </Layout>
   );
