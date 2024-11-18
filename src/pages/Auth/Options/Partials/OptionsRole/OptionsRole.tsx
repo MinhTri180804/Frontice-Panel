@@ -1,7 +1,7 @@
 import { FC } from "react";
-import { useNavigate } from "react-router-dom";
-import styled from "@emotion/styled";
+import { Link } from "react-router-dom";
 import { Typography } from "antd";
+import styled from "@emotion/styled";
 
 interface IOptionRoleProps {
   nameRole: string;
@@ -10,7 +10,7 @@ interface IOptionRoleProps {
 
 const primaryColor = "#5250F7";
 
-const OptionRoleElement = styled.div`
+const OptionRoleElement = styled(Link)`
   padding: 12px 24px;
   border-radius: 6px;
   border: 1px solid ${primaryColor};
@@ -37,15 +37,8 @@ const OptionRoleElement = styled.div`
 `;
 
 const OptionRole: FC<IOptionRoleProps> = ({ nameRole, redirectTo }) => {
-  const navigate = useNavigate();
-
-  const handleClickOption = () => {
-    navigate(redirectTo);
-    return;
-  };
-
   return (
-    <OptionRoleElement onClick={handleClickOption}>
+    <OptionRoleElement to={redirectTo}>
       <Typography>{nameRole}</Typography>
     </OptionRoleElement>
   );

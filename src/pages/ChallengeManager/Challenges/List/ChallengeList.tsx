@@ -1,37 +1,38 @@
-import { Avatar, Button , Flex, Modal, Table, TableProps, Tag } from 'antd';
-import { FC, useState } from 'react';
-import useChallengeListLogic from './challengeList.logic';
-import { IChallengeEntity } from '../../../../types/entity/challenge';
-import { convertTimestampToVietnamTime } from '../../../../utils/convertTime';
-import { PlusOutlined } from '@ant-design/icons';
-import Title from 'antd/es/typography/Title';
-import constantRoutesChallengeManager from '../../../../constants/routes/challengeManager';
-import useAuthStore from '../../../../store/Auth/authStore';
-import ModalChallenger from '../../../../components/Components/Modal/Challenger/ModalChallenger';
+import { Avatar, Button, Flex, Modal, Table, TableProps, Tag } from "antd";
+import { FC, useState } from "react";
+import useChallengeListLogic from "./challengeList.logic";
+import { IChallengeEntity } from "../../../../types/entity/challenge";
+import { convertTimestampToVietnamTime } from "../../../../utils/convertTime";
+import { PlusOutlined } from "@ant-design/icons";
+import Title from "antd/es/typography/Title";
+import constantRoutesChallengeManager from "../../../../constants/routes/challengeManager";
+import useAuthStore from "../../../../store/Auth/authStore";
+import ModalChallenger from "../../../../components/Components/Modal/Challenger/ModalChallenger";
+import { useNavigate } from "react-router-dom";
 
 type DataType = IChallengeEntity;
 
 const defautlAvatar =
-  'https://static.vecteezy.com/system/resources/previews/009/292/244/non_2x/default-avatar-icon-of-social-media-user-vector.jpg';
+  "https://static.vecteezy.com/system/resources/previews/009/292/244/non_2x/default-avatar-icon-of-social-media-user-vector.jpg";
 
-const challengeColumns: TableProps<DataType>['columns'] = [
+const challengeColumns: TableProps<DataType>["columns"] = [
   {
-    title: 'STT',
-    key: 'stt',
+    title: "STT",
+    key: "stt",
     render: (_, __, index) => index + 1,
   },
   {
-    title: 'Title',
-    key: 'title',
+    title: "Title",
+    key: "title",
     sorter: (a, b) => a.title?.length - b.title?.length,
-    dataIndex: 'title',
+    dataIndex: "title",
     render: (text) => <div>{text}</div>,
   },
   {
-    title: 'Công nghệ',
-    key: 'technical',
-    dataIndex: 'technical',
-    render: (technicalList: IChallengeEntity['technical']) => {
+    title: "Công nghệ",
+    key: "technical",
+    dataIndex: "technical",
+    render: (technicalList: IChallengeEntity["technical"]) => {
       const [firstTechnical, secondTechinical, ...rest] = technicalList;
       const technicalShow = [firstTechnical, secondTechinical];
 
@@ -48,15 +49,15 @@ const challengeColumns: TableProps<DataType>['columns'] = [
     },
   },
   {
-    title: 'Cấp độ',
-    key: 'level',
-    dataIndex: 'level',
+    title: "Cấp độ",
+    key: "level",
+    dataIndex: "level",
     render: (level: string) => level,
   },
   {
-    title: () => <div style={{ textAlign: 'center' }}>Tham gia</div>,
-    key: 'joinTotal',
-    dataIndex: 'joinTotal',
+    title: () => <div style={{ textAlign: "center" }}>Tham gia</div>,
+    key: "joinTotal",
+    dataIndex: "joinTotal",
     sorter: (a, b) => a.joinTotal - b.joinTotal,
     render: (joinTotal: string | number) => (
       <Flex justify="center" align="center">
@@ -65,11 +66,11 @@ const challengeColumns: TableProps<DataType>['columns'] = [
           color="primary"
           onClick={() => {
             Modal.info({
-              width: '800px',
-              title: 'Danh sách người dã tham gia thử thách',
-              okText: 'Đóng',
+              width: "800px",
+              title: "Danh sách người dã tham gia thử thách",
+              okText: "Đóng",
               content: (
-                <div style={{ width: '100%' }}>
+                <div style={{ width: "100%" }}>
                   <ModalChallenger />
                 </div>
               ),
@@ -77,14 +78,14 @@ const challengeColumns: TableProps<DataType>['columns'] = [
           }}
         >
           {joinTotal}
-        </Space>
+        </Button>
       </Flex>
     ),
   },
   {
-    title: () => <div style={{ textAlign: 'center' }}>Hoàn thành</div>,
-    key: 'submittedTotal',
-    dataIndex: 'submittedTotal',
+    title: () => <div style={{ textAlign: "center" }}>Hoàn thành</div>,
+    key: "submittedTotal",
+    dataIndex: "submittedTotal",
     sorter: (a, b) => a.submittedTotal - b.submittedTotal,
     render: (submittedTotal: number) => (
       <Flex justify="center" align="center">
@@ -93,11 +94,11 @@ const challengeColumns: TableProps<DataType>['columns'] = [
           color="primary"
           onClick={() => {
             Modal.info({
-              width: '800px',
-              title: 'Danh sách người dã hoàn thành thử thách',
-              okText: 'Đóng',
+              width: "800px",
+              title: "Danh sách người dã hoàn thành thử thách",
+              okText: "Đóng",
               content: (
-                <div style={{ width: '100%' }}>
+                <div style={{ width: "100%" }}>
                   <ModalChallenger />
                 </div>
               ),
@@ -110,21 +111,21 @@ const challengeColumns: TableProps<DataType>['columns'] = [
     ),
   },
   {
-    title: () => <div style={{ textAlign: 'center' }}>Người tạo</div>,
-    key: 'owner',
-    dataIndex: 'owner',
-    render: (owner: IChallengeEntity['owner']) => (
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
+    title: () => <div style={{ textAlign: "center" }}>Người tạo</div>,
+    key: "owner",
+    dataIndex: "owner",
+    render: (owner: IChallengeEntity["owner"]) => (
+      <div style={{ display: "flex", justifyContent: "center" }}>
         <Avatar src={owner.image || defautlAvatar} />
       </div>
     ),
   },
 
   {
-    title: 'Thời gian tạo',
-    key: 'createdAt',
+    title: "Thời gian tạo",
+    key: "createdAt",
     sorter: (a, b) => a.created_at - b.created_at,
-    dataIndex: 'created_at',
+    dataIndex: "created_at",
     render: (time) => <div>{convertTimestampToVietnamTime(time)}</div>,
   },
   // {
@@ -154,20 +155,20 @@ const challengeColumns: TableProps<DataType>['columns'] = [
 
 const ChallengeListPage: FC = () => {
   const profile = useAuthStore((state) => state.profile);
-  sajsdlkajsdlkajsdlkajsdlkjaslkdjalksdjalksjdklasjdlkajsdkljaslkdaskldjaskldjaklsdjalksjdaksd
-  const [page, setPage] = useState<number>(1);
-  const [sort, setSort] = useState<string>('newest');
-  const [perPage, setPerPage] = useState<number>(10);
   const navigate = useNavigate();
+  const [page, setPage] = useState<number>(1);
+  const [sort, setSort] = useState<string>("newest");
+  const [perPage, setPerPage] = useState<number>(10);
   const { queryChallengeList, mutationRemove } = useChallengeListLogic({
     queryChallengeListParams: { page, sort, perPage },
   });
+
 
   const { data: challengeListData, isPending: pendingOfChallenges } =
     queryChallengeList;
   const dataSource: DataType[] = challengeListData?.challenges || [];
 
-  const handleChangeTable: TableProps<DataType>['onChange'] = (pagination) => {
+  const handleChangeTable: TableProps<DataType>["onChange"] = (pagination) => {
     setPage(pagination?.current as number);
     if (pagination?.showSizeChanger) {
       setPerPage(pagination?.pageSize || 10);
@@ -175,10 +176,10 @@ const ChallengeListPage: FC = () => {
     queryChallengeList.refetch();
   };
 
-  const actionColumns: TableProps<DataType>['columns'] = [
+  const actionColumns: TableProps<DataType>["columns"] = [
     {
-      title: 'Hành động',
-      key: 'actions',
+      title: "Hành động",
+      key: "actions",
       //TODO: Implement logic view details challenge action
       render: (_, record: DataType) => {
         return (
@@ -188,7 +189,7 @@ const ChallengeListPage: FC = () => {
                 type="primary"
                 onClick={() =>
                   navigate(
-                    `${constantRoutesChallengeManager.pages.challenges.details}/:${record.id}`
+                    `${constantRoutesChallengeManager.pages.challenges.details}/:${record.id}`,
                   )
                 }
               >
@@ -201,9 +202,9 @@ const ChallengeListPage: FC = () => {
                   color="danger"
                   onClick={() => {
                     Modal.confirm({
-                      title: 'Xác nhận xóa thử thách',
-                      cancelText: 'Quay lại',
-                      okText: 'Đồng ý',
+                      title: "Xác nhận xóa thử thách",
+                      cancelText: "Quay lại",
+                      okText: "Đồng ý",
                       onOk: () => {
                         mutationRemove.mutate({ challengeId: record.id });
                       },
@@ -220,6 +221,10 @@ const ChallengeListPage: FC = () => {
     },
   ];
 
+  const handleChangeTabs = (key: string) => {
+    console.log(key);
+  };
+
   return (
     <>
       <section className="challenges__manager">
@@ -228,13 +233,13 @@ const ChallengeListPage: FC = () => {
             justify="space-between"
             align="center"
             style={{
-              padding: '24px',
-              borderRadius: '8px',
-              boxShadow: '0px 4px 24px 0px rgba(0, 0, 0, 0.08)',
+              padding: "24px",
+              borderRadius: "8px",
+              boxShadow: "0px 4px 24px 0px rgba(0, 0, 0, 0.08)",
             }}
           >
             <div>
-              <Title level={3} style={{ margin: '0' }}>
+              <Title level={3} style={{ margin: "0" }}>
                 Danh sách thử thách
               </Title>
             </div>
@@ -246,7 +251,7 @@ const ChallengeListPage: FC = () => {
                 icon={<PlusOutlined />}
                 onClick={() =>
                   navigate(
-                    constantRoutesChallengeManager.pages.challenges.create
+                    constantRoutesChallengeManager.pages.challenges.create,
                   )
                 }
               >
@@ -256,7 +261,7 @@ const ChallengeListPage: FC = () => {
           </Flex>
 
           <Table
-            scroll={{ x: 'max-content' }}
+            scroll={{ x: "max-content" }}
             pagination={{
               pageSize: challengeListData?.perPage,
               current: challengeListData?.currentPage,
