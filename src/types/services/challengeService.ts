@@ -10,7 +10,7 @@ export type IChallengeService = {
   getAll: (
     params: IGetAllChallengeParams,
   ) => Promise<IBaseResponse<IGetAllChallengeResponse>>;
-  getDetails: (params: IGetDetailsChallengeParams) => Promise<IBaseResponse<>>;
+  // getDetails: (params: IGetDetailsChallengeParams) => Promise<IBaseResponse<>>;
 
   remove: (params: IRemoveChallengeParams) => Promise<IBaseResponse<null>>;
 };

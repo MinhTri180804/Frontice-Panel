@@ -2,6 +2,7 @@ export type IGetAllChallengeParams = {
   sort?: string;
   page?: string | number;
   perPage?: string | number;
+  get?: "owner" | "other" | null;
 };
 
 export type IRemoveChallengeParams = {
