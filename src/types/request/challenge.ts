@@ -1,3 +1,5 @@
+import { UploadFile } from "antd";
+
 export type IGetAllChallengeParams = {
   sort?: string;
   page?: string | number;
@@ -28,4 +30,16 @@ export type ICreateChallengeRequest = {
 
 export type IDeleteFileChallengeRequest = {
   path: string[];
+};
+
+export type IUploadSourceChallengeRequest = {
+  source: File;
+};
+
+export type IUploadFigmaChallengeRequest = {
+  figma: File;
+};
+
+export type IUploadImageChallengeRequest = {
+  image: File;
 };

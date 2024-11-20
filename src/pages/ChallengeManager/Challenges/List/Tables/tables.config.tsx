@@ -8,11 +8,15 @@ const defautlAvatar =
 
 const challengeListColumn: TableProps<IDataTypeChallengeList>["columns"] = [
   {
+    width: 100,
+    fixed: "left",
     title: "STT",
     key: "stt",
     render: (_, __, index) => index + 1,
   },
   {
+    width: 180,
+    fixed: "left",
     title: "Title",
     key: "title",
     sorter: (a, b) => a.title?.length - b.title?.length,
@@ -22,6 +26,7 @@ const challengeListColumn: TableProps<IDataTypeChallengeList>["columns"] = [
   {
     title: "Công nghệ",
     key: "technical",
+    width: 200,
     dataIndex: "technical",
     render: (technicalList: IDataTypeChallengeList["technical"]) => {
       const [firstTechnical, secondTechinical, ...rest] = technicalList;
@@ -30,7 +35,11 @@ const challengeListColumn: TableProps<IDataTypeChallengeList>["columns"] = [
       return (
         <div className="technical-challenge">
           {technicalShow.map((technical, index) => (
-            <Tag color="cyan" key={`${technical}-${index}`}>
+            <Tag
+              color="cyan"
+              style={{ textTransform: "capitalize" }}
+              key={`${technical}-${index}`}
+            >
               {technical}
             </Tag>
           ))}
@@ -41,12 +50,23 @@ const challengeListColumn: TableProps<IDataTypeChallengeList>["columns"] = [
   },
   {
     title: "Cấp độ",
+    width: 124,
     key: "level",
     dataIndex: "level",
     render: (level: string) => level,
   },
   {
+    width: 100,
+    title: <div style={{ textAlign: "center" }}>Số điểm</div>,
+    key: "point",
+    dataIndex: "point",
+    render: (point: string) => (
+      <div style={{ textAlign: "center" }}>{point}</div>
+    ),
+  },
+  {
     title: () => <div style={{ textAlign: "center" }}>Tham gia</div>,
+    width: 120,
     key: "joinTotal",
     dataIndex: "joinTotal",
     sorter: (a, b) => a.joinTotal - b.joinTotal,
@@ -75,6 +95,7 @@ const challengeListColumn: TableProps<IDataTypeChallengeList>["columns"] = [
   },
   {
     title: () => <div style={{ textAlign: "center" }}>Hoàn thành</div>,
+    width: 140,
     key: "submittedTotal",
     dataIndex: "submittedTotal",
     sorter: (a, b) => a.submittedTotal - b.submittedTotal,
@@ -103,6 +124,7 @@ const challengeListColumn: TableProps<IDataTypeChallengeList>["columns"] = [
   },
   {
     title: () => <div style={{ textAlign: "center" }}>Người tạo</div>,
+    width: 120,
     key: "owner",
     dataIndex: "owner",
     render: (owner: IDataTypeChallengeList["owner"]) => (
@@ -113,6 +135,7 @@ const challengeListColumn: TableProps<IDataTypeChallengeList>["columns"] = [
   },
 
   {
+    width: 200,
     title: "Thời gian tạo",
     key: "createdAt",
     sorter: (a, b) => a.created_at - b.created_at,

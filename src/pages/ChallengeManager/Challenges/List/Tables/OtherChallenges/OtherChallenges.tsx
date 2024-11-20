@@ -1,4 +1,4 @@
-import { Table, TableProps } from "antd";
+import { Button, Flex, Table, TableProps } from "antd";
 import { FC, useState } from "react";
 import IDataTypeChallengeList from "../tables.type";
 import challengeListColumn from "../tables.config";
@@ -7,6 +7,8 @@ import { IGetAllChallengeParams } from "../../../../../../types/request/challeng
 import challengeManagerService from "../../../../../../service/ChallengeManager/challengeManagerService";
 import generateQueryKeyChallenges from "../../challengeList.utils";
 import { constantChallengeManagerQueryKey } from "../../../../../../constants/queryKey/challengeManager";
+import { useNavigate } from "react-router-dom";
+import constantRoutesChallengeManager from "../../../../../../constants/routes/challengeManager";
 
 const DEFAULT_CUREENT_PAGE: number = 1;
 const DEFAULT_PAGE_SIZE: number = 10;
@@ -18,7 +20,8 @@ const OtherChallengesTable: FC = () => {
   const [pageSize, setPageSize] = useState<number>(10);
   const [total, setTotal] = useState<number>(0);
   const [challenges, setChallenges] = useState<IDataTypeChallengeList[]>([]);
-  const columns = challengeListColumn;
+  const navigate = useNavigate();
+  const columns = challengeListColumn || [];
   const queryKeys = generateQueryKeyChallenges(
     constantChallengeManagerQueryKey.challenge.otherChallenges,
     {
@@ -67,10 +70,36 @@ const OtherChallengesTable: FC = () => {
     }
   };
 
+  const actionColumns: TableProps<IDataTypeChallengeList>["columns"] = [
+    {
+      title: "Hành động",
+      key: "actions",
+      fixed: "right",
+      render: (_, record: IDataTypeChallengeList) => {
+        return (
+          <>
+            <Flex gap={12} justify="start" align="center">
+              <Button
+                type="primary"
+                onClick={() =>
+                  navigate(
+                    `${constantRoutesChallengeManager.pages.challenges.details}/:${record.id}`,
+                  )
+                }
+              >
+                Xem chi tiết
+              </Button>
+            </Flex>
+          </>
+        );
+      },
+    },
+  ];
+
   return (
     <Table<IDataTypeChallengeList>
       loading={isFetching}
-      columns={columns}
+      columns={[...columns, ...actionColumns]}
       dataSource={challenges}
       onChange={handleChangeTable}
       pagination={{
@@ -79,6 +108,8 @@ const OtherChallengesTable: FC = () => {
         pageSize: pageSize,
         showSizeChanger: true,
       }}
+      sticky
+      scroll={{ x: "max-content" }}
     />
   );
 };

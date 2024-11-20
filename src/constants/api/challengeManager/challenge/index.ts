@@ -4,4 +4,6 @@ export const constantChallengeApi = {
   uploadFigma: "/admin/challenges/upload/figma",
   uploadSource: "/admin/challenges/upload/source",
   uploadImage: "/admin/challenges/upload/image",
+  removeFile: "/admin/challenges/delete-file",
+  create: "/admin/challenges/create",
 };

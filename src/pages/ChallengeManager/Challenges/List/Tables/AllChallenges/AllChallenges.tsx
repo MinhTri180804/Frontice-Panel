@@ -9,6 +9,7 @@ import constantRoutesChallengeManager from "../../../../../../constants/routes/c
 import { useNavigate } from "react-router-dom";
 import { constantChallengeManagerQueryKey } from "../../../../../../constants/queryKey/challengeManager";
 import generateQueryKeyChallenges from "../../challengeList.utils";
+import useAuthStore from "../../../../../../store/Auth/authStore";
 
 const DEFAULT_CUREENT_PAGE: number = 1;
 const DEFAULT_PAGE_SIZE: number = 10;
@@ -16,6 +17,7 @@ const DEFAULT_PAGE_SIZE: number = 10;
 const typeChallenge: IGetAllChallengeParams["get"] = null;
 
 const AllChallengesTable: FC = () => {
+  const profile = useAuthStore((state) => state.profile);
   const colums = challengeListColumn || [];
   const [currentPage, setCurrentPage] = useState<number>(DEFAULT_CUREENT_PAGE);
   const [pageSize, setPageSize] = useState<number>(DEFAULT_PAGE_SIZE);
@@ -77,6 +79,7 @@ const AllChallengesTable: FC = () => {
   const actionColumns: TableProps<IDataTypeChallengeList>["columns"] = [
     {
       title: "Hành động",
+      fixed: "right",
       key: "actions",
       render: (_, record: IDataTypeChallengeList) => {
         return (
@@ -92,6 +95,12 @@ const AllChallengesTable: FC = () => {
               >
                 Xem chi tiết
               </Button>
+
+              {record.owner.id === profile?.id && (
+                <Button variant="outlined" color="danger">
+                  Xóa
+                </Button>
+              )}
             </Flex>
           </>
         );
@@ -102,6 +111,7 @@ const AllChallengesTable: FC = () => {
   return (
     <Table<IDataTypeChallengeList>
       dataSource={challengesList}
+      scroll={{ x: "max-content" }}
       loading={isFetching}
       columns={[...colums, ...actionColumns]}
       pagination={{
