@@ -1,6 +1,7 @@
 // import { jwtDecode } from 'jwt-decode';
 // import { paths } from '../constant';
 
+
 // const i18nHelper = {
 //   getLanguageSystemStaff: () => {
 //     const language = navigator.language;
@@ -57,6 +58,24 @@ const logOnDev = (message: string) => {
   }
 };
 
+const openNewTab = (url: string) => {
+  window.open(url, "_blank", "noopener,noreferrer");
+};
+
+const scrollToElement: (id: string) => void = (idElement) => {
+  const element = document.getElementById(idElement);
+  if (element) {
+    const classAddition = "highLight";
+    element.style.transition = "background-color 1s linear";
+    element.scrollIntoView({ behavior: "smooth" });
+    element.classList.add(classAddition);
+
+    setTimeout(() => {
+      element.classList.remove(classAddition);
+    }, 1000);
+  }
+};
+
 // const calculateTimeLeft = (timestamp: number) => {
 //   const targetTime = new Date(timestamp).getTime();
 //   const currentTime = new Date().getTime();
@@ -83,4 +102,4 @@ const logOnDev = (message: string) => {
 //   calculateTimeLeft,
 // };
 //
-export { logOnDev };
+export { logOnDev, openNewTab, scrollToElement };

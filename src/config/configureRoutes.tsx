@@ -14,7 +14,7 @@ const useConfigureRoutes = (
   }
   console.log("authenticated");
 
-  const basedRoutes: () => RouteObject[] = () => {
+const basedRoutes: () => RouteObject[] = () => {
     switch (role) {
       case "challenge":
         return challengeManagementRoutes;

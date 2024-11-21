@@ -1,8 +1,8 @@
-import { Navigate, RouteObject } from "react-router-dom";
-import constantRoutesChallengeManager from "../../constants/routes/challengeManager";
-import constantDynamicRoute from "../../constants/routes/dynamicRoute";
-import { ChallengeManagerController } from "../../pages/ChallengeManager";
-import { notfoundRoute } from "../CommonRoutes";
+import { Navigate, RouteObject } from 'react-router-dom';
+import constantRoutesChallengeManager from '../../constants/routes/challengeManager';
+import constantDynamicRoute from '../../constants/routes/dynamicRoute';
+import { ChallengeManagerController } from '../../pages/ChallengeManager';
+import { notfoundRoute } from '../CommonRoutes';
 
 const CHALLENGE_ROUTES = {
   PARENT: `${constantRoutesChallengeManager.pages.challenges.root}`,

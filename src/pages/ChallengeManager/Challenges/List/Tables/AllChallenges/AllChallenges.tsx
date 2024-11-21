@@ -1,0 +1,105 @@
+import { FC, useState } from "react";
+import challengeListColumn from "../tables.config";
+import IDataTypeChallengeList from "../tables.type";
+import {   Table, TableProps } from "antd";
+import { useQuery } from "@tanstack/react-query";
+import challengeManagerService from "../../../../../../service/ChallengeManager/challengeManagerService";
+import { IGetAllChallengeParams } from "../../../../../../types/request/challenge";
+import { constantChallengeManagerQueryKey } from "../../../../../../constants/queryKey/challengeManager";
+import generateQueryKeyChallenges from "../../challengeList.utils";
+import { ActionChallenge } from "../Partials/ActionChallenge";
+
+const DEFAULT_CUREENT_PAGE: number = 1;
+const DEFAULT_PAGE_SIZE: number = 10;
+
+const typeChallenge: IGetAllChallengeParams["get"] = null;
+
+const AllChallengesTable: FC = () => {
+  const columns = challengeListColumn || [];
+  const [currentPage, setCurrentPage] = useState<number>(DEFAULT_CUREENT_PAGE);
+  const [pageSize, setPageSize] = useState<number>(DEFAULT_PAGE_SIZE);
+  const [total, setTotal] = useState<number>(0);
+  const [challengesList, setChallengesList] = useState<
+    IDataTypeChallengeList[]
+  >([]);
+
+  const queryKeys = generateQueryKeyChallenges(
+    constantChallengeManagerQueryKey.challenge.allChallenges,
+    {
+      page: currentPage,
+      perPage: pageSize,
+      get: typeChallenge,
+    },
+  );
+
+  const { isFetching } = useQuery({
+    queryKey: queryKeys,
+    queryFn: async () => {
+      try {
+        const response = await challengeManagerService.challenge.getAll({
+          page: currentPage,
+          perPage: pageSize,
+          get: typeChallenge,
+        });
+
+        const {
+          challenges = [],
+          total = 0,
+          perPage = 10,
+          // modified name object because same with state
+          currentPage: currentPageResponse = 1,
+        } = response.data;
+        setCurrentPage(currentPageResponse);
+        setTotal(total);
+        setPageSize(perPage);
+        setChallengesList(challenges);
+        return response.data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  });
+
+  const onChangeTable: TableProps<IDataTypeChallengeList>["onChange"] = (
+    pagination,
+  ) => {
+    if (pagination.current !== currentPage) {
+      setCurrentPage((pagination?.current as number) || DEFAULT_CUREENT_PAGE);
+    }
+
+    if (pagination.pageSize !== pageSize && pagination.showSizeChanger) {
+      setPageSize((pagination?.pageSize as number) || DEFAULT_PAGE_SIZE);
+    }
+  };
+
+  const actionColumns: TableProps<IDataTypeChallengeList>["columns"] = [
+    {
+      title: "Hành động",
+      fixed: "right",
+      key: "actions",
+      render: (_, record: IDataTypeChallengeList) => (
+        <ActionChallenge challenge={record} />
+      ),
+    },
+  ];
+
+  return (
+    <Table<IDataTypeChallengeList>
+      dataSource={challengesList}
+      scroll={{ x: "max-content" }}
+      loading={isFetching}
+      columns={[...columns, ...actionColumns]}
+      pagination={{
+        pageSize: pageSize,
+        current: currentPage,
+        total: total,
+        showSizeChanger: true,
+      }}
+      sticky
+      showHeader
+      onChange={onChangeTable}
+    />
+  );
+};
+
+export default AllChallengesTable;

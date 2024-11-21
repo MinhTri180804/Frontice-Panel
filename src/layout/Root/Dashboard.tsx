@@ -1,17 +1,18 @@
-import React, { useState } from "react";
-import { Breadcrumb, Button, Layout, Menu, MenuProps, theme } from "antd";
-import { Outlet, useNavigate } from "react-router-dom";
-import { BrandColorLogo } from "../../assets/images/logos/locals";
-import useAuthStore from "../../store/Auth/authStore";
-import useDashboardLogic from "./dashboard.logic";
-import { RoleType } from "../../types/base/role";
-import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
+import React, { useState } from 'react';
+import { Breadcrumb, Button, Flex, Layout, Menu, MenuProps, theme } from 'antd';
+import { Outlet, useNavigate } from 'react-router-dom';
+import { BrandColorLogo } from '../../assets/images/logos/locals';
+import useAuthStore from '../../store/Auth/authStore';
+import useDashboardLogic from './dashboard.logic';
+import { RoleType } from '../../types/base/role';
+import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 
-const { Header, Content, Footer, Sider } = Layout;
+const { Header, Content, Sider } = Layout;
 
 //FIX: Fix type in here
-type CustomMenuItem = MenuProps["items"][number] & {
+type CustomMenuItem = Required<MenuProps>['items'][number] & {
   path?: string;
+  children?: CustomMenuItem[]; // Explicitly define `children` as an array of `CustomMenuItem`.
 };
 
 const DashboardLayout: React.FC = () => {
@@ -24,9 +25,9 @@ const DashboardLayout: React.FC = () => {
     token: { borderRadiusLG },
   } = theme.useToken();
 
-  const onMenuClick: MenuProps["onClick"] = (e) => {
+  const onMenuClick: MenuProps['onClick'] = (e) => {
     const findMenuItem = (
-      items: CustomMenuItem[] | undefined,
+      items: CustomMenuItem[] | undefined
     ): CustomMenuItem | undefined => {
       if (!items) return undefined;
 
@@ -34,7 +35,7 @@ const DashboardLayout: React.FC = () => {
         if (item.key === e.key) {
           return item;
         }
-        if ("children" in item && Array.isArray(item.children)) {
+        if ('children' in item && Array.isArray(item.children)) {
           const childItem = findMenuItem(item.children as CustomMenuItem[]);
           if (childItem) {
             return childItem;
@@ -53,7 +54,7 @@ const DashboardLayout: React.FC = () => {
   };
 
   return (
-    <Layout style={{ minHeight: "100vh" }}>
+    <Layout style={{ maxHeight: '100dvh', overflow: 'hidden' }}>
       <Sider
         collapsible
         collapsed={collapsed}
@@ -62,26 +63,26 @@ const DashboardLayout: React.FC = () => {
       >
         <div
           style={{
-            width: "100%",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            overflow: "hidden",
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            overflow: 'hidden',
           }}
         >
           <div
             className="demo-logo-vertical"
             style={{
-              width: "154px",
-              height: "auto",
+              width: '154px',
+              height: 'auto',
             }}
           >
             <img
               style={{
-                width: "100%",
-                height: "100%",
-                objectFit: "cover",
-                objectPosition: "center",
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                objectPosition: 'center',
               }}
               src={BrandColorLogo}
             />
@@ -89,44 +90,46 @@ const DashboardLayout: React.FC = () => {
         </div>
         <Menu
           theme="light"
-          defaultSelectedKeys={["1"]}
+          defaultSelectedKeys={['1']}
           mode="inline"
           items={dashboardMenuContent}
           onClick={onMenuClick}
         />
       </Sider>
       <Layout>
-        <Header style={{ padding: 0, background: "white" }}>
+        <Header style={{ padding: 0, background: 'white' }}>
           <Button
             type="text"
             icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
             onClick={() => setCollapsed(!collapsed)}
             style={{
-              fontSize: "16px",
+              fontSize: '16px',
               width: 64,
               height: 64,
             }}
           />
         </Header>
-        <Content style={{ margin: "0 16px" }}>
-          <Breadcrumb style={{ margin: "16px 0" }}>
-            <Breadcrumb.Item>User</Breadcrumb.Item>
-            <Breadcrumb.Item>Bill</Breadcrumb.Item>
-          </Breadcrumb>
-          <div
-            style={{
-              padding: 24,
-              minHeight: 360,
-              background: "white",
-              borderRadius: borderRadiusLG,
-            }}
-          >
-            <Outlet />
-          </div>
+        <Content
+          style={{ margin: '0 16px', height: '100dvh', overflow: 'auto' }}
+        >
+          <Flex vertical>
+            <Breadcrumb style={{ margin: '16px 0' }}>
+              <Breadcrumb.Item>User</Breadcrumb.Item>
+              <Breadcrumb.Item>Bill</Breadcrumb.Item>
+            </Breadcrumb>
+            <div
+              style={{
+                padding: 24,
+                minHeight: 360,
+                background: 'white',
+                borderRadius: borderRadiusLG,
+                flex: '1',
+              }}
+            >
+              <Outlet />
+            </div>
+          </Flex>
         </Content>
-        <Footer style={{ textAlign: "center" }}>
-          Ant Design ©{new Date().getFullYear()} Created by Ant UED
-        </Footer>
       </Layout>
     </Layout>
   );
