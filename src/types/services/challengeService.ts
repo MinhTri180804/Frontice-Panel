@@ -2,7 +2,6 @@ import {
   ICreateChallengeRequest,
   IDeleteFileChallengeRequest,
   IGetAllChallengeParams,
-  IGetDetailsChallengeParams,
   IRemoveChallengeParams,
   IUploadFigmaChallengeRequest,
   IUploadImageChallengeRequest,

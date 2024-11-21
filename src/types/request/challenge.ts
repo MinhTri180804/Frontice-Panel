@@ -1,5 +1,3 @@
-import { UploadFile } from "antd";
-
 export type IGetAllChallengeParams = {
   sort?: string;
   page?: string | number;

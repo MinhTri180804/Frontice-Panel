@@ -1,8 +1,7 @@
 import { useNavigate } from "react-router-dom";
-import { InboxOutlined, OneToOneOutlined } from "@ant-design/icons";
+import { InboxOutlined } from "@ant-design/icons";
 import {
   Button,
-  DatePicker,
   Flex,
   Form,
   Input,
@@ -30,7 +29,7 @@ const ChallengeUploadPage: FC = () => {
   const [figmaPath, setFigmaPath] = useState<string | null>(null);
   const [imagePath, setImagePath] = useState<string | null>(null);
   const [isPremium, setIsPremium] = useState<boolean>(false);
-  const [technicalList, setTechnicalList] = useState<string[]>([]);
+  const [_, setTechnicalList] = useState<string[]>([]);
   const [plusPoint, setPlusPoint] = useState<number>(0);
   const normFile = (e: any) => {
     console.log(e);

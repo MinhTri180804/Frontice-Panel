@@ -7,7 +7,7 @@ import useDashboardLogic from "./dashboard.logic";
 import { RoleType } from "../../types/base/role";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 
-const { Header, Content, Footer, Sider } = Layout;
+const { Header, Content, Sider } = Layout;
 
 //FIX: Fix type in here
 type CustomMenuItem = MenuProps["items"][number] & {

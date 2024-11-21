@@ -1,12 +1,10 @@
 import {
   Button,
-  ButtonProps,
   Card,
   Checkbox,
   CheckboxProps,
   Flex,
   Modal,
-  Space,
   Statistic,
   Typography,
 } from "antd";
@@ -19,16 +17,22 @@ import challengeManagerService from "../../../../../../../service/ChallengeManag
 import { logOnDev } from "../../../../../../../utils/helper";
 import { toast } from "react-toastify";
 import { constantChallengeManagerQueryKey } from "../../../../../../../constants/queryKey/challengeManager";
+import useAuthStore from "../../../../../../../store/Auth/authStore";
 
 interface IActionChallengeProps {
   challenge: IChallengeEntity;
 }
 
 const ActionChallenge: FC<IActionChallengeProps> = ({ challenge }) => {
+  const profile = useAuthStore((state) => state.profile);
   const navigate = useNavigate();
-  const { confirm } = Modal;
   const queryClient = useQueryClient();
-  useState<boolean>(false);
+  const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
+  const [knowRemoveChallenge, setKnowRemoveChallenge] =
+    useState<boolean>(false);
+  const [knowPremiumChallenge, setKnowPremiumChallenge] =
+    useState<boolean>(false);
+
   const mutationRemoveChallenge = useMutation({
     mutationKey: ["remove_challenge"],
     mutationFn: async () => {
@@ -37,11 +41,12 @@ const ActionChallenge: FC<IActionChallengeProps> = ({ challenge }) => {
       });
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: [
-          constantChallengeManagerQueryKey.challenge.myChallenges,
-          constantChallengeManagerQueryKey.challenge.allChallenges,
-        ],
+      queryClient.resetQueries({
+        predicate: (query) =>
+          [
+            constantChallengeManagerQueryKey.challenge.myChallenges,
+            constantChallengeManagerQueryKey.challenge.allChallenges,
+          ].some((key) => JSON.stringify(query.queryKey).includes(key)),
       });
       logOnDev(`[REMOVE CHALLENGE] success || challenge: ${challenge.id}`);
     },
@@ -49,45 +54,96 @@ const ActionChallenge: FC<IActionChallengeProps> = ({ challenge }) => {
       logOnDev(`[REMOVE CHALLENGE] error || challenge: ${challenge.id}`),
   });
 
-  const showConfirmRemove = () => {
-    let knowRemoveChecked = false;
-    let knowChallengePremiumChecked = false;
+  const handleChangeKnowRemoveChallenge: CheckboxProps["onChange"] = (e) => {
+    setKnowRemoveChallenge(e.target.checked);
+  };
 
-    const handleKnowRemoveChecked: CheckboxProps["onChange"] = (e) => {
-      knowRemoveChecked = e.target.checked;
-      updateOkButtonState();
-    };
+  const handleChangeKnowChallengePremium: CheckboxProps["onChange"] = (e) => {
+    setKnowPremiumChallenge(e.target.checked);
+  };
 
-    const handleKnowChallengePremiumChecked: CheckboxProps["onChange"] = (
-      e,
-    ) => {
-      knowChallengePremiumChecked = e.target.checked;
-      updateOkButtonState();
-    };
+  const handleRemoveChallenge = () => {
+    return toast.promise(
+      mutationRemoveChallenge.mutateAsync().then(() => setIsOpenModal(false)),
+      {
+        pending: "Đang thực hiện xóa thử thách",
+        success: "Xóa thử thách thành công",
+        error: "Xóa thử thách thất bại",
+      },
+    );
+  };
 
-    const handleOkRemoveChallenge = () => {
-      const modal = document.querySelector(".ant-modal-confirm");
-      const okButton = modal?.querySelector(".ant-btn-primary");
+  function checkDisabledButton() {
+    if (challenge.premium) {
+      if (knowRemoveChallenge && knowPremiumChallenge) {
+        return false;
+      }
 
-      const loadingClass = "ant-btn-loading";
+      return true;
+    }
 
-      okButton?.classList.add(loadingClass);
-      return toast.promise(
-        mutationRemoveChallenge.mutateAsync().then(() => {
-          okButton?.classList.remove(loadingClass);
-        }),
-        {
-          pending: "Đang thực hiện xóa thử thách",
-          success: "Xóa thử thách thành công",
-          error: "Xóa thử thách thất bại",
-        },
-      );
-    };
+    if (knowRemoveChallenge) {
+      return false;
+    }
 
-    confirm({
-      width: 620,
-      title: "Xác nhận xóa thử thách",
-      content: (
+    return true;
+  }
+
+  const conditionButtonRemove = checkDisabledButton();
+  return (
+    <>
+      <Flex gap={12} justify="start" align="center">
+        <Button
+          type="primary"
+          onClick={() =>
+            navigate(
+              `${constantRoutesChallengeManager.pages.challenges.details}/:${challenge.id}`,
+            )
+          }
+        >
+          Xem chi tiết
+        </Button>
+        {challenge.owner.id === profile?.id && (
+          <Button
+            variant="outlined"
+            color="danger"
+            onClick={() => setIsOpenModal(true)}
+          >
+            Xóa
+          </Button>
+        )}
+      </Flex>
+
+      <Modal
+        open={isOpenModal}
+        width={620}
+        title={"Xác nhận xóa thử thách"}
+        okText={"Xác nhận"}
+        onOk={handleRemoveChallenge}
+        cancelText={"Hủy bỏ"}
+        onClose={() => setIsOpenModal(false)}
+        onCancel={() => setIsOpenModal(false)}
+        footer={() => (
+          <>
+            <Button
+              loading={mutationRemoveChallenge.isPending}
+              disabled={conditionButtonRemove}
+              onClick={handleRemoveChallenge}
+              variant="solid"
+              color="danger"
+            >
+              Xóa
+            </Button>
+            <Button
+              variant="outlined"
+              color="primary"
+              onClick={() => setIsOpenModal(false)}
+            >
+              Hủy
+            </Button>
+          </>
+        )}
+      >
         <Flex vertical gap={24} justify="start" align="stretch">
           <Flex justify="space-between" align="stretch" gap={24}>
             <Card bordered style={{ flex: 1 }}>
@@ -109,63 +165,22 @@ const ActionChallenge: FC<IActionChallengeProps> = ({ challenge }) => {
             )}
 
             <Checkbox
-              onChange={handleKnowRemoveChecked}
-              value={knowRemoveChecked}
+              value={knowRemoveChallenge}
+              onChange={handleChangeKnowRemoveChallenge}
             >
               Tôi xác nhận xóa thử thách
             </Checkbox>
             {challenge.premium && (
               <Checkbox
-                onChange={handleKnowChallengePremiumChecked}
-                value={knowChallengePremiumChecked}
+                value={knowPremiumChallenge}
+                onChange={handleChangeKnowChallengePremium}
               >
                 Tôi biết đó là thử thách premium
               </Checkbox>
             )}
           </Flex>
         </Flex>
-      ),
-      okText: "Xác nhận",
-      onOk: handleOkRemoveChallenge,
-      cancelText: "Hủy bỏ",
-    });
-
-    function updateOkButtonState() {
-      const modal = document.querySelector(".ant-modal-confirm");
-      const okButton = modal?.querySelector(
-        ".ant-btn-primary",
-      ) as HTMLButtonElement;
-
-      if (okButton) {
-        okButton.disabled = !(
-          knowRemoveChecked &&
-          (!challenge.premium || knowChallengePremiumChecked)
-        );
-      }
-    }
-  };
-
-  return (
-    <>
-      <Flex gap={12} justify="start" align="center">
-        <Button
-          type="primary"
-          onClick={() =>
-            navigate(
-              `${constantRoutesChallengeManager.pages.challenges.details}/:${challenge.id}`,
-            )
-          }
-        >
-          Xem chi tiết
-        </Button>
-        <Button
-          variant="outlined"
-          color="danger"
-          onClick={() => showConfirmRemove()}
-        >
-          Xóa
-        </Button>
-      </Flex>
+      </Modal>
     </>
   );
 };

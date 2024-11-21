@@ -57,6 +57,10 @@ const logOnDev = (message: string) => {
   }
 };
 
+const openNewTab = (url: string) => {
+  window.open(url, "_blank", "noopener,noreferrer");
+};
+
 // const calculateTimeLeft = (timestamp: number) => {
 //   const targetTime = new Date(timestamp).getTime();
 //   const currentTime = new Date().getTime();
@@ -83,4 +87,4 @@ const logOnDev = (message: string) => {
 //   calculateTimeLeft,
 // };
 //
-export { logOnDev };
+export { logOnDev, openNewTab };

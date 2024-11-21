@@ -1,11 +1,11 @@
-import { Button, Empty, Flex, Modal, Table, TableProps } from "antd";
+import { Button, Empty, Table, TableProps } from "antd";
 import { useState } from "react";
 import IDataTypeChallengeList from "../tables.type";
 import challengeListColumn from "../tables.config";
 import { useQuery } from "@tanstack/react-query";
 import { IGetAllChallengeParams } from "../../../../../../types/request/challenge";
 import challengeManagerService from "../../../../../../service/ChallengeManager/challengeManagerService";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import constantRoutesChallengeManager from "../../../../../../constants/routes/challengeManager";
 import { PlusOutlined } from "@ant-design/icons";
 import generateQueryKeyChallenges from "../../challengeList.utils";
@@ -18,13 +18,11 @@ const DEFAULT_PAGE_SIZE: number = 10;
 const typeChallenge: IGetAllChallengeParams["get"] = "owner";
 
 const MyChallengesTable = () => {
-  const [modalRemove, setModalRemove] = useState<boolean>(false);
   const [currentPage, setCurrentPage] = useState<number>(DEFAULT_CUREENT_PAGE);
   const [pageSize, setPageSize] = useState<number>(DEFAULT_PAGE_SIZE);
   const [challengesList, setChallengesList] = useState<
     IDataTypeChallengeList[]
   >([]);
-  const navigate = useNavigate();
   const [total, setTotal] = useState<number>(0);
   const columns = challengeListColumn || [];
 

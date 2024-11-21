@@ -1,7 +1,7 @@
 import { FC, useState } from "react";
 import challengeListColumn from "../tables.config";
 import IDataTypeChallengeList from "../tables.type";
-import { Button, Flex, Modal, Table, TableProps } from "antd";
+import { Button, Flex, Table, TableProps } from "antd";
 import { useQuery } from "@tanstack/react-query";
 import challengeManagerService from "../../../../../../service/ChallengeManager/challengeManagerService";
 import { IGetAllChallengeParams } from "../../../../../../types/request/challenge";
@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { constantChallengeManagerQueryKey } from "../../../../../../constants/queryKey/challengeManager";
 import generateQueryKeyChallenges from "../../challengeList.utils";
 import useAuthStore from "../../../../../../store/Auth/authStore";
+import { ActionChallenge } from "../Partials/ActionChallenge";
 
 const DEFAULT_CUREENT_PAGE: number = 1;
 const DEFAULT_PAGE_SIZE: number = 10;
@@ -81,30 +82,9 @@ const AllChallengesTable: FC = () => {
       title: "Hành động",
       fixed: "right",
       key: "actions",
-      render: (_, record: IDataTypeChallengeList) => {
-        return (
-          <>
-            <Flex gap={12} justify="start" align="center">
-              <Button
-                type="primary"
-                onClick={() =>
-                  navigate(
-                    `${constantRoutesChallengeManager.pages.challenges.details}/:${record.id}`,
-                  )
-                }
-              >
-                Xem chi tiết
-              </Button>
-
-              {record.owner.id === profile?.id && (
-                <Button variant="outlined" color="danger">
-                  Xóa
-                </Button>
-              )}
-            </Flex>
-          </>
-        );
-      },
+      render: (_, record: IDataTypeChallengeList) => (
+        <ActionChallenge challenge={record} />
+      ),
     },
   ];
 

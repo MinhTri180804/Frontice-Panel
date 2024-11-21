@@ -1,8 +1,4 @@
-import {
-  createBrowserRouter,
-  RouterProvider,
-  useRoutes,
-} from "react-router-dom";
+import { useRoutes } from "react-router-dom";
 import "./App.css";
 import configureRoutes from "./config/configureRoutes";
 import useAuthStore from "./store/Auth/authStore";

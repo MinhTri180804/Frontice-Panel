@@ -1,7 +1,8 @@
-import { Modal, TableProps, Avatar, Flex, Button, Tag } from "antd";
+import { TableProps, Avatar, Tag } from "antd";
 import IDataTypeChallengeList from "./tables.type";
-import ModalChallenger from "../../../../../components/Components/Modal/Challenger/ModalChallenger";
 import { convertTimestampToVietnamTime } from "../../../../../utils/convertTime";
+import { CheckOutlined, CloseOutlined } from "@ant-design/icons";
+import { ViewChallengers } from "./Partials/ViewChallengers";
 
 const defautlAvatar =
   "https://static.vecteezy.com/system/resources/previews/009/292/244/non_2x/default-avatar-icon-of-social-media-user-vector.jpg";
@@ -65,32 +66,32 @@ const challengeListColumn: TableProps<IDataTypeChallengeList>["columns"] = [
     ),
   },
   {
+    width: 100,
+    title: <div style={{ textAlign: "center" }}>Premium</div>,
+    key: "premium",
+    dataIndex: "premium",
+    render(isPremium: boolean) {
+      return isPremium ? (
+        <div style={{ textAlign: "center" }}>
+          {<CheckOutlined style={{ color: "#5250F7" }} />}
+        </div>
+      ) : (
+        <div style={{ textAlign: "center" }}>{<CloseOutlined />}</div>
+      );
+    },
+  },
+  {
     title: () => <div style={{ textAlign: "center" }}>Tham gia</div>,
     width: 120,
     key: "joinTotal",
     dataIndex: "joinTotal",
     sorter: (a, b) => a.joinTotal - b.joinTotal,
-    render: (joinTotal: string | number) => (
-      <Flex justify="center" align="center">
-        <Button
-          variant="outlined"
-          color="primary"
-          onClick={() => {
-            Modal.info({
-              width: "800px",
-              title: "Danh sách người dã tham gia thử thách",
-              okText: "Đóng",
-              content: (
-                <div style={{ width: "100%" }}>
-                  <ModalChallenger />
-                </div>
-              ),
-            });
-          }}
-        >
-          {joinTotal}
-        </Button>
-      </Flex>
+    render: (joinTotal: string | number, record) => (
+      <ViewChallengers
+        typeChallengerInChallenge="all"
+        challengeId={record.id}
+        value={joinTotal}
+      />
     ),
   },
   {
@@ -99,27 +100,12 @@ const challengeListColumn: TableProps<IDataTypeChallengeList>["columns"] = [
     key: "submittedTotal",
     dataIndex: "submittedTotal",
     sorter: (a, b) => a.submittedTotal - b.submittedTotal,
-    render: (submittedTotal: number) => (
-      <Flex justify="center" align="center">
-        <Button
-          variant="outlined"
-          color="primary"
-          onClick={() => {
-            Modal.info({
-              width: "800px",
-              title: "Danh sách người dã hoàn thành thử thách",
-              okText: "Đóng",
-              content: (
-                <div style={{ width: "100%" }}>
-                  <ModalChallenger />
-                </div>
-              ),
-            });
-          }}
-        >
-          {submittedTotal}
-        </Button>
-      </Flex>
+    render: (submittedTotal: number, record) => (
+      <ViewChallengers
+        typeChallengerInChallenge="submitted"
+        challengeId={record.id}
+        value={submittedTotal}
+      />
     ),
   },
   {

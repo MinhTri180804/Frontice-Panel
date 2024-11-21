@@ -1,7 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import challengeManagerService from "../../../../service/ChallengeManager/challengeManagerService";
 import { ICreateChallengeRequest } from "../../../../types/request/challenge";
-import { toast } from "react-toastify";
 import { constantChallengeManagerQueryKey } from "../../../../constants/queryKey/challengeManager";
 
 interface useUploadChallengePageLogicProps {
