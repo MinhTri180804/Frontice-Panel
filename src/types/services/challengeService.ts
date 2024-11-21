@@ -2,6 +2,7 @@ import {
   ICreateChallengeRequest,
   IDeleteFileChallengeRequest,
   IGetAllChallengeParams,
+  IGetChallengeDetailsParams,
   IRemoveChallengeParams,
   IUploadFigmaChallengeRequest,
   IUploadImageChallengeRequest,
@@ -10,6 +11,7 @@ import {
 import { IBaseResponse } from "../base/response";
 import {
   IGetAllChallengeResponse,
+  IGetChallengeDetailsResponse,
   IUploadFigmaChallengeResponse,
   IUploadImageChallengeResponse,
   IUploadSourceChallengeResponse,
@@ -19,7 +21,9 @@ export type IChallengeService = {
   getAll: (
     params: IGetAllChallengeParams,
   ) => Promise<IBaseResponse<IGetAllChallengeResponse>>;
-  // getDetails: (params: IGetDetailsChallengeParams) => Promise<IBaseResponse<>>;
+  getDetails: (
+    params: IGetChallengeDetailsParams,
+  ) => Promise<IBaseResponse<IGetChallengeDetailsResponse>>;
 
   uploadSource: (
     dataBody: IUploadSourceChallengeRequest,

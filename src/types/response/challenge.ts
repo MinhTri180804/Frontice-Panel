@@ -19,3 +19,5 @@ export type IUploadSourceChallengeResponse = {
 export type IUploadFigmaChallengeResponse = {
   path: string;
 };
+
+export type IGetChallengeDetailsResponse = IChallengeEntity;

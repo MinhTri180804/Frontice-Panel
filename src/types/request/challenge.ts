@@ -9,10 +9,6 @@ export type IRemoveChallengeParams = {
   challengeId: string;
 };
 
-export type IGetDetailsChallengeParams = {
-  challengeId: string;
-};
-
 export type ICreateChallengeRequest = {
   title: string;
   level_id: string;
@@ -40,4 +36,8 @@ export type IUploadFigmaChallengeRequest = {
 
 export type IUploadImageChallengeRequest = {
   image: File;
+};
+
+export type IGetChallengeDetailsParams = {
+  challengeId: string;
 };

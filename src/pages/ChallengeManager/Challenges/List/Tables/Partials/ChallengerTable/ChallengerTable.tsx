@@ -1,29 +1,30 @@
-import { Table, TableProps } from "antd";
-import { FC, useState } from "react";
-import { ITaskeeEntity } from "../../../../../../../types/entity/taskee";
-import { constantChallengeManagerQueryKey } from "../../../../../../../constants/queryKey/challengeManager";
-import { IGetAllTaskeeInChallengeParams } from "../../../../../../../types/request/taskee";
-import { useQuery } from "@tanstack/react-query";
-import challengeManagerService from "../../../../../../../service/ChallengeManager/challengeManagerService";
-import { logOnDev } from "../../../../../../../utils/helper";
-import challengerTableColumns from "./challengerTable.config";
-import { persist } from "zustand/middleware";
+import { Table, TableProps } from 'antd';
+import { FC, useState } from 'react';
+import { ITaskeeEntity } from '../../../../../../../types/entity/taskee';
+import { constantChallengeManagerQueryKey } from '../../../../../../../constants/queryKey/challengeManager';
+import { IGetAllTaskeeInChallengeParams } from '../../../../../../../types/request/taskee';
+import { useQuery } from '@tanstack/react-query';
+import challengeManagerService from '../../../../../../../service/ChallengeManager/challengeManagerService';
+import { logOnDev } from '../../../../../../../utils/helper';
+import challengerTableColumns from './challengerTable.config';
 
 type IDatatypeChallenger = ITaskeeEntity;
 
-interface IChallengerTableProps {
+type IChallengerTableProps = {
   challengeId: string;
-  typeChallengerInChallenge: IGetAllTaskeeInChallengeParams["query"];
-}
+  typeChallengerInChallenge: IGetAllTaskeeInChallengeParams['query'];
+  idTable?: string;
+};
 
 const ChallengerTable: FC<IChallengerTableProps> = ({
   challengeId,
   typeChallengerInChallenge,
+  idTable,
 }) => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [pageSize, setPageSize] = useState<number>(10);
-  const handleChangeTable: TableProps<IDatatypeChallenger>["onChange"] = (
-    pagination,
+  const handleChangeTable: TableProps<IDatatypeChallenger>['onChange'] = (
+    pagination
   ) => {
     if (pagination.current !== currentPage) {
       setCurrentPage(pagination?.current || 1);
@@ -72,6 +73,7 @@ const ChallengerTable: FC<IChallengerTableProps> = ({
         showSizeChanger: true,
       }}
       onChange={handleChangeTable}
+      id={idTable}
     />
   );
 };

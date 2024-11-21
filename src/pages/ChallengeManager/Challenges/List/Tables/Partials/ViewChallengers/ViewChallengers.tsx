@@ -1,11 +1,7 @@
-import { FormContext } from "antd/es/form/context";
 import { FC, useState } from "react";
 import { IGetAllTaskeeInChallengeParams } from "../../../../../../../types/request/taskee";
 import { Button, Flex, Modal } from "antd";
 import challengerTitleModal from "./viewChallengers.content";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import challengeManagerService from "../../../../../../../service/ChallengeManager/challengeManagerService";
-import { constantChallengeManagerQueryKey } from "../../../../../../../constants/queryKey/challengeManager";
 import ChallengerTable from "../ChallengerTable/ChallengerTable";
 
 interface IViewChallengersProps {

@@ -6,4 +6,5 @@ export const constantChallengeApi = {
   uploadImage: "/admin/challenges/upload/image",
   removeFile: "/admin/challenges/delete-file",
   create: "/admin/challenges/create",
+  getDetails: "/admin/challenges",
 };

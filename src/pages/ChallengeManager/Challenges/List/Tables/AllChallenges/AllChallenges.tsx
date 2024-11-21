@@ -1,15 +1,12 @@
 import { FC, useState } from "react";
 import challengeListColumn from "../tables.config";
 import IDataTypeChallengeList from "../tables.type";
-import { Button, Flex, Table, TableProps } from "antd";
+import {   Table, TableProps } from "antd";
 import { useQuery } from "@tanstack/react-query";
 import challengeManagerService from "../../../../../../service/ChallengeManager/challengeManagerService";
 import { IGetAllChallengeParams } from "../../../../../../types/request/challenge";
-import constantRoutesChallengeManager from "../../../../../../constants/routes/challengeManager";
-import { useNavigate } from "react-router-dom";
 import { constantChallengeManagerQueryKey } from "../../../../../../constants/queryKey/challengeManager";
 import generateQueryKeyChallenges from "../../challengeList.utils";
-import useAuthStore from "../../../../../../store/Auth/authStore";
 import { ActionChallenge } from "../Partials/ActionChallenge";
 
 const DEFAULT_CUREENT_PAGE: number = 1;
@@ -18,15 +15,13 @@ const DEFAULT_PAGE_SIZE: number = 10;
 const typeChallenge: IGetAllChallengeParams["get"] = null;
 
 const AllChallengesTable: FC = () => {
-  const profile = useAuthStore((state) => state.profile);
-  const colums = challengeListColumn || [];
+  const columns = challengeListColumn || [];
   const [currentPage, setCurrentPage] = useState<number>(DEFAULT_CUREENT_PAGE);
   const [pageSize, setPageSize] = useState<number>(DEFAULT_PAGE_SIZE);
   const [total, setTotal] = useState<number>(0);
   const [challengesList, setChallengesList] = useState<
     IDataTypeChallengeList[]
   >([]);
-  const navigate = useNavigate();
 
   const queryKeys = generateQueryKeyChallenges(
     constantChallengeManagerQueryKey.challenge.allChallenges,
@@ -93,7 +88,7 @@ const AllChallengesTable: FC = () => {
       dataSource={challengesList}
       scroll={{ x: "max-content" }}
       loading={isFetching}
-      columns={[...colums, ...actionColumns]}
+      columns={[...columns, ...actionColumns]}
       pagination={{
         pageSize: pageSize,
         current: currentPage,
