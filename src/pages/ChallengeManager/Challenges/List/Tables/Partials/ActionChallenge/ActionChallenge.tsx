@@ -138,6 +138,7 @@ const ActionChallenge: FC<IActionChallengeProps> = ({ challenge }) => {
               variant="outlined"
               color="primary"
               onClick={() => setIsOpenModal(false)}
+              disabled={mutationRemoveChallenge.isPending}
             >
               Hủy
             </Button>
@@ -161,7 +162,9 @@ const ActionChallenge: FC<IActionChallengeProps> = ({ challenge }) => {
           </Flex>
           <Flex vertical gap={12} justify="start" align="stretch">
             {challenge.premium && (
-              <Typography color="#FFB82E">Đây là thử thách Premium</Typography>
+              <Typography style={{ fontWeight: "bold" }}>
+                Đây là thử thách Premium
+              </Typography>
             )}
 
             <Checkbox
