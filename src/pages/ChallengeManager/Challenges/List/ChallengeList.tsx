@@ -1,23 +1,40 @@
-import { Button, Flex, Tabs } from "antd";
-import { FC, useState } from "react";
-import { PlusOutlined, RedoOutlined } from "@ant-design/icons";
+import { Button, Flex, Tabs, TabsProps } from "antd";
+import { FC, useEffect, useState } from "react";
+import { FilterOutlined, PlusOutlined, RedoOutlined } from "@ant-design/icons";
 import Title from "antd/es/typography/Title";
 import constantRoutesChallengeManager from "../../../../constants/routes/challengeManager";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import challengeListTabs from "./challengeList.tabs";
 import { useQueryClient } from "@tanstack/react-query";
 import { constantChallengeManagerQueryKey } from "../../../../constants/queryKey/challengeManager";
 import { toast } from "react-toastify";
+import useDrawerChallengesFilterStore from "../../../../store/DrawerChallengesFilter/DrawerChallengesFilterStore";
+import DrawerFilterChallenges from "./Partials/DrawerFilter/DrawerFilterChallenges";
+import { ITypeOfChallenges } from "../../../../types/other/challenge";
 
 const ChallengeListPage: FC = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const openDrawerFilter =
+    useDrawerChallengesFilterStore.getState().openDrawerFilter;
+  const typeOfChallenges = useDrawerChallengesFilterStore(
+    (state) => state.typeOfChallenges,
+  );
+  const changeTypeOfChallenge =
+    useDrawerChallengesFilterStore.getState().changeTypeOfChallenge;
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const [isLoadingRefreshChallengebutton, setIsLoadingRefreshChallengeButton] =
     useState<boolean>(false);
 
-  const handleChangeTabs = (key: string) => {
-    console.log(key);
+  const handleChangeTabs: TabsProps["onChange"] = (activeKeyTab: string) => {
+    setSearchParams({ tab: activeKeyTab });
+    changeTypeOfChallenge(activeKeyTab as ITypeOfChallenges);
   };
+
+  useEffect(() => {
+    const tab = searchParams.get("tab") || "all_challenges";
+    changeTypeOfChallenge(tab as ITypeOfChallenges);
+  }, [searchParams, typeOfChallenges]);
 
   const tabsItems = challengeListTabs;
 
@@ -42,6 +59,7 @@ const ChallengeListPage: FC = () => {
     );
   };
 
+  console.log("render challenge list page");
   return (
     <>
       <section className="challenges__manager">
@@ -86,12 +104,29 @@ const ChallengeListPage: FC = () => {
                 >
                   Tạo thử thách mới
                 </Button>
+                <Button
+                  color="primary"
+                  size="large"
+                  icon={<FilterOutlined />}
+                  onClick={() => openDrawerFilter()}
+                >
+                  Bộ lọc
+                </Button>
               </Flex>
             </div>
           </Flex>
 
-          <Tabs items={tabsItems} type="card" onChange={handleChangeTabs} />
+          <Tabs
+            defaultActiveKey={typeOfChallenges}
+            activeKey={typeOfChallenges}
+            items={tabsItems}
+            type="card"
+            onChange={handleChangeTabs}
+            destroyInactiveTabPane={true}
+          />
         </Flex>
+
+        <DrawerFilterChallenges />
       </section>
     </>
   );
