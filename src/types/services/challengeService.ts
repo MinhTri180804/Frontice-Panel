@@ -12,6 +12,7 @@ import { IBaseResponse } from "../base/response";
 import {
   IGetAllChallengeResponse,
   IGetChallengeDetailsResponse,
+  IGetFilterInforamtion,
   IUploadFigmaChallengeResponse,
   IUploadImageChallengeResponse,
   IUploadSourceChallengeResponse,
@@ -44,4 +45,6 @@ export type IChallengeService = {
   ) => Promise<IBaseResponse<null>>;
 
   create: (data: ICreateChallengeRequest) => Promise<IBaseResponse<null>>;
+
+  getFilterInforamtion: () => Promise<IBaseResponse<IGetFilterInforamtion>>;
 };
