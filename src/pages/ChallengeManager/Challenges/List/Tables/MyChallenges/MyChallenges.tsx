@@ -139,6 +139,7 @@ const MyChallengesTable = () => {
   return (
     <Table<IDataTypeChallengeList>
       loading={isFetching}
+      rowKey={(record) => `${record.id}`}
       scroll={{ x: "max-content" }}
       columns={[...columns, ...actionColumns]}
       dataSource={challengesList}
