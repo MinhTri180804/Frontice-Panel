@@ -4,7 +4,6 @@ import { useParams } from "react-router-dom";
 import { constantChallengeManagerQueryKey } from "../../../../constants/queryKey/challengeManager";
 import challengeManagerService from "../../../../service/ChallengeManager/challengeManagerService";
 import { Avatar, Card, Divider, Flex, Typography } from "antd";
-import { convertTimestampToVietnamTime } from "../../../../utils/convertTime";
 import ChallengerTable from "../List/Tables/Partials/ChallengerTable/ChallengerTable";
 import { scrollToElement } from "../../../../utils/helper";
 import { ChallengeOverview } from "../../../../components/Components/ChallengeOverview";

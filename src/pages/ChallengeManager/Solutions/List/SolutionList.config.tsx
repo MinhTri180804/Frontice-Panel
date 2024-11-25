@@ -1,7 +1,6 @@
 import { Button, Flex, Badge, Avatar, TableProps } from "antd";
 import { convertTimestampToVietnamTime } from "../../../../utils/convertTime";
 import { ISolutionEntity } from "../../../../types/entity/solution";
-import { CheckOutlined } from "@ant-design/icons";
 import { ViewMentorFeedback } from "./Partials/ViewMentorFeedback";
 
 const defautlAvatar =

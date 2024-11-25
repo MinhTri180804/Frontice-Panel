@@ -5,16 +5,7 @@ import { constantChallengeManagerQueryKey } from "../../../../constants/queryKey
 import { Navigate, useParams } from "react-router";
 import constantRoutesGlobal from "../../../../constants/routes/global";
 import challengeManagerService from "../../../../service/ChallengeManager/challengeManagerService";
-import {
-  Avatar,
-  Card,
-  Collapse,
-  Descriptions,
-  Empty,
-  Flex,
-  Tag,
-  Typography,
-} from "antd";
+import { Avatar, Card, Collapse, Empty, Flex, Tag, Typography } from "antd";
 import { ActionsSolutionDetails } from "./Partials/Actions";
 import { convertTimestampToVietnamTime } from "../../../../utils/convertTime";
 

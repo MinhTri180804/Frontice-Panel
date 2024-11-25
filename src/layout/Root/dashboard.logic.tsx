@@ -25,7 +25,6 @@ const getItem: (
 const DEFAULT_CHALLENGE_ROUTES = `/${constantRoutesChallengeManager.pages.challenges.root}`;
 const DEFAULT_SOLUTION_ROUTES = `/${constantRoutesChallengeManager.pages.solutions.root}`;
 const DEFAULT_TASK_ROUTES = `/${constantRoutesChallengeManager.pages.tasks.root}`;
-const DEFAULT_STATISTIC_ROUTES = `/${constantRoutesChallengeManager.pages.statistic.root}`;
 
 const menuOfChallengeManager: MenuItem[] = [
   getItem("Thử thách", "challenges", <PieChartOutlined />, [

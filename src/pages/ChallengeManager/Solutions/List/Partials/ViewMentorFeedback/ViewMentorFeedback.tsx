@@ -1,8 +1,4 @@
-import {
-  CheckOutlined,
-  CloseOutlined,
-  IssuesCloseOutlined,
-} from "@ant-design/icons";
+import { CheckOutlined, CloseOutlined } from "@ant-design/icons";
 import { Button, Flex, Modal, Typography } from "antd";
 import { FC, useState } from "react";
 
@@ -10,7 +6,7 @@ interface IViewMentorFeedbackProps {
   mentorFeedback: string | null;
 }
 
-const { Title, Text } = Typography;
+const { Text } = Typography;
 
 const ViewMentorFeedback: FC<IViewMentorFeedbackProps> = ({
   mentorFeedback,
