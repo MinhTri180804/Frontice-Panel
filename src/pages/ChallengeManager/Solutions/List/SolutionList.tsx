@@ -1,33 +1,61 @@
 import { FC, useState } from "react";
-import useSolutionListLogic from "./solutionList.logic";
-import { IGetAllSolutionResponse } from "../../../../types/request/solution";
-import { Button, Table, TableProps } from "antd";
-import { useNavigate } from "react-router-dom";
+import { Button, Empty, Flex, Table, TableProps, Typography } from "antd";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import constantRoutesChallengeManager from "../../../../constants/routes/challengeManager";
 import columnsSolutionList from "./SolutionList.config";
 import { ISolutionEntity } from "../../../../types/entity/solution";
+import { FilterOutlined, RedoOutlined } from "@ant-design/icons";
+import challengeManagerService from "../../../../service/ChallengeManager/challengeManagerService";
+import { useQuery } from "@tanstack/react-query";
 
 type DataType = ISolutionEntity;
 
+const { Title } = Typography;
+
 const SolutionListPage: FC = () => {
-  const [page, setPage] = useState<number>(1);
-  const [perPage, setPerPage] = useState<number>(10);
-  const { querySolutionList } = useSolutionListLogic({
-    querySoltuionListParams: { page: page, per_page: perPage },
-  });
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [totalPage, setTotalPage] = useState<number | string>(0);
+  const [currentPage, setCurrentPage] = useState<number | string>(
+    searchParams.get("page") || 1,
+  );
+  const [perPage, setPerPage] = useState<number | string>(
+    searchParams.get("limit") || 10,
+  );
+  const [solutionList, setSolutionList] = useState<DataType[]>([]);
   const navigate = useNavigate();
 
-  const { data: dataSolutionList, isPending } = querySolutionList;
+  const { isFetching, data } = useQuery({
+    queryKey: ["solution_list", perPage, currentPage],
+    queryFn: async () => {
+      const response = await challengeManagerService.solution.getAll({
+        page: currentPage,
+        per_page: perPage,
+      });
 
-  const dataSource: DataType[] = dataSolutionList?.solutions || [];
+      setTotalPage(response.data.total);
+      setSolutionList(response.data.solutions);
+      return response.data;
+    },
+  });
 
   const onChangeTable: TableProps<DataType>["onChange"] = (pagination) => {
-    console.log(pagination);
-    setPage(pagination?.current || 1);
-    if (pagination.showSizeChanger) {
-      setPerPage(pagination?.pageSize || 10);
+    if (pagination.current !== currentPage && pagination.current) {
+      const page = pagination.current.toString();
+      const currentParams = Object.fromEntries(searchParams.entries());
+      setCurrentPage(page);
+      setSearchParams({ ...currentParams, page: page });
     }
-    querySolutionList.refetch();
+
+    if (
+      pagination.pageSize !== perPage &&
+      pagination.showSizeChanger &&
+      pagination.pageSize
+    ) {
+      const limit = pagination.pageSize.toString();
+      const currentParams = Object.fromEntries(searchParams.entries());
+      setPerPage(pagination?.pageSize as number);
+      setSearchParams({ ...currentParams, limit: limit });
+    }
   };
 
   const actionsColumn: TableProps<DataType>["columns"] = [
@@ -55,21 +83,67 @@ const SolutionListPage: FC = () => {
   ];
 
   return (
-    <div>
+    <Flex gap={32} vertical>
+      <Flex
+        justify="space-between"
+        align="center"
+        style={{
+          padding: "24px",
+          borderRadius: "8px",
+          boxShadow: "0px 4px 24px 0px rgba(0, 0, 0, 0.08)",
+        }}
+      >
+        <div>
+          <Title level={3} style={{ margin: "0" }}>
+            Danh sách giải pháp của{" "}
+            <span style={{ color: "#5250F7" }}>Taskee</span>
+          </Title>
+        </div>
+        <div>
+          <Flex justify="flex-end" align="stretch" gap={12}>
+            <Button
+              size="large"
+              variant="outlined"
+              color="primary"
+              disabled
+              icon={<RedoOutlined />}
+              // onClick={() => revalidateChallenges()}
+              // loading={isLoadingRefreshChallengebutton}
+            >
+              Làm mới
+            </Button>
+
+            <Button
+              color="primary"
+              size="large"
+              disabled
+              icon={<FilterOutlined />}
+              // onClick={() => openDrawerFilter()}
+            >
+              Bộ lọc
+            </Button>
+          </Flex>
+        </div>
+      </Flex>
       <Table
         columns={[...(columnsSolutionList || []), ...actionsColumn]}
         scroll={{ x: "max-content" }}
-        dataSource={dataSource}
-        loading={isPending}
+        dataSource={solutionList}
+        loading={isFetching}
         pagination={{
-          pageSize: dataSolutionList?.perPage,
-          total: dataSolutionList?.total,
-          current: dataSolutionList?.currentPage,
+          pageSize: data?.perPage,
+          total: totalPage as number,
+          current: currentPage as number,
           showSizeChanger: true,
         }}
         onChange={onChangeTable}
+        locale={{
+          emptyText: (
+            <Empty description={"Không tìm thấy giải pháp nào..."}></Empty>
+          ),
+        }}
       />
-    </div>
+    </Flex>
   );
 };
 

@@ -9,6 +9,9 @@ import ChallengerTable from "../List/Tables/Partials/ChallengerTable/ChallengerT
 import { scrollToElement } from "../../../../utils/helper";
 import { ChallengeOverview } from "../../../../components/Components/ChallengeOverview";
 import { IChallengeEntity } from "../../../../types/entity/challenge";
+import { TableSolutionOfChallenge } from "./Partials/TableSolutionOfChallenge";
+
+const { Title } = Typography;
 
 const ChallengeDetailsPage: FC = () => {
   const { Text } = Typography;
@@ -36,6 +39,7 @@ const ChallengeDetailsPage: FC = () => {
       <ChallengeOverview
         isLoading={isFetching}
         challengeData={data as IChallengeEntity}
+        openPercentSubmit
       />
 
       <Flex justify="center" align="center" gap={24}>
@@ -85,34 +89,54 @@ const ChallengeDetailsPage: FC = () => {
       </Flex>
 
       <Divider orientation="left" plain>
-        Danh sách <span style={{ fontWeight: "bold" }}>Taskee đã tham gia</span>
+        <Title level={4} style={{ margin: "0" }}>
+          Danh sách{" "}
+          <span style={{ fontWeight: "bold" }}>Taskee đã tham gia</span>
+        </Title>
       </Divider>
 
       <ChallengerTable
         idTable="table__taskee__joined"
         challengeId={challengeId as string}
         typeChallengerInChallenge="all"
+        emptyText="Không tìm thấy Taskee nào tham gia vào thử thách..."
       />
 
       <Divider orientation="left" plain>
-        Danh sách{" "}
-        <span style={{ color: "#5250F7" }}>Taskee chưa hoàn thành</span>
+        <Title level={4} style={{ margin: "0" }}>
+          Danh sách{" "}
+          <span style={{ color: "#EA5B33" }}>Taskee chưa hoàn thành</span>
+        </Title>
       </Divider>
 
       <ChallengerTable
         challengeId={challengeId as string}
-        typeChallengerInChallenge="submitted"
+        typeChallengerInChallenge="unsubmitted"
+        emptyText="Không tìm thấy  Taskee nào chưa hoàn thành..."
       />
 
       <Divider orientation="left" plain>
-        Danh sách <span style={{ color: "#1CBD74" }}>Taskee đã hoàn thành</span>
+        <Title level={4} style={{ margin: "0" }}>
+          Danh sách{" "}
+          <span style={{ color: "#1CBD74" }}>Taskee đã hoàn thành</span>
+        </Title>
       </Divider>
 
       <ChallengerTable
         idTable="table__taskee__unsubmitted"
         challengeId={challengeId as string}
         typeChallengerInChallenge="submitted"
+        emptyText="Không tìm thấy Taskee nào hoàn thành..."
       />
+
+      <Divider orientation="left" plain>
+        <Title level={4} style={{ margin: "0" }}>
+          Danh sách{" "}
+          <span style={{ color: "#4240C6" }}>Các giải pháp của thử thách</span>
+        </Title>
+      </Divider>
+
+      {challengeId && <TableSolutionOfChallenge challengeId={challengeId} />}
     </Flex>
   );
 };

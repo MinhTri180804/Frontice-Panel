@@ -143,8 +143,8 @@ const DrawerFilterChallenges: FC<IDrawerFilterChallengesProps> = ({}) => {
 
         <TimeCreatedFilter
           isLoading={isFetching}
-          minDate={data?.created_at.min as number}
-          maxDate={data?.created_at.max as number}
+          minDate={data?.created_at?.min as number}
+          maxDate={data?.created_at?.max as number}
         />
 
         <TechnicalFilter
@@ -156,8 +156,8 @@ const DrawerFilterChallenges: FC<IDrawerFilterChallengesProps> = ({}) => {
 
         <ScoreFilter
           isLoading={isFetching}
-          minScore={data?.point.min || 0}
-          maxScore={data?.point.max || 0}
+          minScore={data?.point?.min || 0}
+          maxScore={data?.point?.max || 0}
         />
 
         {tabTypeOfChallenge !== "my_challenges" && (

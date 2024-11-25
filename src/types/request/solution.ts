@@ -6,3 +6,7 @@ export type IGetAllSolutionParams = {
 export type IGetDetailsSolutionParams = {
   solutionId: string;
 };
+
+export type IGetAllByChallengeIdParams = {
+  challengeId: string;
+};

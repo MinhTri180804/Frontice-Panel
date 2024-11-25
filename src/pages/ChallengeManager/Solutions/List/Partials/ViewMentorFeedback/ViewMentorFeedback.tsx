@@ -19,7 +19,12 @@ const ViewMentorFeedback: FC<IViewMentorFeedbackProps> = ({
   if (!mentorFeedback) {
     return (
       <Flex justify="center" align="center">
-        <Button icon={<CloseOutlined />}></Button>
+        <Button
+          disabled
+          icon={<CloseOutlined />}
+          color="danger"
+          variant="solid"
+        ></Button>
       </Flex>
     );
   }
@@ -27,6 +32,8 @@ const ViewMentorFeedback: FC<IViewMentorFeedbackProps> = ({
     <>
       <Flex justify="center" align="center">
         <Button
+          color="primary"
+          variant="solid"
           icon={<CheckOutlined />}
           onClick={() => setIsShowModal(true)}
         ></Button>

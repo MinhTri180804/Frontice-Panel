@@ -1,6 +1,7 @@
 import axiosClient from "../../../axios/axiosClient";
 import constantChallengeManagerApi from "../../../constants/api/challengeManager";
 import {
+  IGetAllByChallengeIdParams,
   IGetAllSolutionParams,
   IGetDetailsSolutionParams,
 } from "../../../types/request/solution";
@@ -18,6 +19,19 @@ const solutionService: ISolutionService = {
     const { solutionId } = params;
     return axiosClient.get(
       `${constantChallengeManagerApi.solution.details}/${solutionId}`,
+    );
+  },
+
+  getReport: () => {
+    return axiosClient.get(
+      `${constantChallengeManagerApi.solution.getReports}`,
+    );
+  },
+
+  getAllByChallengeId: (params: IGetAllByChallengeIdParams) => {
+    const { challengeId } = params;
+    return axiosClient.get(
+      `${constantChallengeManagerApi.solution.getAllByChallengeId}/${challengeId}/solutions`,
     );
   },
 };

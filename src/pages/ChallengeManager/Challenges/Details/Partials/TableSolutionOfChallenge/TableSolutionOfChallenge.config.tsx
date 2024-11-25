@@ -1,8 +1,7 @@
-import { Button, Flex, Badge, Avatar, TableProps } from "antd";
-import { convertTimestampToVietnamTime } from "../../../../utils/convertTime";
-import { ISolutionEntity } from "../../../../types/entity/solution";
-import { CheckOutlined } from "@ant-design/icons";
-import { ViewMentorFeedback } from "./Partials/ViewMentorFeedback";
+import { Avatar, Badge, Button, Flex, TableProps } from "antd";
+import { ISolutionEntity } from "../../../../../../types/entity/solution";
+import { ViewMentorFeedback } from "../../../../Solutions/List/Partials/ViewMentorFeedback";
+import { convertTimestampToVietnamTime } from "../../../../../../utils/convertTime";
 
 const defautlAvatar =
   "https://static.vecteezy.com/system/resources/previews/009/292/244/non_2x/default-avatar-icon-of-social-media-user-vector.jpg";

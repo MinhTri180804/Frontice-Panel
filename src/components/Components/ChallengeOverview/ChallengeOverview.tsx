@@ -20,6 +20,7 @@ interface IChallengeOverviewProps {
   challengeData: IChallengeEntity | Omit<IChallengeEntity, "owner">;
   isLoading: boolean;
   buttonToChallengeDetails?: boolean;
+  openPercentSubmit?: boolean;
 }
 
 const { Text } = Typography;
@@ -28,6 +29,7 @@ const ChallengeOverview: FC<IChallengeOverviewProps> = ({
   isLoading,
   challengeData,
   buttonToChallengeDetails = false,
+  openPercentSubmit = false,
 }) => {
   const navigate = useNavigate();
   const timeCreated = convertTimestampToVietnamTime(challengeData?.created_at);
@@ -84,7 +86,7 @@ const ChallengeOverview: FC<IChallengeOverviewProps> = ({
                   )}
                 />
               </Card>
-              {challengeData?.submittedRate && (
+              {openPercentSubmit && (
                 <Card>
                   <Statistic
                     title="Phần trăm hoàn thành"

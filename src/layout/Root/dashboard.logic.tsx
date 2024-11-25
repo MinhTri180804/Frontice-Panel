@@ -61,13 +61,6 @@ const menuOfChallengeManager: MenuItem[] = [
       `${DEFAULT_SOLUTION_ROUTES}/${constantRoutesChallengeManager.pages.solutions.report}`,
     ),
   ]),
-  getItem(
-    "Thống kê",
-    "statistic",
-    <PieChartOutlined />,
-    undefined,
-    DEFAULT_STATISTIC_ROUTES,
-  ),
   getItem("Nhiệm vụ", "tasks", <PieChartOutlined />, [
     getItem("Danh sách", "tasks-1", undefined, undefined, DEFAULT_TASK_ROUTES),
     getItem(
