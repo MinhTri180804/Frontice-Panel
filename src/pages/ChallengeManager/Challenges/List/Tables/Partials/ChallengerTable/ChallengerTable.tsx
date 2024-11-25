@@ -1,30 +1,32 @@
-import { Table, TableProps } from 'antd';
-import { FC, useState } from 'react';
-import { ITaskeeEntity } from '../../../../../../../types/entity/taskee';
-import { constantChallengeManagerQueryKey } from '../../../../../../../constants/queryKey/challengeManager';
-import { IGetAllTaskeeInChallengeParams } from '../../../../../../../types/request/taskee';
-import { useQuery } from '@tanstack/react-query';
-import challengeManagerService from '../../../../../../../service/ChallengeManager/challengeManagerService';
-import { logOnDev } from '../../../../../../../utils/helper';
-import challengerTableColumns from './challengerTable.config';
+import { Empty, Table, TableProps } from "antd";
+import { FC, useState } from "react";
+import { ITaskeeEntity } from "../../../../../../../types/entity/taskee";
+import { constantChallengeManagerQueryKey } from "../../../../../../../constants/queryKey/challengeManager";
+import { IGetAllTaskeeInChallengeParams } from "../../../../../../../types/request/taskee";
+import { useQuery } from "@tanstack/react-query";
+import challengeManagerService from "../../../../../../../service/ChallengeManager/challengeManagerService";
+import { logOnDev } from "../../../../../../../utils/helper";
+import challengerTableColumns from "./challengerTable.config";
 
 type IDatatypeChallenger = ITaskeeEntity;
 
 type IChallengerTableProps = {
   challengeId: string;
-  typeChallengerInChallenge: IGetAllTaskeeInChallengeParams['query'];
+  typeChallengerInChallenge: IGetAllTaskeeInChallengeParams["query"];
   idTable?: string;
+  emptyText?: string;
 };
 
 const ChallengerTable: FC<IChallengerTableProps> = ({
   challengeId,
   typeChallengerInChallenge,
   idTable,
+  emptyText = "Không tìm thấy...",
 }) => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [pageSize, setPageSize] = useState<number>(10);
-  const handleChangeTable: TableProps<IDatatypeChallenger>['onChange'] = (
-    pagination
+  const handleChangeTable: TableProps<IDatatypeChallenger>["onChange"] = (
+    pagination,
   ) => {
     if (pagination.current !== currentPage) {
       setCurrentPage(pagination?.current || 1);
@@ -74,6 +76,9 @@ const ChallengerTable: FC<IChallengerTableProps> = ({
       }}
       onChange={handleChangeTable}
       id={idTable}
+      locale={{
+        emptyText: <Empty description={emptyText}></Empty>,
+      }}
     />
   );
 };
