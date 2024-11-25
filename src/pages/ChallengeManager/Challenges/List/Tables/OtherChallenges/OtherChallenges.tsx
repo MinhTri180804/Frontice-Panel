@@ -153,6 +153,7 @@ const OtherChallengesTable: FC = () => {
     <Table<IDataTypeChallengeList>
       loading={isFetching}
       columns={[...columns, ...actionColumns]}
+      rowKey={(record) => `${record.id}`}
       dataSource={challenges}
       onChange={handleChangeTable}
       pagination={{
