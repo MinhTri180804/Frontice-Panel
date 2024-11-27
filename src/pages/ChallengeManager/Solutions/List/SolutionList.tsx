@@ -61,6 +61,7 @@ const SolutionListPage: FC = () => {
   const actionsColumn: TableProps<DataType>["columns"] = [
     {
       fixed: "right",
+      width: 240,
       title: "Hành động",
       key: "actions",
       render: (_, record) => {
@@ -68,7 +69,7 @@ const SolutionListPage: FC = () => {
           <Button
             variant="outlined"
             color="primary"
-            size="large"
+            size="middle"
             onClick={() =>
               navigate(
                 `${constantRoutesChallengeManager.pages.solutions.details}/${record.id}`,
@@ -128,6 +129,9 @@ const SolutionListPage: FC = () => {
       <Table
         columns={[...(columnsSolutionList || []), ...actionsColumn]}
         scroll={{ x: "max-content" }}
+        virtual
+        showHeader
+        sticky
         dataSource={solutionList}
         loading={isFetching}
         pagination={{

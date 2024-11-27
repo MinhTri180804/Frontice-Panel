@@ -2,26 +2,39 @@ import { Button, Flex, Badge, Avatar, TableProps } from "antd";
 import { convertTimestampToVietnamTime } from "../../../../utils/convertTime";
 import { ISolutionEntity } from "../../../../types/entity/solution";
 import { ViewMentorFeedback } from "./Partials/ViewMentorFeedback";
-
-const defautlAvatar =
-  "https://static.vecteezy.com/system/resources/previews/009/292/244/non_2x/default-avatar-icon-of-social-media-user-vector.jpg";
+import ViewTaskee from "../../../../components/Components/ViewTaskee/ViewTaskee";
 
 const columnsSolutionList: TableProps<ISolutionEntity>["columns"] = [
   {
     fixed: "left",
-    title: "STT",
+    width: 100,
+    title: (
+      <Flex align="center" justify="center">
+        STT
+      </Flex>
+    ),
     key: "stt",
-    render: (_, __, index) => index + 1,
+    render: (_, __, index) => (
+      <Flex align="center" justify="center">
+        {index + 1}
+      </Flex>
+    ),
   },
   {
     fixed: "left",
+    width: 250,
     title: "Tiêu đề",
     key: "title",
     sorter: (a, b) => a.title?.length - b.title?.length,
     dataIndex: "title",
   },
   {
-    title: "Lượt thích",
+    title: (
+      <Flex justify="center" align="center">
+        Lượt thích
+      </Flex>
+    ),
+    width: 160,
     sorter: (a, b) => a.liked - b.liked,
     key: "liked",
     dataIndex: "liked",
@@ -32,7 +45,12 @@ const columnsSolutionList: TableProps<ISolutionEntity>["columns"] = [
     ),
   },
   {
-    title: "Lượt không thích",
+    title: (
+      <Flex align="center" justify="center">
+        Lượt không thích
+      </Flex>
+    ),
+    width: 200,
     sorter: (a, b) => a.disliked - b.disliked,
     key: "dislike",
     dataIndex: "disliked",
@@ -43,7 +61,12 @@ const columnsSolutionList: TableProps<ISolutionEntity>["columns"] = [
     ),
   },
   {
-    title: "Phản hồi của Mentor",
+    title: (
+      <Flex align="center" justify="center">
+        Phản hồi của Mentor
+      </Flex>
+    ),
+    width: 200,
     key: "mentor_feedback",
     dataIndex: "mentor_feedback",
     render: (mentorFeedback) => (
@@ -51,17 +74,31 @@ const columnsSolutionList: TableProps<ISolutionEntity>["columns"] = [
     ),
   },
   {
-    title: "Đăng tải",
+    title: (
+      <Flex justify="center" align="center">
+        Đăng tải
+      </Flex>
+    ),
+    width: 200,
     key: "submitedAt",
     sorter: (a, b) => a.submitedAt - b.submitedAt,
     dataIndex: "submitedAt",
     render: (timeValue) => {
       const timeFormat = convertTimestampToVietnamTime(timeValue);
-      return <div>{timeFormat}</div>;
+      return (
+        <Flex align="center" justify="center">
+          {timeFormat}
+        </Flex>
+      );
     },
   },
   {
-    title: "Bình luận",
+    title: (
+      <Flex justify="center" align="center">
+        Bình luận
+      </Flex>
+    ),
+    width: 140,
     key: "comment",
     dataIndex: "comment",
     sorter: (a, b) => a.comment - b.comment,
@@ -78,26 +115,16 @@ const columnsSolutionList: TableProps<ISolutionEntity>["columns"] = [
     },
   },
   {
-    title: "Tác giả",
+    title: (
+      <Flex align="center" justify="center">
+        Tác giả
+      </Flex>
+    ),
+    width: 260,
     key: "taskee",
     dataIndex: "taskee",
     render: (taskee) => {
-      return (
-        <Button variant="text" color="primary" size="large">
-          <Flex justify="flex-start" align="center" gap={12}>
-            {taskee.gold_account ? (
-              <Badge dot color="volcano" size="default">
-                <Avatar src={taskee.image || defautlAvatar} />
-              </Badge>
-            ) : (
-              <Avatar src={taskee.image || defautlAvatar} />
-            )}
-            <div className="full_name">
-              {taskee.firstname} {taskee.lastname}
-            </div>
-          </Flex>
-        </Button>
-      );
+      return <ViewTaskee taskee={taskee} />;
     },
   },
 ];

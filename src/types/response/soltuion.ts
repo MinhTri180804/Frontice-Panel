@@ -1,4 +1,4 @@
-import { ISolutionEntity } from "../entity/solution";
+import { ISolutionEntity, ITaskSolutionEntity } from "../entity/solution";
 
 export type IGetAllSolutionResponse = {
   solutions: ISolutionEntity[];
@@ -20,6 +20,22 @@ export type IGetALlSolutionReportResponse = {
 
 export type IGetAllByChallengeIdResponse = {
   solutions: ISolutionEntity[];
+  total: number;
+  current_page: number;
+  per_page: number;
+  last_page: number;
+};
+
+export type IGetAllTaskSolutionResponse = {
+  solutions: ITaskSolutionEntity[];
+  total: number;
+  current_page: number;
+  per_page: number;
+  last_page: number;
+};
+
+export type IGetSolutionsByTaskIdResponse = {
+  solutions: ITaskSolutionEntity[];
   total: number;
   current_page: number;
   per_page: number;

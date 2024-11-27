@@ -117,6 +117,7 @@ const OtherChallengesTable: FC = () => {
 
   const actionColumns: TableProps<IDataTypeChallengeList>["columns"] = [
     {
+      width: 200,
       title: "Hành động",
       key: "actions",
       fixed: "right",
@@ -162,7 +163,9 @@ const OtherChallengesTable: FC = () => {
         pageSize: pageSize as number,
         showSizeChanger: true,
       }}
+      showHeader
       sticky
+      virtual
       scroll={{ x: "max-content" }}
       locale={{
         emptyText: (

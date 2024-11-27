@@ -128,6 +128,7 @@ const AllChallengesTable: FC = () => {
 
   const actionColumns: TableProps<IDataTypeChallengeList>["columns"] = [
     {
+      width: 200,
       title: "Hành động",
       fixed: "right",
       key: "actions",
@@ -151,6 +152,7 @@ const AllChallengesTable: FC = () => {
         showSizeChanger: true,
       }}
       sticky
+      virtual
       showHeader
       onChange={onChangeTable}
       locale={{

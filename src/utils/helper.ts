@@ -1,7 +1,6 @@
 // import { jwtDecode } from 'jwt-decode';
 // import { paths } from '../constant';
 
-
 // const i18nHelper = {
 //   getLanguageSystemStaff: () => {
 //     const language = navigator.language;
@@ -76,30 +75,20 @@ const scrollToElement: (id: string) => void = (idElement) => {
   }
 };
 
-// const calculateTimeLeft = (timestamp: number) => {
-//   const targetTime = new Date(timestamp).getTime();
-//   const currentTime = new Date().getTime();
-//   const difference = targetTime - currentTime;
-//   console.log(difference);
+const calculateTimeLeft = (timestamp: number) => {
+  const targetTime = new Date(timestamp).getTime();
+  const currentTime = new Date().getTime();
+  const difference = targetTime - currentTime;
 
-//   if (difference <= 0) {
-//     return null;
-//   }
+  if (difference <= 0) {
+    return null;
+  }
 
-//   const hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
-//   const minutes = Math.floor((difference / (1000 * 60)) % 60);
-//   const seconds = Math.floor((difference / 1000) % 60);
+  const hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
+  const minutes = Math.floor((difference / (1000 * 60)) % 60);
+  const seconds = Math.floor((difference / 1000) % 60);
 
-//   return { hours, minutes, seconds };
-// };
+  return { hours, minutes, seconds };
+};
 
-// export {
-//   checkAuthentication,
-//   checkRefreshTokenValidity,
-//   i18nHelper,
-//   handleDownloadFile,
-// logOnDev,
-//   calculateTimeLeft,
-// };
-//
-export { logOnDev, openNewTab, scrollToElement };
+export { logOnDev, openNewTab, scrollToElement, calculateTimeLeft };
