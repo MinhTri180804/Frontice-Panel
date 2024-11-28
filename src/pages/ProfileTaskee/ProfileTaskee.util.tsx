@@ -2,7 +2,6 @@ import { FC } from "react";
 import { IGetProfileTaskeeResponse } from "../../types/response/taskee";
 import { Typography } from "antd";
 import { openNewTab } from "../../utils/helper";
-import { SmileFilled, SmileOutlined } from "@ant-design/icons";
 
 interface IEmptyTextProps {
   text: string;

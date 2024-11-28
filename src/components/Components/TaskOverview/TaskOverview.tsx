@@ -14,11 +14,13 @@ import {
 import { convertTimestampToVietnamTime } from "../../../utils/convertTime";
 import useTimeCountDown from "../../../hooks/useTimeCountDown";
 import { useNavigate } from "react-router";
+import constantRoutesChallengeManager from "../../../constants/routes/challengeManager";
 
 interface ITaskOverviewProps {
   taskData: ITaskEntity;
   isLoading: boolean;
   buttonToTaskDetails?: boolean;
+  buttonDownloadFiles?: boolean;
 }
 
 const { Text, Title } = Typography;
@@ -27,10 +29,20 @@ const TaskOverview: FC<ITaskOverviewProps> = ({
   taskData,
   isLoading,
   buttonToTaskDetails = false,
+  buttonDownloadFiles = false,
 }) => {
   const timeCreatedAt = convertTimestampToVietnamTime(taskData?.created_at);
   const expiredTime = useTimeCountDown(taskData?.expiredAt * 1000);
   const navigate = useNavigate();
+
+  const handleDownloadFigma = () => {
+    console.log("download figma");
+  };
+
+  const handleDownloadAssets = () => {
+    console.log("download assets");
+  };
+
   return (
     <Card loading={isLoading}>
       <Row gutter={24} align={"middle"}>
@@ -44,9 +56,11 @@ const TaskOverview: FC<ITaskOverviewProps> = ({
           >
             <Flex justify="space-between" align="center">
               <Flex vertical justify="start" align="stretch" gap={4}>
-                <Text style={{ color: "grey", fontSize: "14px" }}>
-                  {timeCreatedAt}
-                </Text>
+                {taskData?.created_at && (
+                  <Text style={{ color: "grey", fontSize: "14px" }}>
+                    {timeCreatedAt}
+                  </Text>
+                )}
                 <Title level={2} style={{ margin: 0 }}>
                   {taskData?.title}
                 </Title>
@@ -72,18 +86,20 @@ const TaskOverview: FC<ITaskOverviewProps> = ({
                   )}
                 />
               </Card>
-              <Card>
-                <Statistic
-                  title="Thời gian còn lại"
-                  precision={2}
-                  valueRender={() => (
-                    <div style={{ fontSize: "18px" }}>
-                      {expiredTime?.hours} : {expiredTime?.minutes} :{" "}
-                      {expiredTime?.seconds}
-                    </div>
-                  )}
-                />
-              </Card>
+              {taskData?.expiredAt && (
+                <Card>
+                  <Statistic
+                    title="Thời gian còn lại"
+                    precision={2}
+                    valueRender={() => (
+                      <div style={{ fontSize: "18px" }}>
+                        {expiredTime?.hours} : {expiredTime?.minutes} :{" "}
+                        {expiredTime?.seconds}
+                      </div>
+                    )}
+                  />
+                </Card>
+              )}
             </Flex>
             {buttonToTaskDetails && (
               <Button
@@ -91,11 +107,44 @@ const TaskOverview: FC<ITaskOverviewProps> = ({
                 color="primary"
                 size="large"
                 style={{ width: "60%" }}
-                onClick={() => navigate(`/taskDetails`)}
+                onClick={() =>
+                  navigate(
+                    `/${constantRoutesChallengeManager.pages.tasks.root}/${constantRoutesChallengeManager.pages.tasks.details}/${taskData.id}`,
+                  )
+                }
               >
-                Chi tiết thử thách
+                Chi tiết nhiệm vụ
               </Button>
             )}
+            {buttonDownloadFiles &&
+              taskData?.sourceLink &&
+              taskData?.figmaLink && (
+                <Flex
+                  justify="start"
+                  align="stretch"
+                  gap={12}
+                  style={{ width: "60%" }}
+                >
+                  <Button
+                    size="large"
+                    variant="solid"
+                    color="primary"
+                    style={{ width: "100%" }}
+                    onClick={() => handleDownloadFigma()}
+                  >
+                    Tải file thiết kế Figma
+                  </Button>
+                  <Button
+                    size="large"
+                    color="primary"
+                    variant="outlined"
+                    style={{ width: "100%" }}
+                    onClick={() => handleDownloadAssets()}
+                  >
+                    Tải file cung cấp
+                  </Button>
+                </Flex>
+              )}
           </Flex>
         </Col>
         <Col span={10}>

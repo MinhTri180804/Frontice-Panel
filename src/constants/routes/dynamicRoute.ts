@@ -7,6 +7,7 @@ const constantDynamicRoute = {
   reportTask: "reportTaskId",
   taskeeId: "taskeeUsername",
   taskerId: "taskerUsername",
+  taskSolution: "taskSolutionId",
 };
 
 export default constantDynamicRoute;

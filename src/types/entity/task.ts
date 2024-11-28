@@ -18,6 +18,8 @@ export type ITaskEntity = {
   expiredAt: number;
   created_at: number;
   updated_at: number;
+  sourceLink: string;
+  figmaLink: string;
   reports: {
     id: string;
     reportBy: {

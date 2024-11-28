@@ -41,3 +41,5 @@ export type IGetSolutionsByTaskIdResponse = {
   per_page: number;
   last_page: number;
 };
+
+export type IGetDetailsTaskSolutionResponse = ITaskSolutionEntity;

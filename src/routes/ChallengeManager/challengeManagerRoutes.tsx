@@ -30,6 +30,7 @@ const TASK_ROUTES = {
   DETAILS: `${constantRoutesChallengeManager.pages.tasks.details}/:${constantDynamicRoute.task}`,
   REPORT: `${constantRoutesChallengeManager.pages.tasks.report}`,
   REPORT_DETAILS: `:${constantDynamicRoute.reportTask}`,
+  SOLUTION_TASK_DETAILS: `${constantRoutesChallengeManager.pages.tasks.taskSolutionDetails}/:${constantDynamicRoute.taskSolution}`,
 };
 
 const extendChallengeRoutes: RouteObject[] = [
@@ -86,6 +87,10 @@ const extendTaskRoutes: RouteObject[] = [
   {
     path: TASK_ROUTES.DETAILS,
     element: <ChallengeManagerController.Task.Details />,
+  },
+  {
+    path: TASK_ROUTES.SOLUTION_TASK_DETAILS,
+    element: <ChallengeManagerController.Task.SolutionTaskDetails />,
   },
   {
     path: TASK_ROUTES.REPORT,

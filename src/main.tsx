@@ -10,10 +10,12 @@ import { BrowserRouter } from "react-router-dom";
 const client = new QueryClient();
 
 createRoot(document.getElementById("root")!).render(
-  <QueryClientProvider client={client}>
-    <BrowserRouter>
-      <ToastContainer />
-      <App />
-    </BrowserRouter>
-  </QueryClientProvider>,
+  <StrictMode>
+    <QueryClientProvider client={client}>
+      <BrowserRouter>
+        <ToastContainer />
+        <App />
+      </BrowserRouter>
+    </QueryClientProvider>
+  </StrictMode>,
 );

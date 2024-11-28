@@ -1,9 +1,6 @@
 import { ITaskSolutionEntity } from "../../../../types/entity/solution";
-import { Avatar, Badge, Button, Flex, TableProps } from "antd";
+import { Flex, TableProps } from "antd";
 import ViewTaskee from "../../ViewTaskee/ViewTaskee";
-
-const defautlAvatar =
-  "https://static.vecteezy.com/system/resources/previews/009/292/244/non_2x/default-avatar-icon-of-social-media-user-vector.jpg";
 
 const columnsTaskSolution: TableProps<ITaskSolutionEntity>["columns"] = [
   {

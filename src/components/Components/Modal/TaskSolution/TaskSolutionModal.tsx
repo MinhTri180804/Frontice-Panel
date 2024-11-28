@@ -6,7 +6,7 @@ import { ITaskSolutionEntity } from "../../../../types/entity/solution";
 import challengeManagerService from "../../../../service/ChallengeManager/challengeManagerService";
 import columnsTaskSolution from "./TaskSolutionModal.config";
 import { useNavigate } from "react-router";
-import columnsTaskTable from "../../../../pages/ChallengeManager/Task/List/TaskList.config";
+import constantRoutesChallengeManager from "../../../../constants/routes/challengeManager";
 
 interface ITaskSolutionModalProps {
   taskId: string;
@@ -64,7 +64,11 @@ const TaskSolutionModal: FC<ITaskSolutionModalProps> = ({
         <Button
           variant="outlined"
           color="primary"
-          onClick={() => navigate(`/taskDetails`)}
+          onClick={() =>
+            navigate(
+              `${constantRoutesChallengeManager.pages.tasks.taskSolutionDetails}/${record.id}`,
+            )
+          }
         >
           Xem chi tiết
         </Button>

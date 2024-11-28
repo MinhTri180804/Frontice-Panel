@@ -69,6 +69,7 @@ const ListSolutionTask: FC<IListSolutionTaskProps> = ({ taskId }) => {
       }}
       showHeader
       sticky
+      virtual
       scroll={{ x: "max-content" }}
       onChange={handleChangeTable}
     />

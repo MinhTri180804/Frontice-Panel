@@ -9,6 +9,7 @@ import { TaskOverview } from "../../../../components/Components/TaskOverview";
 import { ITaskEntity } from "../../../../types/entity/task";
 import ListSolutionTask from "./Partials/ListSolutionTask/ListSolutionTask";
 import { ViewReportsTask } from "../../../../components/Components/ViewReportsTask";
+import { ActionsWithReport } from "./Partials/ActionsWithReport";
 
 const { Text, Title } = Typography;
 
@@ -34,9 +35,16 @@ const TaskDetailsPage: FC = () => {
 
   return (
     <Flex vertical gap={32}>
+      {dataTaskDetails?.reports && (
+        <ActionsWithReport
+          taskId={dataTaskDetails?.id}
+          reportNumber={dataTaskDetails?.reports?.length}
+        />
+      )}
       <TaskOverview
         taskData={dataTaskDetails as ITaskEntity}
         isLoading={isFetching}
+        buttonDownloadFiles
       />
 
       <Flex justify="center" align="stretch" gap={24}>

@@ -1,10 +1,51 @@
-import { Avatar, Badge, Button, Flex, TableProps } from "antd";
+import { Button, Flex, TableProps } from "antd";
 import { ITaskSolutionEntity } from "../../../../../../types/entity/solution";
 import { convertTimestampToVietnamTime } from "../../../../../../utils/convertTime";
 import ViewTaskee from "../../../../../../components/Components/ViewTaskee/ViewTaskee";
+import { FC } from "react";
+import { useNavigate } from "react-router-dom";
+import constantRoutesChallengeManager from "../../../../../../constants/routes/challengeManager";
+import { openNewTab } from "../../../../../../utils/helper";
 
-const defautlAvatar =
-  "https://static.vecteezy.com/system/resources/previews/009/292/244/non_2x/default-avatar-icon-of-social-media-user-vector.jpg";
+interface IActionsProps {
+  githubLink: string;
+  livePreview: string;
+  taskSolutionId: string;
+}
+const Actions: FC<IActionsProps> = ({
+  githubLink,
+  livePreview,
+  taskSolutionId,
+}) => {
+  const navigate = useNavigate();
+  return (
+    <Flex justify="start" align="center" gap={8}>
+      <Button
+        onClick={() =>
+          navigate(
+            `/${constantRoutesChallengeManager.pages.tasks.root}/${constantRoutesChallengeManager.pages.tasks.taskSolutionDetails}/${taskSolutionId}`,
+          )
+        }
+      >
+        Xem chi tiết
+      </Button>
+      <Button
+        variant="solid"
+        color="primary"
+        onClick={() => openNewTab(livePreview)}
+      >
+        Kết quả
+      </Button>
+      <Button
+        variant="outlined"
+        color="primary"
+        onClick={() => openNewTab(githubLink)}
+      >
+        Mã nguồn
+      </Button>
+    </Flex>
+  );
+};
 
 const columnsTaskSolutionList: TableProps<ITaskSolutionEntity>["columns"] = [
   {
@@ -77,18 +118,16 @@ const columnsTaskSolutionList: TableProps<ITaskSolutionEntity>["columns"] = [
   },
 
   {
-    width: 200,
+    width: 350,
+    fixed: "right",
     title: "Hành động",
     key: "actions",
     render: (_, record) => (
-      <Flex justify="start" align="center" gap={8}>
-        <Button variant="solid" color="primary">
-          Kết quả
-        </Button>
-        <Button variant="outlined" color="primary">
-          Mã nguồn
-        </Button>
-      </Flex>
+      <Actions
+        livePreview={record.liveGithub}
+        githubLink={record.github}
+        taskSolutionId={record.id}
+      />
     ),
   },
 ];
