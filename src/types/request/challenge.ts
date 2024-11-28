@@ -2,6 +2,14 @@ export type IGetAllChallengeParams = {
   sort?: string;
   page?: string | number;
   perPage?: string | number;
+  filter?: {
+    levels?: string[] | number[];
+    owners?: string[] | number[];
+    technical?: string[] | number[];
+    timeCreated?: string[] | number[];
+    points?: number[] | string[];
+    premium?: boolean;
+  };
   get?: "owner" | "other" | null;
 };
 

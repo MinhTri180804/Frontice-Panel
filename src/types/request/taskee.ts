@@ -4,3 +4,7 @@ export type IGetAllTaskeeInChallengeParams = {
   page: number;
   perPage: number;
 };
+
+export type IGetTaskeeProfileParams = {
+  usernameTaskee: string;
+};

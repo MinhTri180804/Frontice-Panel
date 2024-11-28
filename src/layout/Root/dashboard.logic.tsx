@@ -25,7 +25,6 @@ const getItem: (
 const DEFAULT_CHALLENGE_ROUTES = `/${constantRoutesChallengeManager.pages.challenges.root}`;
 const DEFAULT_SOLUTION_ROUTES = `/${constantRoutesChallengeManager.pages.solutions.root}`;
 const DEFAULT_TASK_ROUTES = `/${constantRoutesChallengeManager.pages.tasks.root}`;
-const DEFAULT_STATISTIC_ROUTES = `/${constantRoutesChallengeManager.pages.statistic.root}`;
 
 const menuOfChallengeManager: MenuItem[] = [
   getItem("Thử thách", "challenges", <PieChartOutlined />, [
@@ -61,13 +60,6 @@ const menuOfChallengeManager: MenuItem[] = [
       `${DEFAULT_SOLUTION_ROUTES}/${constantRoutesChallengeManager.pages.solutions.report}`,
     ),
   ]),
-  getItem(
-    "Thống kê",
-    "statistic",
-    <PieChartOutlined />,
-    undefined,
-    DEFAULT_STATISTIC_ROUTES,
-  ),
   getItem("Nhiệm vụ", "tasks", <PieChartOutlined />, [
     getItem("Danh sách", "tasks-1", undefined, undefined, DEFAULT_TASK_ROUTES),
     getItem(

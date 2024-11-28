@@ -14,9 +14,56 @@ import { IChallengeService } from "../../../types/services/challengeService";
 
 const challengeService: IChallengeService = {
   getAll: (params: IGetAllChallengeParams) => {
-    const { page = 1, sort = "newest", perPage = 10, get = null } = params;
+    const {
+      page = 1,
+      sort = "newest",
+      perPage = 10,
+      get = null,
+      filter,
+    } = params;
+    const paramsFilterArr: string[] = [];
+    if (filter) {
+      if (filter.levels) {
+        const levelsFilterParams = filter.levels.map(
+          (level) => `level[]=${level}`,
+        );
+        paramsFilterArr.push(`filter[]=level&${levelsFilterParams.join("&")}`);
+      }
+
+      if (filter.owners) {
+        const ownersFilterParams = filter.owners.map(
+          (ownerId) => `owner[]=${ownerId}`,
+        );
+
+        paramsFilterArr.push(`filter[]=owner&${ownersFilterParams.join("&")}`);
+      }
+
+      if (filter.points) {
+        paramsFilterArr.push(
+          `filter[]=point&min_point=${filter.points[0]}&max_point=${filter.points[1]}`,
+        );
+      }
+
+      if (filter.technical) {
+        const technicalFilterParams = filter.technical.map(
+          (technicalItem) => `technical[]=${technicalItem}`,
+        );
+        paramsFilterArr.push(technicalFilterParams.join("&"));
+      }
+
+      if (filter.timeCreated) {
+        paramsFilterArr.push(
+          `filter[]=created_at&start=${filter.timeCreated[0]}&end=${filter.timeCreated[1]}`,
+        );
+      }
+
+      if (filter.premium) {
+        paramsFilterArr.push(`filter[]=premium`);
+      }
+    }
+
     return axiosClient.get(
-      `${constantChallengeManagerApi.challenge.getAll}?sort=${sort}&page=${page}&per_page=${perPage}&get=${get}`,
+      `${constantChallengeManagerApi.challenge.getAll}?sort=${sort}&page=${page}&per_page=${perPage}&get=${get}&${paramsFilterArr.join("&")}`,
     );
   },
 
@@ -93,6 +140,12 @@ const challengeService: IChallengeService = {
 
   create: (data: ICreateChallengeRequest) => {
     return axiosClient.post(constantChallengeManagerApi.challenge.create, data);
+  },
+
+  getFilterInforamtion: () => {
+    return axiosClient.get(
+      constantChallengeManagerApi.challenge.getFilterInformation,
+    );
   },
 };
 
