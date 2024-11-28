@@ -127,6 +127,7 @@ const MyChallengesTable = () => {
 
   const actionColumns: TableProps<IDataTypeChallengeList>["columns"] = [
     {
+      width: 200,
       title: "Hành động",
       fixed: "right",
       key: "actions",
@@ -149,6 +150,9 @@ const MyChallengesTable = () => {
         total: total,
         showSizeChanger: true,
       }}
+      virtual
+      showHeader
+      sticky
       onChange={handleChangeTable}
       locale={{
         emptyText: (

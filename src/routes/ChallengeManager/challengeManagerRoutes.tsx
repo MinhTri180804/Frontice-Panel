@@ -1,8 +1,12 @@
-import { Navigate, RouteObject } from 'react-router-dom';
-import constantRoutesChallengeManager from '../../constants/routes/challengeManager';
-import constantDynamicRoute from '../../constants/routes/dynamicRoute';
-import { ChallengeManagerController } from '../../pages/ChallengeManager';
-import { notfoundRoute } from '../CommonRoutes';
+import { Navigate, RouteObject } from "react-router-dom";
+import constantRoutesChallengeManager from "../../constants/routes/challengeManager";
+import constantDynamicRoute from "../../constants/routes/dynamicRoute";
+import { ChallengeManagerController } from "../../pages/ChallengeManager";
+import { notfoundRoute } from "../CommonRoutes";
+import {
+  taskeeProfileRoute,
+  taskerProfileRoute,
+} from "../CommonRoutes/commonRoutes";
 
 const CHALLENGE_ROUTES = {
   PARENT: `${constantRoutesChallengeManager.pages.challenges.root}`,
@@ -26,6 +30,7 @@ const TASK_ROUTES = {
   DETAILS: `${constantRoutesChallengeManager.pages.tasks.details}/:${constantDynamicRoute.task}`,
   REPORT: `${constantRoutesChallengeManager.pages.tasks.report}`,
   REPORT_DETAILS: `:${constantDynamicRoute.reportTask}`,
+  SOLUTION_TASK_DETAILS: `${constantRoutesChallengeManager.pages.tasks.taskSolutionDetails}/:${constantDynamicRoute.taskSolution}`,
 };
 
 const extendChallengeRoutes: RouteObject[] = [
@@ -84,6 +89,10 @@ const extendTaskRoutes: RouteObject[] = [
     element: <ChallengeManagerController.Task.Details />,
   },
   {
+    path: TASK_ROUTES.SOLUTION_TASK_DETAILS,
+    element: <ChallengeManagerController.Task.SolutionTaskDetails />,
+  },
+  {
     path: TASK_ROUTES.REPORT,
     children: [
       {
@@ -122,6 +131,9 @@ const challengeManagementRoutes: RouteObject[] = [
     path: STATISTIC_ROUTES.PARENT,
     children: [...extendStatisticRoutes, notfoundRoute],
   },
+
+  taskeeProfileRoute,
+  taskerProfileRoute,
 ];
 
 export default challengeManagementRoutes;

@@ -1,18 +1,18 @@
-// import { useEffect, useState } from 'react';
-// import { calculateTimeLeft } from '../utils/helper';
+import { useEffect, useState } from "react";
+import { calculateTimeLeft } from "../utils/helper";
 
-// const useTimeCountDown = (timestamp: number) => {
-//   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft(timestamp));
+const useTimeCountDown = (timestamp: number) => {
+  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft(timestamp));
 
-//   useEffect(() => {
-//     const timer = setInterval(() => {
-//       setTimeLeft(calculateTimeLeft(timestamp));
-//     }, 1000);
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTimeLeft(calculateTimeLeft(timestamp));
+    }, 1000);
 
-//     return () => clearInterval(timer);
-//   }, [timestamp]);
+    return () => clearInterval(timer);
+  }, [timestamp]);
 
-//   return timeLeft;
-// };
+  return timeLeft;
+};
 
-// export default useTimeCountDown;
+export default useTimeCountDown;

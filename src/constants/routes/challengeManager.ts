@@ -15,6 +15,7 @@ const constantRoutesChallengeManager = {
       // Children
       details: "details",
       report: "reports",
+      taskSolutionDetails: "task-solution",
     },
     solutions: {
       root: "solutions",
