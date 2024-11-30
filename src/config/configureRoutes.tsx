@@ -3,6 +3,7 @@ import authRoutes from "../routes/AuthRoutes/authRoutes";
 import { challengeManagementRoutes } from "../routes/ChallengeManager";
 import { DashBoardLayout } from "../layout/Root";
 import { RoleType } from "../types/base/role";
+import { MentorRoutes } from "../routes/Mentor";
 
 const useConfigureRoutes = (
   role: RoleType | null,
@@ -19,8 +20,7 @@ const useConfigureRoutes = (
         return challengeManagementRoutes;
 
       case "mentor":
-        // TODO: Implement mentor routes
-        return [];
+        return MentorRoutes;
 
       case "tasker":
         // TODO: Implement tasker routes
