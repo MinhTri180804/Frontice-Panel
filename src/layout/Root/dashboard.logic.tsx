@@ -4,6 +4,7 @@ import type { MenuProps } from "antd";
 import { PieChartOutlined } from "@ant-design/icons";
 import constantRoutesChallengeManager from "../../constants/routes/challengeManager";
 import MenuItem from "antd/es/menu/MenuItem";
+import constantRoutesMentor from "../../constants/routes/mentor";
 type MenuItem = Required<MenuProps>["items"][number];
 
 const getItem: (
@@ -72,11 +73,40 @@ const menuOfChallengeManager: MenuItem[] = [
   ]),
 ];
 
+const menuOfMentor: MenuItem[] = [
+  getItem("Giải pháp", "solutions", <PieChartOutlined />, [
+    getItem(
+      "Danh sách",
+      "solutions_list",
+      undefined,
+      undefined,
+      `${constantRoutesMentor.solution.root}/${constantRoutesMentor.solution.list}`,
+    ),
+  ]),
+  getItem("Tài khoản", "account", <PieChartOutlined />, [
+    getItem(
+      "Trang cá nhân",
+      "account_profile",
+      undefined,
+      undefined,
+      `${constantRoutesMentor.myProfile.root}/${constantRoutesMentor.myProfile.details}`,
+    ),
+    getItem(
+      "Cài đặt",
+      "account_profile-setting",
+      undefined,
+      undefined,
+      `${constantRoutesMentor.myProfile.root}/${constantRoutesMentor.myProfile.setting}`,
+    ),
+  ]),
+];
 const useDashboardLogic = (role: RoleType) => {
   const generatorDashboardMenuContent: () => MenuItem[] = () => {
     switch (role) {
       case "challenge":
         return menuOfChallengeManager;
+      case "mentor":
+        return menuOfMentor;
       default:
         return [];
     }
