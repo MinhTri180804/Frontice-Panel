@@ -51,3 +51,5 @@ export type ITaskSolutionEntity = {
   submittedAt: number;
   status: string;
 };
+
+export type ISolutionFeedbackEntity = ISolutionEntity;
