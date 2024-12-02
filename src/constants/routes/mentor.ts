@@ -4,7 +4,7 @@ const constantRoutesMentor = {
     list: "",
     details: "solution",
   },
-  myProfile: {
+  profile: {
     root: "profile",
     details: "me",
     setting: "setting",

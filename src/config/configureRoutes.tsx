@@ -2,17 +2,16 @@ import { RouteObject } from "react-router-dom";
 import authRoutes from "../routes/AuthRoutes/authRoutes";
 import { challengeManagementRoutes } from "../routes/ChallengeManager";
 import { DashBoardLayout } from "../layout/Root";
-import { RoleType } from "../types/base/role";
 import { MentorRoutes } from "../routes/Mentor";
+import { RoleType } from "../types/base/role";
 
 const useConfigureRoutes = (
   role: RoleType | null,
-  isAuthenticated: boolean,
+  isAuthentication: boolean,
 ): RouteObject[] => {
-  if (!role || !isAuthenticated) {
+  if (!isAuthentication || !role) {
     return authRoutes;
   }
-  console.log("authenticated");
 
   const basedRoutes: () => RouteObject[] = () => {
     switch (role) {

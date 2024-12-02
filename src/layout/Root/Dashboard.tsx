@@ -6,6 +6,7 @@ import useAuthStore from "../../store/Auth/authStore";
 import useDashboardLogic from "./dashboard.logic";
 import { RoleType } from "../../types/base/role";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
+import { UserCustomer } from "./Partials/UserCustomer";
 
 const { Header, Content, Sider } = Layout;
 
@@ -97,16 +98,20 @@ const DashboardLayout: React.FC = () => {
       </Sider>
       <Layout>
         <Header style={{ padding: 0, background: "white" }}>
-          <Button
-            type="text"
-            icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-            onClick={() => setCollapsed(!collapsed)}
-            style={{
-              fontSize: "16px",
-              width: 64,
-              height: 64,
-            }}
-          />
+          <Flex justify="space-between" align="center">
+            <Button
+              type="text"
+              icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+              onClick={() => setCollapsed(!collapsed)}
+              style={{
+                fontSize: "16px",
+                width: 64,
+                height: 64,
+              }}
+            />
+
+            <UserCustomer />
+          </Flex>
         </Header>
         <Content
           style={{ margin: "0 16px", height: "100dvh", overflow: "auto" }}

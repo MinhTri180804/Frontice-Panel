@@ -89,14 +89,14 @@ const menuOfMentor: MenuItem[] = [
       "account_profile",
       undefined,
       undefined,
-      `${constantRoutesMentor.myProfile.root}/${constantRoutesMentor.myProfile.details}`,
+      `${constantRoutesMentor.profile.root}/${constantRoutesMentor.profile.details}`,
     ),
     getItem(
       "Cài đặt",
       "account_profile-setting",
       undefined,
       undefined,
-      `${constantRoutesMentor.myProfile.root}/${constantRoutesMentor.myProfile.setting}`,
+      `${constantRoutesMentor.profile.root}/${constantRoutesMentor.profile.setting}`,
     ),
   ]),
 ];

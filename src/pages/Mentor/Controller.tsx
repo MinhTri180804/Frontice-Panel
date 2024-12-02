@@ -1,11 +1,11 @@
-import { ProfileManagement } from "./Profile";
+import { MyProfileController } from "../MyProfile";
 import { SolutionManagement } from "./Solutions";
 
 const MentorController = () => {
   return null;
 };
 
-MentorController.Profile = ProfileManagement;
 MentorController.Solutions = SolutionManagement;
+MentorController.Profile = MyProfileController.Mentor;
 
 export default MentorController;

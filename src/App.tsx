@@ -1,12 +1,15 @@
 import { useRoutes } from "react-router-dom";
 import "./App.css";
 import configureRoutes from "./config/configureRoutes";
-import useAuthStore from "./store/Auth/authStore";
+import useCheckAuthOnReload from "./hooks/useCheckAuthOnReload";
+import { LoadingAuthentication } from "./components/Loading/Authentication";
 
 function App() {
-  const role = useAuthStore((state) => state.role);
-  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
-  const routing = useRoutes(configureRoutes(role, isAuthenticated));
+  const { role, isAuthentication, isPending } = useCheckAuthOnReload();
+  const routing = useRoutes(configureRoutes(role, isAuthentication));
+
+  if (isPending) return <LoadingAuthentication />;
+
   return <>{routing}</>;
 }
 

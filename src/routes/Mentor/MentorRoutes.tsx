@@ -11,9 +11,9 @@ const SOLTUION_ROUTES = {
 };
 
 const MY_PROFILE_ROUTES = {
-  ROOT: `${constantRoutesMentor.myProfile.root}`,
-  DETAILS: `${constantRoutesMentor.myProfile.details}`,
-  SETTING: `${constantRoutesMentor.myProfile.setting}`,
+  ROOT: `${constantRoutesMentor.profile.root}`,
+  DETAILS: `${constantRoutesMentor.profile.details}`,
+  SETTING: `${constantRoutesMentor.profile.setting}`,
 };
 
 const extendSolutionRoutes: RouteObject[] = [
@@ -34,7 +34,7 @@ const extendMyProfileRoutes: RouteObject[] = [
   },
   {
     path: MY_PROFILE_ROUTES.DETAILS,
-    element: <MentorController.Profile.Details />,
+    element: <MentorController.Profile />,
   },
   {
     path: MY_PROFILE_ROUTES.SETTING,
