@@ -35,7 +35,7 @@ const TaskDetailsPage: FC = () => {
 
   return (
     <Flex vertical gap={32}>
-      {dataTaskDetails?.reports && (
+      {Boolean(dataTaskDetails?.reports.length) && dataTaskDetails?.reports && (
         <ActionsWithReport
           taskId={dataTaskDetails?.id}
           reportNumber={dataTaskDetails?.reports?.length}

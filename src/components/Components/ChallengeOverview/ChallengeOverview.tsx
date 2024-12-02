@@ -93,7 +93,7 @@ const ChallengeOverview: FC<IChallengeOverviewProps> = ({
                     precision={2}
                     valueRender={() => (
                       <div style={{ fontSize: "18px" }}>
-                        {challengeData?.submittedRate}
+                        {challengeData?.submittedRate.toFixed(2)} %
                       </div>
                     )}
                   />

@@ -1,3 +1,4 @@
+import { MyProfileController } from "../MyProfile";
 import ChallengeManagement from "./Challenges/ChallengeManagement";
 import SolutionManagement from "./Solutions/SolutionManagement";
 import StatisticManagement from "./Statistic/StatisticManagement";
@@ -11,5 +12,6 @@ ChallengeManagerController.Challenge = ChallengeManagement;
 ChallengeManagerController.Solution = SolutionManagement;
 ChallengeManagerController.Statistic = StatisticManagement;
 ChallengeManagerController.Task = TaskManagement;
+ChallengeManagerController.Profile = MyProfileController.ChallengeManager;
 
 export default ChallengeManagerController;
