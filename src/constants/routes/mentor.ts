@@ -1,19 +1,13 @@
 const constantRoutesMentor = {
-  root: '/',
-  challenge: {
-    root: 'challenge',
-    list: 'list',
-    details: 'details',
-  },
   solution: {
-    root: 'solution',
-    list: 'list',
-    details: 'details',
-    review: 'review',
+    root: "solution",
+    list: "",
+    details: "solution",
   },
   profile: {
-    root: 'profile',
-    setting: 'setting',
+    root: "profile",
+    details: "me",
+    setting: "setting",
   },
 };
 

@@ -1,6 +1,11 @@
 const constantRoutesChallengeManager = {
   pages: {
     root: "/",
+    profile: {
+      root: "profile",
+      me: "me",
+      setting: "setting",
+    },
     challenges: {
       root: "challenges",
       // Children

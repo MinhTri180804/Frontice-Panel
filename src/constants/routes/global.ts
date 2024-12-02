@@ -5,6 +5,8 @@ const constantRoutesGlobal = {
   },
   profileTaskee: "taskee/profile",
   profileTasker: "tasker/profile",
+  myProfile: "profile/me",
+  settingProfile: "profile/setting",
 };
 
 export default constantRoutesGlobal;

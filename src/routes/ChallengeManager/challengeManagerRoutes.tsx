@@ -4,6 +4,7 @@ import constantDynamicRoute from "../../constants/routes/dynamicRoute";
 import { ChallengeManagerController } from "../../pages/ChallengeManager";
 import { notfoundRoute } from "../CommonRoutes";
 import {
+  notMatchRoute,
   taskeeProfileRoute,
   taskerProfileRoute,
 } from "../CommonRoutes/commonRoutes";
@@ -32,6 +33,27 @@ const TASK_ROUTES = {
   REPORT_DETAILS: `:${constantDynamicRoute.reportTask}`,
   SOLUTION_TASK_DETAILS: `${constantRoutesChallengeManager.pages.tasks.taskSolutionDetails}/:${constantDynamicRoute.taskSolution}`,
 };
+
+const PROFILE_ROUTES = {
+  PARENT: `${constantRoutesChallengeManager.pages.profile.root}`,
+  ME: `${constantRoutesChallengeManager.pages.profile.me}`,
+  SETTING: `${constantRoutesChallengeManager.pages.profile.setting}`,
+};
+
+const extendProfileRoutes: RouteObject[] = [
+  {
+    index: true,
+    element: <Navigate to={PROFILE_ROUTES.ME} replace />,
+  },
+  {
+    path: PROFILE_ROUTES.ME,
+    element: <ChallengeManagerController.Profile />,
+  },
+  {
+    path: PROFILE_ROUTES.SETTING,
+    element: <ChallengeManagerController.Profile.Setting />,
+  },
+];
 
 const extendChallengeRoutes: RouteObject[] = [
   {
@@ -132,8 +154,15 @@ const challengeManagementRoutes: RouteObject[] = [
     children: [...extendStatisticRoutes, notfoundRoute],
   },
 
+  {
+    path: PROFILE_ROUTES.PARENT,
+    children: [...extendProfileRoutes],
+  },
+
   taskeeProfileRoute,
   taskerProfileRoute,
+  notfoundRoute,
+  notMatchRoute,
 ];
 
 export default challengeManagementRoutes;

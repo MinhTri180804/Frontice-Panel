@@ -1,7 +1,6 @@
 import { Navigate, RouteObject } from "react-router-dom";
 import constantRoutesGlobal from "../../constants/routes/global";
 import { NotFoundPage } from "../../pages/ErrorPage/NotFound";
-import constantRoutesAuth from "../../constants/routes/authentication";
 import constantDynamicRoute from "../../constants/routes/dynamicRoute";
 import { ProfileTaskee } from "../../pages/ProfileTaskee";
 import { ProfileTasker } from "../../pages/ProfileTasker";
@@ -13,12 +12,7 @@ const notfoundRoute: RouteObject = {
 
 const notMatchRoute: RouteObject = {
   path: "*",
-  element: (
-    <Navigate
-      to={`/${constantRoutesAuth.root}/${constantRoutesAuth.options}`}
-      replace
-    />
-  ),
+  element: <Navigate to={`/404`} replace />,
 };
 
 const taskeeProfileRoute: RouteObject = {

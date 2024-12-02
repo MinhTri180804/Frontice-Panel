@@ -99,10 +99,22 @@ const authRoutes: RouteObject[] = [
           ...extendAuthRoutes,
         ],
       },
-      notMatchRoute,
+      {
+        path: "*",
+        element: (
+          <Navigate
+            to={`${constantRoutesAuth.root}/${constantRoutesAuth.options}`}
+            replace
+          />
+        ),
+      },
     ],
   },
-  notMatchRoute,
+
+  {
+    path: "*",
+    element: <Navigate to={"/"} replace />,
+  },
 ];
 
 export default authRoutes;

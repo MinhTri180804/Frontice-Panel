@@ -5,18 +5,28 @@ import axios, {
   InternalAxiosRequestConfig,
 } from "axios";
 import { logOnDev } from "../utils/helper";
-import { getAccessToken } from "../utils/localstorage";
+import {
+  getAccessToken,
+  getRefreshToken,
+  removeAccessToken,
+  removeRefreshToken,
+  saveAccessToken,
+  saveRefreshToken,
+} from "../utils/localstorage";
 import { IBaseResponse } from "../types/base/response";
+import authService from "../service/authService";
+import axiosClient from "../axios/axiosClient";
+import constantRoutesAuth from "../constants/routes/authentication";
 
 const TIMEOUT_REQUEST = 15000;
-//
-// interface IConditionCallBack {
-//   _retry: boolean;
-// }
-//
-// const conditionCallback: IConditionCallBack = {
-//   _retry: false,
-// };
+
+interface IConditionCallBack {
+  _retry: boolean;
+}
+
+const conditionCallback: IConditionCallBack = {
+  _retry: false,
+};
 
 const onRequest = (
   config: InternalAxiosRequestConfig,
@@ -60,48 +70,44 @@ const onErrorResponse = async (
     );
 
     switch (status) {
-      // case 401:
-      //   console.log("[RETRY IN AXIOS]", conditionCallback._retry);
-      //   console.log("[TESTING REFRESH TOKEN]: ", error);
-      //   if (
-      //     !conditionCallback._retry
-      //     //  error.response?.data?.isExpired === false
-      //   ) {
-      //     conditionCallback._retry = true;
-      //     try {
-      //       const refreshToken = getRefreshToken();
-      //       if (refreshToken) {
-      //         const response = await authService.refreshToken({
-      //           refreshToken: refreshToken,
-      //         });
-      //
-      //         const {
-      //           access_token: accessTokenNew,
-      //           refresh_token: refreshTokenNew,
-      //         } = response.data;
-      //
-      //         saveAccessToken(accessTokenNew);
-      //         saveRefreshToken(refreshTokenNew);
-      //
-      //         axiosClient.defaults.headers.common["Authorization"] =
-      //           `Bearer ${accessTokenNew}`;
-      //
-      //         const requestOrigin = error.config as InternalAxiosRequestConfig;
-      //         requestOrigin.headers.Authorization = `Bearer ${accessTokenNew}`;
-      //
-      //         return axiosClient(requestOrigin);
-      //       }
-      //     } catch (refreshTokenError) {
-      //       removeAccessToken();
-      //       removeRefreshToken();
-      //       removeInfo();
-      //       window.location.href = `${paths.auth}/${paths.login}`;
-      //       throw refreshTokenError;
-      //     } finally {
-      //       conditionCallback._retry = false;
-      //     }
-      //   }
-      //   break;
+      case 401:
+        console.log("[RETRY IN AXIOS]", conditionCallback._retry);
+        console.log("[TESTING REFRESH TOKEN]: ", error);
+        if (!conditionCallback._retry) {
+          conditionCallback._retry = true;
+          try {
+            const refreshToken = getRefreshToken();
+            if (refreshToken) {
+              const response = await authService.refreshToken({
+                refreshToken: refreshToken,
+              });
+
+              const {
+                access_token: accessTokenNew,
+                refresh_token: refreshTokenNew,
+              } = response.data;
+
+              saveAccessToken(accessTokenNew);
+              saveRefreshToken(refreshTokenNew);
+
+              axiosClient.defaults.headers.common["Authorization"] =
+                `Bearer ${accessTokenNew}`;
+
+              const requestOrigin = error.config as InternalAxiosRequestConfig;
+              requestOrigin.headers.Authorization = `Bearer ${accessTokenNew}`;
+
+              return axiosClient(requestOrigin);
+            }
+          } catch (refreshTokenError) {
+            removeAccessToken();
+            removeRefreshToken();
+            window.location.href = `${constantRoutesAuth.root}/${constantRoutesAuth.options}`;
+            throw refreshTokenError;
+          } finally {
+            conditionCallback._retry = false;
+          }
+        }
+        break;
 
       case 404:
         logOnDev("[!] [ERROR]: 404 from response status backend");
