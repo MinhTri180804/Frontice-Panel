@@ -2,7 +2,11 @@ import { Navigate, RouteObject } from "react-router-dom";
 import constantRoutesMentor from "../../constants/routes/mentor";
 import constantDynamicRoute from "../../constants/routes/dynamicRoute";
 import MentorController from "../../pages/Mentor/Controller";
-import { taskeeProfileRoute } from "../CommonRoutes/commonRoutes";
+import {
+  notfoundRoute,
+  notMatchRoute,
+  taskeeProfileRoute,
+} from "../CommonRoutes/commonRoutes";
 
 const SOLTUION_ROUTES = {
   ROOT: `${constantRoutesMentor.solution.root}`,
@@ -61,6 +65,8 @@ const MentorRoutes: RouteObject[] = [
     children: extendMyProfileRoutes,
   },
   taskeeProfileRoute,
+  notMatchRoute,
+  notfoundRoute,
 ];
 
 export default MentorRoutes;

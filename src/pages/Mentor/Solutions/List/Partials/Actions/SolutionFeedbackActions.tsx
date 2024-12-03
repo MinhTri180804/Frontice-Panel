@@ -43,7 +43,7 @@ const SolutionFeedbackActions: FC<ISolutionFeedbackActionsProps> = ({
           variant="solid"
           color="primary"
           size="middle"
-          onClick={() => handleViewDetails}
+          onClick={() => handleViewDetails()}
         >
           Xem chi tiết
         </Button>

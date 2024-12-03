@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { mentorQueryKey } from "../../../../constants/queryKey/mentor";
 import { useState } from "react";
 import { ISolutionFeedbackEntity } from "../../../../types/entity/solution";
@@ -7,6 +7,7 @@ import { RedoOutlined, FilterOutlined } from "@ant-design/icons";
 import { Flex, Button, Table, Empty, TableProps, Typography } from "antd";
 import { useSearchParams } from "react-router-dom";
 import columns from "./solutionList.config";
+import { toast } from "react-toastify";
 
 const { Title } = Typography;
 
@@ -22,6 +23,7 @@ const SolutionsListPage = () => {
   const [solutionsFeedback, setSolutionsFeedback] = useState<
     ISolutionFeedbackEntity[]
   >([]);
+  const queryClient = useQueryClient();
   const { isFetching } = useQuery({
     queryKey: [mentorQueryKey.solution.getAll, currentPage, pageSize],
     queryFn: async () => {
@@ -40,6 +42,19 @@ const SolutionsListPage = () => {
       }
     },
   });
+
+  const refetchData = async () => {
+    return await toast.promise(
+      queryClient.refetchQueries({
+        queryKey: [mentorQueryKey.solution.getAll],
+      }),
+      {
+        pending: "Đang thực hiện làm mới dữ liệu",
+        success: "Làm mới dữ liệu thành công",
+        error: "Làm mới dữ liệu thất bại",
+      },
+    );
+  };
 
   const onChangeTable: TableProps<ISolutionFeedbackEntity>["onChange"] = (
     pagination,
@@ -85,9 +100,8 @@ const SolutionsListPage = () => {
               size="large"
               variant="outlined"
               color="primary"
-              disabled
               icon={<RedoOutlined />}
-              // onClick={() => revalidateChallenges()}
+              onClick={() => refetchData()}
               // loading={isLoadingRefreshChallengebutton}
             >
               Làm mới

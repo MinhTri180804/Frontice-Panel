@@ -1,11 +1,25 @@
-import { Button, Card, Descriptions, Flex, Form, Input, Modal } from "antd";
+import {
+  Button,
+  Card,
+  Collapse,
+  Descriptions,
+  Divider,
+  Flex,
+  Form,
+  Input,
+  Modal,
+} from "antd";
 import { FC, useState } from "react";
 import { ISolutionFeedbackEntity } from "../../../../../../types/entity/solution";
-import itemDescriptionSolution from "./feedbackModal.logic";
+import {
+  itemDescriptionSolution,
+  itemsCollapseSolution,
+} from "./feedbackModal.logic";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import mentorService from "../../../../../../service/Mentor/mentorService";
 import { mentorQueryKey } from "../../../../../../constants/queryKey/mentor";
 import { toast } from "react-toastify";
+import { openNewTab } from "../../../../../../utils/helper";
 
 interface IFeedbackModalProps {
   isOpen: boolean;
@@ -20,6 +34,7 @@ const FeedbackModal: FC<IFeedbackModalProps> = ({
 }) => {
   const [feedbackValue, setFeedbackValue] = useState<string>("");
   const itemsDescription = itemDescriptionSolution(solutionData);
+  const itemCollapse = itemsCollapseSolution(solutionData.description);
   const queryClient = useQueryClient();
   const mutationFeedback = useMutation({
     mutationKey: ["feedback-solution", solutionData.id],
@@ -49,6 +64,14 @@ const FeedbackModal: FC<IFeedbackModalProps> = ({
     mutationFeedback.mutate();
   };
 
+  const handleViewSource = () => {
+    openNewTab(solutionData.github);
+  };
+
+  const handleViewPreview = () => {
+    openNewTab(solutionData.liveGithub);
+  };
+
   return (
     <Modal
       width={900}
@@ -71,10 +94,22 @@ const FeedbackModal: FC<IFeedbackModalProps> = ({
         }}
       >
         <Flex justify="space-between" align="stretch" gap={8}>
-          <Button variant="outlined" size="large" style={{ width: "100%" }}>
+          <Button
+            variant="outlined"
+            size="large"
+            style={{ width: "100%" }}
+            disabled={!solutionData?.github}
+            onClick={handleViewSource}
+          >
             Xem mã nguồn
           </Button>
-          <Button variant="outlined" size="large" style={{ width: "100%" }}>
+          <Button
+            variant="outlined"
+            size="large"
+            style={{ width: "100%" }}
+            disabled={!solutionData?.liveGithub}
+            onClick={handleViewPreview}
+          >
             Xem kết quả
           </Button>
           <Button variant="outlined" size="large" style={{ width: "100%" }}>
@@ -83,12 +118,25 @@ const FeedbackModal: FC<IFeedbackModalProps> = ({
         </Flex>
         <Card>
           <Descriptions
-            size="small"
+            size="middle"
             items={itemsDescription}
             layout="vertical"
             title="Thông tin giải pháp"
           />
         </Card>
+
+        {Boolean(solutionData.description.length) && (
+          <Flex vertical gap={8}>
+            <Divider
+              style={{ margin: "0", fontSize: "16px" }}
+              orientation="left"
+            >
+              Câu hỏi và trả lời
+            </Divider>
+            <Collapse items={itemCollapse} size="small" />
+          </Flex>
+        )}
+
         <Form>
           <Form.Item
             layout="vertical"
