@@ -106,15 +106,27 @@ const MentorChangePassword = () => {
         </Form.Item>
 
         <Form.Item>
-          <Button
-            type="primary"
-            htmlType="submit"
-            loading={mutationChangePassword.isPending}
-            size="large"
-            block
-          >
-            Đổi mật khẩu
-          </Button>
+          <Flex gap={12}>
+            <Button
+              type="primary"
+              htmlType="submit"
+              loading={mutationChangePassword.isPending}
+              size="large"
+              block
+            >
+              Đổi mật khẩu
+            </Button>
+
+            <Button
+              size="large"
+              onClick={() => navigate(`/${constantRoutesMentor.profile.root}`)}
+              style={{
+                width: "30%",
+              }}
+            >
+              Quay lại
+            </Button>
+          </Flex>
         </Form.Item>
       </Form>
     </Flex>

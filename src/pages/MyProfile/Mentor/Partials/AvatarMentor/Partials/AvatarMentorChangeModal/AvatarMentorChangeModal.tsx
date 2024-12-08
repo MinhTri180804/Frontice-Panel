@@ -23,6 +23,7 @@ const AvatarMentorChangeModal: FC<IAvatarMentorChangeModalProps> = ({
   onClose,
   currentAvatar,
 }) => {
+  const [pathAvatarUpload, setPathAvatarUpload] = useState<string | null>(null);
   const [avatarUpload, setAvatarUpload] = useState<string | null>(null);
   const [fileList, setFileList] = useState<UploadProps["fileList"]>([]);
   const accountId = useAuthStore((state) => state.profile?.id);
@@ -59,17 +60,19 @@ const AvatarMentorChangeModal: FC<IAvatarMentorChangeModalProps> = ({
       mutationUploadAvatar
         .mutateAsync(file as File)
         .then((response) => {
-          const imageResponseUrl = response.data.path;
-          if (imageResponseUrl && onSuccess) {
-            setAvatarUpload(imageResponseUrl);
+          const imageResponsePath = response.data.path;
+          const imageResponseLink = response.data.link;
+          if (imageResponsePath && imageResponseLink && onSuccess) {
+            setAvatarUpload(imageResponsePath);
+            setPathAvatarUpload(imageResponsePath);
             setFileList([
               {
                 uid: "123",
                 name: "avatar-new",
-                url: response.data.link,
+                url: imageResponseLink,
               },
             ]);
-            onSuccess(imageResponseUrl);
+            onSuccess(imageResponsePath);
             return;
           }
         })
@@ -91,14 +94,28 @@ const AvatarMentorChangeModal: FC<IAvatarMentorChangeModalProps> = ({
         "Bạn vừa đăng tải 1 ảnh đại diện mới nhưng chưa cập nhật cho tài khoản của mình, bạn chắc chắn mình sẽ hủy bỏ hình ảnh vừa đăng tải chứ ?",
       okText: "Xác nhận hủy bỏ",
       cancelText: "Quay lại",
-      onOk: () => {
+      cancelButtonProps: { loading: mutationRemoveFile.isPending },
+      onOk: async () => {
         if (avatarUpload) {
-          console.log("go");
-          mutationRemoveFile.mutate([avatarUpload]);
+          await toast.promise(
+            mutationRemoveFile
+              .mutateAsync([avatarUpload])
+              .then(() => {
+                setPathAvatarUpload(null);
+                setAvatarUpload(null);
+                setFileList([]);
+                onClose();
+              })
+              .catch((error) => {
+                console.log("[ERROR REMOVE IMAGE]: ", error);
+              }),
+            {
+              pending: "Đang thực hiện xóa hình ảnh",
+              success: "Xóa thành công",
+              error: "Xoá thất bại",
+            },
+          );
         }
-        setAvatarUpload(null);
-        setFileList([]);
-        onClose();
       },
       onCancel: () => {
         logOnDev(
@@ -144,7 +161,12 @@ const AvatarMentorChangeModal: FC<IAvatarMentorChangeModalProps> = ({
       title="Thay đổi ảnh đại diện"
       okText="Thay đổi"
       cancelText="Hủy bỏ"
-      cancelButtonProps={{ color: "danger", variant: "outlined" }}
+      cancelButtonProps={{
+        color: "danger",
+        variant: "outlined",
+        disabled:
+          mutationUploadAvatar.isPending || mutationRemoveFile.isPending,
+      }}
       okButtonProps={{ disabled: !Boolean(avatarUpload) }}
     >
       <Flex
@@ -179,9 +201,23 @@ const AvatarMentorChangeModal: FC<IAvatarMentorChangeModalProps> = ({
               }}
               customRequest={customRequestChangeAvatar}
               disabled={mutationUploadAvatar.isPending}
-              onRemove={() => {
-                setAvatarUpload(null);
-                setFileList([]);
+              onRemove={async (file) => {
+                if (pathAvatarUpload) {
+                  await toast.promise(
+                    mutationRemoveFile
+                      .mutateAsync([pathAvatarUpload])
+                      .then(() => {
+                        setPathAvatarUpload(null);
+                        setAvatarUpload(null);
+                        setFileList([]);
+                      }),
+                    {
+                      pending: "Đang thực hiện xóa hình ảnh",
+                      success: "Xóa hình ảnh thành công",
+                      error: "Xóa hình ảnh thành công",
+                    },
+                  );
+                }
               }}
               fileList={fileList}
             >

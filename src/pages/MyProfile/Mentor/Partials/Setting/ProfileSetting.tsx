@@ -4,6 +4,8 @@ import { AvatarMentor } from "../AvatarMentor";
 import useAuthStore from "../../../../../store/Auth/authStore";
 import { useState } from "react";
 import { ConfirmModifiedModal } from "./Partials/ConfirmModifieModal";
+import { useNavigate } from "react-router-dom";
+import constantRoutesMentor from "../../../../../constants/routes/mentor";
 
 const { Title } = Typography;
 
@@ -17,6 +19,7 @@ type IDataModified = {
 };
 
 const MentorProfileSetting = () => {
+  const navigate = useNavigate();
   const profile = useAuthStore((state) => state.profile);
   const [isDisabled, setIsDisabled] = useState(true);
   const [dataModified, setDataModified] = useState<IDataModified | null>(null);
@@ -118,7 +121,11 @@ const MentorProfileSetting = () => {
             >
               Cập nhật
             </Button>
-            <Button style={{ width: "30%" }} size="large">
+            <Button
+              style={{ width: "30%" }}
+              size="large"
+              onClick={() => navigate(`/${constantRoutesMentor.profile.root}`)}
+            >
               Quay lại
             </Button>
           </Flex>
