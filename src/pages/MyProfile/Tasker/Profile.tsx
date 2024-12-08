@@ -1,3 +1,4 @@
+import { ChangePasswordPage } from "./Partials/ChangePassword";
 import { TaskerProfileSetting } from "./Partials/Setting";
 
 const TaskerProfile = () => {
@@ -5,5 +6,6 @@ const TaskerProfile = () => {
 };
 
 TaskerProfile.Setting = TaskerProfileSetting;
+TaskerProfile.ChangePassword = ChangePasswordPage;
 
 export default TaskerProfile;

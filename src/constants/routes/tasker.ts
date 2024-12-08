@@ -1,16 +1,21 @@
 const constantRoutesTasker = {
-  root: '/',
-  challenge: {
-    root: '/challenges',
-    upload: '/upload',
+  root: "/",
+  task: {
+    root: "task",
+    list: "",
+    create: "create",
+    update: "update",
+    details: "details",
   },
   solution: {
-    root: '/solutions',
-    review: '/review',
+    root: "solution",
+    details: "details",
   },
   profile: {
-    root: '/profile',
-    setting: '/setting',
+    root: "profile",
+    details: "me",
+    setting: "setting",
+    changePassword: "change-password",
   },
 };
 
