@@ -1,4 +1,5 @@
 import {
+  Avatar,
   Button,
   Card,
   Collapse,
@@ -7,6 +8,7 @@ import {
   Flex,
   Form,
   Input,
+  List,
   Modal,
 } from "antd";
 import { FC, useState } from "react";
@@ -19,7 +21,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import mentorService from "../../../../../../service/Mentor/mentorService";
 import { mentorQueryKey } from "../../../../../../constants/queryKey/mentor";
 import { toast } from "react-toastify";
-import { openNewTab } from "../../../../../../utils/helper";
+import { downloadFile, openNewTab } from "../../../../../../utils/helper";
 
 interface IFeedbackModalProps {
   isOpen: boolean;
@@ -74,10 +76,15 @@ const FeedbackModal: FC<IFeedbackModalProps> = ({
 
   return (
     <Modal
+      centered
       width={900}
       open={isOpen}
       title="Phản hồi giải pháp"
-      okText="Phàn hồi"
+      okText={
+        Boolean(solutionData.mentor_feedback)
+          ? "Giải pháp đã được phản hồi"
+          : "Phàn hồi"
+      }
       cancelText="Hủy"
       onCancel={() => onCloseModal()}
       okButtonProps={{
@@ -97,6 +104,7 @@ const FeedbackModal: FC<IFeedbackModalProps> = ({
           <Button
             variant="outlined"
             size="large"
+            color="primary"
             style={{ width: "100%" }}
             disabled={!solutionData?.github}
             onClick={handleViewSource}
@@ -106,14 +114,30 @@ const FeedbackModal: FC<IFeedbackModalProps> = ({
           <Button
             variant="outlined"
             size="large"
+            color="primary"
             style={{ width: "100%" }}
             disabled={!solutionData?.liveGithub}
             onClick={handleViewPreview}
           >
             Xem kết quả
           </Button>
-          <Button variant="outlined" size="large" style={{ width: "100%" }}>
-            Xem chi tiết giải pháp
+          <Button
+            variant="outlined"
+            size="large"
+            style={{ width: "100%" }}
+            onClick={() => downloadFile(solutionData.challenge.sourceLink)}
+            disabled={!Boolean(solutionData.challenge?.sourceLink)}
+          >
+            Tải xuống thư mục bổ xung
+          </Button>
+          <Button
+            variant="outlined"
+            size="large"
+            style={{ width: "100%" }}
+            onClick={() => downloadFile(solutionData.challenge.figmaLink)}
+            disabled={!Boolean(solutionData.challenge?.figmaLink)}
+          >
+            Tải xuống thư mục thiết kế
           </Button>
         </Flex>
         <Card>
@@ -137,22 +161,43 @@ const FeedbackModal: FC<IFeedbackModalProps> = ({
           </Flex>
         )}
 
-        <Form>
-          <Form.Item
-            layout="vertical"
-            label="Lời nhận xét của bạn"
-            name="feedback"
-            rules={[
-              { required: true, message: "Lời nhận xét không được để trống" },
-            ]}
-          >
-            <Input
-              value={feedbackValue}
-              onChange={(e) => setFeedbackValue(e.target.value)}
-              placeholder="Nhập lời nhận xét của bạn"
-            />
-          </Form.Item>
-        </Form>
+        {!Boolean(solutionData.mentor_feedback) ? (
+          <Form>
+            <Form.Item
+              layout="vertical"
+              label="Lời nhận xét của bạn"
+              name="feedback"
+              rules={[
+                { required: true, message: "Lời nhận xét không được để trống" },
+              ]}
+            >
+              <Input
+                value={feedbackValue}
+                onChange={(e) => setFeedbackValue(e.target.value)}
+                placeholder="Nhập lời nhận xét của bạn"
+              />
+            </Form.Item>
+          </Form>
+        ) : (
+          <Flex vertical>
+            <Divider orientation="left">
+              Phản hồi của <span style={{ fontWeight: "bold" }}>Mentor</span>
+            </Divider>
+            <List>
+              <List.Item>
+                <List.Item.Meta
+                  avatar={
+                    <Avatar
+                      src={solutionData.mentor_feedback?.admin_feedback.image}
+                    />
+                  }
+                  title={solutionData.mentor_feedback?.admin_feedback.fullname}
+                  description={solutionData.mentor_feedback?.feedback}
+                />
+              </List.Item>
+            </List>
+          </Flex>
+        )}
       </Flex>
     </Modal>
   );

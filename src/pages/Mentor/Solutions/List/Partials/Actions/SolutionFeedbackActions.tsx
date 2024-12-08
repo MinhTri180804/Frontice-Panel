@@ -1,24 +1,18 @@
 import { Button, Flex } from "antd";
 import { FC, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import constantRoutesMentor from "../../../../../../constants/routes/mentor";
 import { FeedbackModal } from "../FeedbackModal";
 import { ISolutionFeedbackEntity } from "../../../../../../types/entity/solution";
 
 interface ISolutionFeedbackActionsProps {
   solutionData: ISolutionFeedbackEntity;
+  textButtonViewFeedback?: string;
 }
 
 const SolutionFeedbackActions: FC<ISolutionFeedbackActionsProps> = ({
   solutionData,
+  textButtonViewFeedback = "Phản hồi",
 }) => {
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
-  const navigate = useNavigate();
-  const handleViewDetails = () => {
-    return navigate(
-      `${constantRoutesMentor.solution.details}/${solutionData.id}`,
-    );
-  };
 
   const handleFeedback = () => {
     setIsOpenModal(true);
@@ -37,15 +31,7 @@ const SolutionFeedbackActions: FC<ISolutionFeedbackActionsProps> = ({
           size="middle"
           onClick={handleFeedback}
         >
-          Phản hồi
-        </Button>
-        <Button
-          variant="solid"
-          color="primary"
-          size="middle"
-          onClick={() => handleViewDetails()}
-        >
-          Xem chi tiết
+          {textButtonViewFeedback}
         </Button>
       </Flex>
       <FeedbackModal

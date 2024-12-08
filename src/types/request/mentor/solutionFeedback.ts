@@ -1,6 +1,8 @@
 export type IGetAllSolutionFeedbackParams = {
   page?: string | number;
   per_page?: string | number;
+  typeSolution?: "no_feedback" | "mentor_feedback";
+  levels?: number[] | string[];
 };
 
 export type IFeedbackSolutionRequest = {

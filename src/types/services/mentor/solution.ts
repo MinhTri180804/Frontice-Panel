@@ -4,7 +4,10 @@ import {
   IFeedbackSolutionRequest,
   IGetAllSolutionFeedbackParams,
 } from "../../request/mentor/solutionFeedback";
-import { IGetAllSolutionFeedbackResponse } from "../../response/mentor/solutionFeedback";
+import {
+  IGetAllSolutionFeedbackRespondedResponse,
+  IGetAllSolutionFeedbackResponse,
+} from "../../response/mentor/solutionFeedback";
 
 type ISolutionMentorService = {
   getAll: (
@@ -15,6 +18,10 @@ type ISolutionMentorService = {
     data: IFeedbackSolutionRequest,
     params: IFeedbackSolutionParams,
   ) => Promise<IBaseResponse<null>>;
+
+  responded: (
+    params: IGetAllSolutionFeedbackParams,
+  ) => Promise<IBaseResponse<IGetAllSolutionFeedbackRespondedResponse>>;
 };
 
 export default ISolutionMentorService;

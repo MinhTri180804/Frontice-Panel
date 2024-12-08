@@ -3,4 +3,6 @@ export const constantAuthApi = {
   login: "login",
   refresh: "refresh",
   logout: "logout",
+  updateProfile: "auth/update",
+  removeFile: "delete",
 };

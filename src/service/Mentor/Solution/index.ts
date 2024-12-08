@@ -9,10 +9,21 @@ import ISolutionMentorService from "../../../types/services/mentor/solution";
 
 const solutionService: ISolutionMentorService = {
   getAll: (params: IGetAllSolutionFeedbackParams) => {
-    const { page, per_page } = params;
+    const { page, per_page, levels = null, typeSolution = null } = params;
+
+    const paramsFilter: string[] = [];
+
+    if (typeSolution) {
+      paramsFilter.push(`filter[]=${typeSolution}`);
+    }
+
+    if (levels) {
+      const levelValues = levels.map((level) => `level[]=${level}`);
+      paramsFilter.push(`filter[]=level&${levelValues.join("&")}`);
+    }
 
     return axiosClient.get(
-      `${constantMentorApi.solution.getAll}?page=${page}&per_page=${per_page}`,
+      `${constantMentorApi.solution.getAll}?page=${page}&per_page=${per_page}&${paramsFilter.join("&")}`,
     );
   },
 
@@ -24,6 +35,13 @@ const solutionService: ISolutionMentorService = {
     return axiosClient.post(
       `${constantMentorApi.solution.feedback}/${solutionId}`,
       data,
+    );
+  },
+
+  responded: (params: IGetAllSolutionFeedbackParams) => {
+    const { page, per_page } = params;
+    return axiosClient.get(
+      `${constantMentorApi.solution.getAll}/feedback?page=${page}&per_page=${per_page}`,
     );
   },
 };

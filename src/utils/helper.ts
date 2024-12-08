@@ -57,10 +57,65 @@ const calculateTimeLeft = (timestamp: number) => {
   return { hours, minutes, seconds };
 };
 
+/**
+ * Downloads a file from the given URL.
+ * @param url - The URL of the file to download.
+ * @param filename - Optional: The name to save the file as.
+ */
+const downloadFile = (url: string, filename?: string) => {
+  // Create a temporary anchor element
+  const anchor = document.createElement("a");
+  anchor.href = url;
+  anchor.target = "_blank";
+
+  // If a filename is provided, set the download attribute
+  if (filename) {
+    anchor.download = filename;
+  }
+
+  // Append the anchor to the body and programmatically click it
+  document.body.appendChild(anchor);
+  anchor.click();
+
+  // Remove the anchor element from the DOM
+  document.body.removeChild(anchor);
+};
+
+const downloadFileWithBlob = async (url: string, filename: string) => {
+  try {
+    // Fetch the file as a blob
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error("Failed to fetch the file.");
+    }
+    const blob = await response.blob();
+
+    // Create a URL for the blob
+    const blobUrl = URL.createObjectURL(blob);
+
+    // Create an anchor element for download
+    const anchor = document.createElement("a");
+    anchor.href = blobUrl;
+    anchor.download = filename;
+
+    // Trigger download
+    document.body.appendChild(anchor);
+    anchor.click();
+
+    // Cleanup
+    document.body.removeChild(anchor);
+    URL.revokeObjectURL(blobUrl);
+  } catch (error) {
+    console.error("Error downloading file:", error);
+  }
+};
+
 export {
   logOnDev,
   openNewTab,
   scrollToElement,
   calculateTimeLeft,
   checkRefreshTokenValidity,
+  downloadFile,
+  downloadFileWithBlob,
 };

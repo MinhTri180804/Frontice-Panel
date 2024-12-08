@@ -5,7 +5,16 @@ import { constantChallengeManagerQueryKey } from "../../../../constants/queryKey
 import { Navigate, useParams } from "react-router";
 import constantRoutesGlobal from "../../../../constants/routes/global";
 import challengeManagerService from "../../../../service/ChallengeManager/challengeManagerService";
-import { Avatar, Card, Collapse, Empty, Flex, Tag, Typography } from "antd";
+import {
+  Avatar,
+  Card,
+  Collapse,
+  Empty,
+  Flex,
+  List,
+  Tag,
+  Typography,
+} from "antd";
 import { ActionsSolutionDetails } from "./Partials/Actions";
 import { convertTimestampToVietnamTime } from "../../../../utils/convertTime";
 
@@ -98,7 +107,10 @@ const SolutionDetailsPage: FC = () => {
         </Card>
       </Flex>
 
-      <ActionsSolutionDetails />
+      <ActionsSolutionDetails
+        liveGithub={solutionDetails?.liveGithub || null}
+        github={solutionDetails?.github || null}
+      />
       <Card type="inner" title={solutionDetails?.title}>
         <Flex vertical gap={12}>
           <Flex vertical>
@@ -109,7 +121,23 @@ const SolutionDetailsPage: FC = () => {
           <Flex vertical gap={8}>
             <Title level={5}>Mentor phản hồi</Title>
             {solutionDetails?.mentor_feedback ? (
-              <Text>{solutionDetails.mentor_feedback}</Text>
+              <List>
+                <List.Item>
+                  <List.Item.Meta
+                    avatar={
+                      <Avatar
+                        src={
+                          solutionDetails.mentor_feedback?.admin_feedback.image
+                        }
+                      />
+                    }
+                    title={
+                      solutionDetails.mentor_feedback?.admin_feedback.fullname
+                    }
+                    description={solutionDetails.mentor_feedback?.feedback}
+                  />
+                </List.Item>
+              </List>
             ) : (
               <Empty
                 description={

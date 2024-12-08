@@ -1,4 +1,5 @@
 import { IChallengeEntity } from "./challenge";
+import { IMeInfo } from "./meInfo";
 import { ITaskEntity } from "./task";
 
 export type ISolutionEntity = {
@@ -23,7 +24,11 @@ export type ISolutionEntity = {
   }[];
   submitedAt: number;
   comment: number;
-  mentor_feedback: string | null;
+  mentor_feedback: {
+    feedback: string;
+    admin_feedback: IMeInfo;
+    feedback_at: number;
+  } | null;
 };
 
 export type ITaskSolutionEntity = {
@@ -52,4 +57,24 @@ export type ITaskSolutionEntity = {
   status: string;
 };
 
-export type ISolutionFeedbackEntity = ISolutionEntity;
+export type ISolutionFeedbackEntity = Omit<ISolutionEntity, "challenge"> & {
+  challenge: IChallengeEntity & {
+    sourceLink: string;
+    figmaLink: string;
+  };
+};
+export type ISolutionFeedbackRespondedEntity = Omit<
+  ISolutionEntity,
+  "mentor_feedback" | "challenge"
+> & {
+  mentor_feedback: {
+    feedback: string;
+    admin_feedback: IMeInfo;
+    feedback_at: number;
+  };
+} & {
+  challenge: IChallengeEntity & {
+    sourceLink: string;
+    figmaLink: string;
+  };
+};

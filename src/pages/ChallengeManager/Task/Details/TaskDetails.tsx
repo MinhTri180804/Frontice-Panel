@@ -106,7 +106,7 @@ const TaskDetailsPage: FC = () => {
       {dataTaskDetails?.reports ? (
         <ViewReportsTask reportsData={dataTaskDetails?.reports} />
       ) : (
-        <Empty />
+        <Empty description="Không tìm thấy tố cáo nào..." />
       )}
     </Flex>
   );

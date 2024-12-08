@@ -1,6 +1,9 @@
 import axiosClient from "../axios/axiosClient";
 import { constantAuthApi } from "../constants/api/auth";
-import { IRefreshTokenRequest } from "../types/request/auth";
+import {
+  IRefreshTokenRequest,
+  IRemoveFileRequest,
+} from "../types/request/auth";
 import { ILoginRequest } from "../types/request/login";
 import { IAuthService } from "../types/services/authService";
 
@@ -27,6 +30,19 @@ const authService: IAuthService = {
 
   logout: () => {
     return axiosClient.post(`${DEFAULT_URL_API}/${constantAuthApi.logout}`);
+  },
+
+  updateProfile: (data) => {
+    return axiosClient.put(constantAuthApi.updateProfile, data);
+  },
+
+  removeFile: (data: IRemoveFileRequest) => {
+    return axiosClient.delete(
+      `${DEFAULT_URL_API}/${constantAuthApi.removeFile}`,
+      {
+        data,
+      },
+    );
   },
 };
 
