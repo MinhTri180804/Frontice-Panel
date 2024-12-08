@@ -201,7 +201,7 @@ const AvatarMentorChangeModal: FC<IAvatarMentorChangeModalProps> = ({
               }}
               customRequest={customRequestChangeAvatar}
               disabled={mutationUploadAvatar.isPending}
-              onRemove={async (file) => {
+              onRemove={async () => {
                 if (pathAvatarUpload) {
                   await toast.promise(
                     mutationRemoveFile

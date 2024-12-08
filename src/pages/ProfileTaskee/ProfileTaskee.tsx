@@ -3,7 +3,7 @@ import { Navigate, useParams } from "react-router-dom";
 import constantRoutesGlobal from "../../constants/routes/global";
 import { useQuery } from "@tanstack/react-query";
 import challengeManagerService from "../../service/ChallengeManager/challengeManagerService";
-import { Avatar, Card, Descriptions, Flex, Image, Typography } from "antd";
+import { Card, Descriptions, Flex, Image, Typography } from "antd";
 import { constantChallengeManagerQueryKey } from "../../constants/queryKey/challengeManager";
 import { CardChallengeInformationTaskee } from "./Partials/CardChallengeInformationTaskee";
 import { generateItemDescription } from "./ProfileTaskee.util";
