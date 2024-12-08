@@ -11,3 +11,5 @@ export type IMeInfo = {
   adminRole: RoleType;
   createdAt: number;
 };
+
+export type IMentorInfoEntity = IMeInfo;

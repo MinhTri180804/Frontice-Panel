@@ -3,15 +3,18 @@ import { Navigate, useParams } from "react-router-dom";
 import constantRoutesGlobal from "../../constants/routes/global";
 import { useQuery } from "@tanstack/react-query";
 import challengeManagerService from "../../service/ChallengeManager/challengeManagerService";
-import { Card, Descriptions, Divider, Flex, Table, Typography } from "antd";
+import { Card, Descriptions, Flex, Image, Typography } from "antd";
 import { constantChallengeManagerQueryKey } from "../../constants/queryKey/challengeManager";
 import { CardChallengeInformationTaskee } from "./Partials/CardChallengeInformationTaskee";
 import { generateItemDescription } from "./ProfileTaskee.util";
+import { TablesChallengeInformation } from "./Partials/TableChallengeInformation";
+import useAuthStore from "../../store/Auth/authStore";
 
 const { Title } = Typography;
 
 const ProfileTaskee: FC = () => {
   const { taskeeUsername } = useParams();
+  const roleAccount = useAuthStore((state) => state.role);
 
   const { isFetching, data } = useQuery({
     queryKey: [constantChallengeManagerQueryKey.taskee, taskeeUsername],
@@ -37,6 +40,12 @@ const ProfileTaskee: FC = () => {
 
   return (
     <Flex vertical gap={32}>
+      <Flex vertical align="center" gap={12}>
+        <Title level={4} style={{ margin: 0 }}>
+          Ảnh đại diện
+        </Title>
+        <Image src={data?.image} width={120} style={{ borderRadius: "6px" }} />
+      </Flex>
       <Card loading={isFetching}>
         <Descriptions
           title="Thông tin"
@@ -62,29 +71,9 @@ const ProfileTaskee: FC = () => {
         />
       </Flex>
 
-      <Divider orientation="left" plain>
-        <Title level={4} style={{ margin: "0" }}>
-          Danh sách thử thách đã tham gia
-        </Title>
-      </Divider>
-
-      <Table columns={[]} dataSource={[]} loading={isFetching} />
-
-      <Divider orientation="left" plain>
-        <Title level={4} style={{ margin: "0" }}>
-          Danh sách thử thách chưa hoàn thành
-        </Title>
-      </Divider>
-
-      <Table columns={[]} dataSource={[]} loading={isFetching} />
-
-      <Divider orientation="left" plain>
-        <Title level={4} style={{ margin: "0" }}>
-          Danh sách thử thách đã hoàn thành
-        </Title>
-      </Divider>
-
-      <Table columns={[]} dataSource={[]} loading={isFetching} />
+      {roleAccount !== "mentor" && roleAccount !== "tasker" && (
+        <TablesChallengeInformation />
+      )}
     </Flex>
   );
 };

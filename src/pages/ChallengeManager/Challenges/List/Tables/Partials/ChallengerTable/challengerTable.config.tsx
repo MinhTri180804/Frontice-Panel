@@ -3,6 +3,8 @@ import { ITaskeeEntity } from "../../../../../../../types/entity/taskee";
 import { openNewTab } from "../../../../../../../utils/helper";
 import { CheckOutlined, CloseOutlined } from "@ant-design/icons";
 import { FC } from "react";
+import { useNavigate } from "react-router-dom";
+import constantRoutesGlobal from "../../../../../../../constants/routes/global";
 
 const challengerTableColumns: TableProps<ITaskeeEntity>["columns"] = [
   {
@@ -79,21 +81,28 @@ const challengerTableColumns: TableProps<ITaskeeEntity>["columns"] = [
     title: "Hành động",
     key: "actions",
     render: (_, record) => (
-      <ButtonNavigateDetailsChallenger challenge={record} />
+      <ButtonNavigateDetailsChallenger taskeeUsername={record.username} />
     ),
   },
 ];
 
 interface IButtonNavigateDetailsChallengerProps {
-  challenge: ITaskeeEntity;
+  taskeeUsername: string;
 }
 
 const ButtonNavigateDetailsChallenger: FC<
   IButtonNavigateDetailsChallengerProps
-> = ({}) => {
-  // TODO: Implement routes to taskee details
+> = ({ taskeeUsername }) => {
+  const navigate = useNavigate();
+
   return (
-    <Button variant="outlined" color="primary">
+    <Button
+      variant="outlined"
+      color="primary"
+      onClick={() =>
+        navigate(`/${constantRoutesGlobal.profileTaskee}/${taskeeUsername}`)
+      }
+    >
       Xem chi tiết
     </Button>
   );

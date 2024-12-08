@@ -1,7 +1,16 @@
 import { IBaseResponse } from "../base/response";
-import { IRefreshTokenRequest } from "../request/auth";
+import {
+  IChangePasswordRequest,
+  IRefreshTokenRequest,
+  IRemoveFileRequest,
+  IUpdateProfileMentorRequest,
+  IUpdateProfileRequest,
+} from "../request/auth";
 import { ILoginRequest } from "../request/login";
-import { IRefreshTokenResponse } from "../response/auth";
+import {
+  IRefreshTokenResponse,
+  IUpdateProfileResponse,
+} from "../response/auth";
 import { IInfoMeResponse } from "../response/info";
 import { ILoginResponse } from "../response/login";
 
@@ -12,4 +21,12 @@ export type IAuthService = {
     data: IRefreshTokenRequest,
   ) => Promise<IBaseResponse<IRefreshTokenResponse>>;
   logout: () => Promise<IBaseResponse<null>>;
+  updateProfile: (
+    data: IUpdateProfileRequest | IUpdateProfileMentorRequest,
+  ) => Promise<IBaseResponse<IUpdateProfileResponse>>;
+  removeFile: (data: IRemoveFileRequest) => Promise<IBaseResponse<null>>;
+
+  changePassword: (
+    data: IChangePasswordRequest,
+  ) => Promise<IBaseResponse<null>>;
 };

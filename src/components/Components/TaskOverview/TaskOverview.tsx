@@ -15,6 +15,7 @@ import { convertTimestampToVietnamTime } from "../../../utils/convertTime";
 import useTimeCountDown from "../../../hooks/useTimeCountDown";
 import { useNavigate } from "react-router";
 import constantRoutesChallengeManager from "../../../constants/routes/challengeManager";
+import { downloadFile } from "../../../utils/helper";
 
 interface ITaskOverviewProps {
   taskData: ITaskEntity;
@@ -36,11 +37,11 @@ const TaskOverview: FC<ITaskOverviewProps> = ({
   const navigate = useNavigate();
 
   const handleDownloadFigma = () => {
-    console.log("download figma");
+    downloadFile(taskData.figmaLink);
   };
 
   const handleDownloadAssets = () => {
-    console.log("download assets");
+    downloadFile(taskData.sourceLink);
   };
 
   return (
@@ -93,8 +94,14 @@ const TaskOverview: FC<ITaskOverviewProps> = ({
                     precision={2}
                     valueRender={() => (
                       <div style={{ fontSize: "18px" }}>
-                        {expiredTime?.hours} : {expiredTime?.minutes} :{" "}
-                        {expiredTime?.seconds}
+                        {expiredTime ? (
+                          <>
+                            {expiredTime?.hours} : {expiredTime?.minutes} :{" "}
+                            {expiredTime?.seconds}
+                          </>
+                        ) : (
+                          <span style={{ color: "red" }}>Hết thời gian</span>
+                        )}
                       </div>
                     )}
                   />

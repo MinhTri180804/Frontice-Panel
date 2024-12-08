@@ -7,6 +7,7 @@ const constantRoutesMentor = {
   profile: {
     root: "profile",
     details: "me",
+    changePassword: "change-password",
     setting: "setting",
   },
 };
