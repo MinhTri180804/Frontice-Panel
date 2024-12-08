@@ -5,10 +5,16 @@ import { toast } from "react-toastify";
 import { saveAccessToken, saveRefreshToken } from "../../../utils/localstorage";
 import { useNavigate } from "react-router-dom";
 import useAuthStore from "../../../store/Auth/authStore";
+import mutationKey from "../../../constants/mutation";
 
 const useLoginLogic = () => {
   const navigate = useNavigate();
   const { login } = useAuthStore();
+
+  const mutationGetInfo = useMutation({
+    mutationKey: [mutationKey.getInfo],
+    mutationFn: async () => await authService.infoMe(),
+  });
 
   const mutationLogin = useMutation({
     mutationKey: [],
@@ -22,14 +28,23 @@ const useLoginLogic = () => {
             return response.data;
           })
           .then(async (responseTokens) => {
-            try {
-              const responseInfo = await authService.infoMe();
-              saveRefreshToken(responseTokens.refresh_token);
-              saveAccessToken(responseTokens.access_token);
-              login(responseInfo.data);
-            } catch (error) {
-              console.log("error: ", error);
-            }
+            return await toast.promise(
+              mutationGetInfo
+                .mutateAsync()
+                .then((response) => {
+                  saveRefreshToken(responseTokens.refresh_token);
+                  saveAccessToken(responseTokens.access_token);
+                  login(response.data);
+                })
+                .catch((error) => {
+                  console.log("error: ", error);
+                }),
+              {
+                pending: "Đang thực hiện lấy thông tin tài khoản",
+                success: "Lấy thông tin tài khoản thành công",
+                error: "Lấy thông tin tài khoản thất bại",
+              },
+            );
           }),
         {
           success: "Đăng nhập thành công",

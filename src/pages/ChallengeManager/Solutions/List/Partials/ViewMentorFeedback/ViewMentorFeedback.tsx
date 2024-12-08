@@ -1,12 +1,11 @@
 import { CheckOutlined, CloseOutlined } from "@ant-design/icons";
-import { Button, Flex, Modal, Typography } from "antd";
+import { Avatar, Button, Flex, List, Modal } from "antd";
 import { FC, useState } from "react";
+import { ISolutionEntity } from "../../../../../../types/entity/solution";
 
 interface IViewMentorFeedbackProps {
-  mentorFeedback: string | null;
+  mentorFeedback: ISolutionEntity["mentor_feedback"];
 }
-
-const { Text } = Typography;
 
 const ViewMentorFeedback: FC<IViewMentorFeedbackProps> = ({
   mentorFeedback,
@@ -48,7 +47,15 @@ const ViewMentorFeedback: FC<IViewMentorFeedbackProps> = ({
         )}
         onCancel={() => setIsShowModal(false)}
       >
-        <Text>{mentorFeedback}</Text>
+        <List>
+          <List.Item>
+            <List.Item.Meta
+              avatar={<Avatar src={mentorFeedback.admin_feedback.image} />}
+              title={mentorFeedback.admin_feedback.fullname}
+              description={mentorFeedback.feedback}
+            />
+          </List.Item>
+        </List>
       </Modal>
     </>
   );

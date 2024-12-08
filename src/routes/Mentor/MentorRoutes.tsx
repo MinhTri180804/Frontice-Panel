@@ -2,7 +2,11 @@ import { Navigate, RouteObject } from "react-router-dom";
 import constantRoutesMentor from "../../constants/routes/mentor";
 import constantDynamicRoute from "../../constants/routes/dynamicRoute";
 import MentorController from "../../pages/Mentor/Controller";
-import { taskeeProfileRoute } from "../CommonRoutes/commonRoutes";
+import {
+  notfoundRoute,
+  notMatchRoute,
+  taskeeProfileRoute,
+} from "../CommonRoutes/commonRoutes";
 
 const SOLTUION_ROUTES = {
   ROOT: `${constantRoutesMentor.solution.root}`,
@@ -12,6 +16,7 @@ const SOLTUION_ROUTES = {
 
 const MY_PROFILE_ROUTES = {
   ROOT: `${constantRoutesMentor.profile.root}`,
+  CHANGE_PASSWORD: `${constantRoutesMentor.profile.changePassword}`,
   DETAILS: `${constantRoutesMentor.profile.details}`,
   SETTING: `${constantRoutesMentor.profile.setting}`,
 };
@@ -40,6 +45,10 @@ const extendMyProfileRoutes: RouteObject[] = [
     path: MY_PROFILE_ROUTES.SETTING,
     element: <MentorController.Profile.Setting />,
   },
+  {
+    path: MY_PROFILE_ROUTES.CHANGE_PASSWORD,
+    element: <MentorController.Profile.ChangePassword />,
+  },
 ];
 
 const MentorRoutes: RouteObject[] = [
@@ -61,6 +70,8 @@ const MentorRoutes: RouteObject[] = [
     children: extendMyProfileRoutes,
   },
   taskeeProfileRoute,
+  notMatchRoute,
+  notfoundRoute,
 ];
 
 export default MentorRoutes;

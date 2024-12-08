@@ -91,7 +91,22 @@ const generateItemDescription = (data?: IGetProfileTaskeeResponse) => {
     {
       key: "cv",
       label: "CV",
-      children: data?.cv || <EmptyText text="Không có" />,
+      children: data?.cv ? (
+        <div
+          onClick={() => openNewTab(data.cv)}
+          style={{
+            padding: "0",
+            margin: "0",
+            textDecoration: "underline",
+            color: "blue",
+            cursor: "pointer",
+          }}
+        >
+          Xem CV
+        </div>
+      ) : (
+        <EmptyText text="Không có" />
+      ),
     },
     {
       key: "bio",
