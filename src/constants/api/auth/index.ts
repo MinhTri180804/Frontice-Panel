@@ -5,4 +5,5 @@ export const constantAuthApi = {
   logout: "logout",
   updateProfile: "auth/update",
   removeFile: "delete",
+  changePassword: "change-password",
 };

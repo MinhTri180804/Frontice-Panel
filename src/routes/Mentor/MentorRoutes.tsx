@@ -16,6 +16,7 @@ const SOLTUION_ROUTES = {
 
 const MY_PROFILE_ROUTES = {
   ROOT: `${constantRoutesMentor.profile.root}`,
+  CHANGE_PASSWORD: `${constantRoutesMentor.profile.changePassword}`,
   DETAILS: `${constantRoutesMentor.profile.details}`,
   SETTING: `${constantRoutesMentor.profile.setting}`,
 };
@@ -43,6 +44,10 @@ const extendMyProfileRoutes: RouteObject[] = [
   {
     path: MY_PROFILE_ROUTES.SETTING,
     element: <MentorController.Profile.Setting />,
+  },
+  {
+    path: MY_PROFILE_ROUTES.CHANGE_PASSWORD,
+    element: <MentorController.Profile.ChangePassword />,
   },
 ];
 

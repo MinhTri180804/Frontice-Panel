@@ -5,6 +5,7 @@ const mutationKey = {
   uploadAvatar: "upload-avatar",
   uploadImageChallenge: "upload-image-challege",
   removeImageChallenge: "remove-image-challenge",
+  changePassword: "change-password",
 };
 
 export default mutationKey;

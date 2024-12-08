@@ -1,6 +1,7 @@
 import axiosClient from "../axios/axiosClient";
 import { constantAuthApi } from "../constants/api/auth";
 import {
+  IChangePasswordRequest,
   IRefreshTokenRequest,
   IRemoveFileRequest,
 } from "../types/request/auth";
@@ -42,6 +43,13 @@ const authService: IAuthService = {
       {
         data,
       },
+    );
+  },
+
+  changePassword: (data: IChangePasswordRequest) => {
+    return axiosClient.put(
+      `${DEFAULT_URL_API}/${constantAuthApi.changePassword}`,
+      data,
     );
   },
 };

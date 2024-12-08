@@ -7,6 +7,7 @@ import { Card, Descriptions, Divider, Flex } from "antd";
 import { AvatarMentor } from "./Partials/AvatarMentor";
 import { TableSolutionResponded } from "./Partials/TableSolutionResponded";
 import { StatisticAccount } from "./Partials/StatisticAccount";
+import { MentorChangePassword } from "./Partials/ChangePassword";
 
 const MentorProfile = () => {
   const profile = useAuthStore((state) => state.profile);
@@ -35,5 +36,6 @@ const MentorProfile = () => {
 };
 
 MentorProfile.Setting = MentorProfileSetting;
+MentorProfile.ChangePassword = MentorChangePassword;
 
 export default MentorProfile;

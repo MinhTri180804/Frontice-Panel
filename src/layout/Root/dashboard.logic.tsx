@@ -92,6 +92,13 @@ const menuOfMentor: MenuItem[] = [
       `${constantRoutesMentor.profile.root}/${constantRoutesMentor.profile.details}`,
     ),
     getItem(
+      "Đổi mật khẩu",
+      "change_password",
+      undefined,
+      undefined,
+      `${constantRoutesMentor.profile.root}/${constantRoutesMentor.profile.changePassword}`,
+    ),
+    getItem(
       "Cài đặt",
       "account_profile-setting",
       undefined,

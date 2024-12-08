@@ -1,5 +1,6 @@
 import { IBaseResponse } from "../base/response";
 import {
+  IChangePasswordRequest,
   IRefreshTokenRequest,
   IRemoveFileRequest,
   IUpdateProfileMentorRequest,
@@ -24,4 +25,8 @@ export type IAuthService = {
     data: IUpdateProfileRequest | IUpdateProfileMentorRequest,
   ) => Promise<IBaseResponse<IUpdateProfileResponse>>;
   removeFile: (data: IRemoveFileRequest) => Promise<IBaseResponse<null>>;
+
+  changePassword: (
+    data: IChangePasswordRequest,
+  ) => Promise<IBaseResponse<null>>;
 };

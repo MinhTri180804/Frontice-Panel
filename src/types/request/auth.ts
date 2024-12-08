@@ -22,3 +22,9 @@ export type IUpdateProfileMentorRequest = {
 export type IRemoveFileRequest = {
   path: string[];
 };
+
+export type IChangePasswordRequest = {
+  current_password: string;
+  password: string;
+  password_confirmation: string;
+};
