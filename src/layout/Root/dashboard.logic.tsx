@@ -5,6 +5,7 @@ import { PieChartOutlined } from "@ant-design/icons";
 import constantRoutesChallengeManager from "../../constants/routes/challengeManager";
 import MenuItem from "antd/es/menu/MenuItem";
 import constantRoutesMentor from "../../constants/routes/mentor";
+import constantRoutesTasker from "../../constants/routes/tasker";
 type MenuItem = Required<MenuProps>["items"][number];
 
 const getItem: (
@@ -107,6 +108,49 @@ const menuOfMentor: MenuItem[] = [
     ),
   ]),
 ];
+
+const menuOfTasker: MenuItem[] = [
+  getItem("Nhiệm vụ", "task", <PieChartOutlined />, [
+    getItem(
+      "Danh sách",
+      "task_list",
+      undefined,
+      undefined,
+      `${constantRoutesTasker.task.root}/${constantRoutesTasker.task.list}`,
+    ),
+    getItem(
+      "Tạo mới",
+      "task_create",
+      undefined,
+      undefined,
+      `${constantRoutesTasker.task.root}/${constantRoutesTasker.task.create}`,
+    ),
+  ]),
+  getItem("Tài khoản", "account", <PieChartOutlined />, [
+    getItem(
+      "Trang cá nhân",
+      "account_profile",
+      undefined,
+      undefined,
+      `${constantRoutesTasker.profile.root}/${constantRoutesTasker.profile.details}`,
+    ),
+    getItem(
+      "Đổi mật khẩu",
+      "change_password",
+      undefined,
+      undefined,
+      `${constantRoutesTasker.profile.root}/${constantRoutesTasker.profile.changePassword}`,
+    ),
+    getItem(
+      "Cài đặt",
+      "account_profile-setting",
+      undefined,
+      undefined,
+      `${constantRoutesTasker.profile.root}/${constantRoutesTasker.profile.setting}`,
+    ),
+  ]),
+];
+
 const useDashboardLogic = (role: RoleType) => {
   const generatorDashboardMenuContent: () => MenuItem[] = () => {
     switch (role) {
@@ -115,7 +159,7 @@ const useDashboardLogic = (role: RoleType) => {
       case "mentor":
         return menuOfMentor;
       default:
-        return [];
+        return menuOfTasker;
     }
   };
 

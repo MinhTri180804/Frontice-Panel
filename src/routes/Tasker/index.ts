@@ -1,1 +1,1 @@
-export { default } from './taskerRoutes';
+export { default as TaskerRoutes } from "./TaskerRoutes.tsx";

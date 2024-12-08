@@ -30,7 +30,7 @@ const useCheckAuthOnReload = () => {
           const userInfo = await authService
             .infoMe()
             .then((response) => response.data);
-          login(userInfo); // Cập nhật trạng thái đăng nhập
+          login(userInfo);
         } catch (error) {
           console.log("[Error in accessing user info]:", error);
           removeAccessToken();
@@ -42,6 +42,7 @@ const useCheckAuthOnReload = () => {
         return;
       }
 
+      // Optimazation logic in here
       if (refreshToken) {
         const validateRefreshToken = checkRefreshTokenValidity(refreshToken);
         if (validateRefreshToken) {
@@ -63,6 +64,8 @@ const useCheckAuthOnReload = () => {
                 "[Error in fetching user info after refresh]:",
                 error,
               );
+              removeRefreshToken();
+              removeAccessToken();
               logout();
             }
           } catch (error) {

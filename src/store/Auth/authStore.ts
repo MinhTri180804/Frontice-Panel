@@ -37,7 +37,7 @@ const useAuthStore = create<State & Action>((set) => ({
     set(() => ({
       profile: profile,
       isAuthenticated: true,
-      role: profile.adminRole,
+      role: profile?.adminRole || profile.role,
     })),
   logout: () => {
     removeAccessToken();
