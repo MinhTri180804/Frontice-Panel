@@ -19,6 +19,16 @@ export type IUpdateProfileMentorRequest = {
   image?: string;
 };
 
+export type IUpdateProfileTaskerRequest = {
+  username: string;
+  email: string;
+  firstname: string;
+  lastname: string;
+  phone: string;
+  bio: string;
+  company: string;
+};
+
 export type IRemoveFileRequest = {
   path: string[];
 };
