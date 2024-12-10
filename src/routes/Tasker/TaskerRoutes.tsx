@@ -35,7 +35,7 @@ const extendTaskRoutes: RouteObject[] = [
     element: <TaskerController.Task.Create />,
   },
   {
-    path: TASK_ROUTES.UPDATE,
+    path: `${TASK_ROUTES.UPDATE}/:${constantDynamicRoute.task}`,
     element: <TaskerController.Task.Update />,
   },
   {

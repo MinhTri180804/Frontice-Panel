@@ -2,9 +2,9 @@ import { TableProps } from "rc-table";
 import { ITaskEntity } from "../../../../types/entity/task";
 import { Flex, Tag } from "antd";
 import { ViewExpiredTime } from "../../../../components/Components/ViewExpiredTime";
-import ActionTaskTable from "../../../ChallengeManager/Task/List/Partials/Actions/ActionsTaskTable";
 import { ITaskOfTaskerEntity } from "../../../../types/response/tasker/task";
 import { ViewTaskSolution } from "../../../../components/Components/ViewTaskSolution";
+import { ActionsTaskTable } from "./Partials/ActionsTaskTable";
 
 const columns: TableProps<ITaskOfTaskerEntity>["columns"] = [
   {
@@ -114,10 +114,10 @@ const columns: TableProps<ITaskOfTaskerEntity>["columns"] = [
   },
   {
     fixed: "right",
-    width: 200,
+    width: 280,
     title: "Hành động",
     key: "actions",
-    render: (_, record) => <ActionTaskTable taskId={record.id} />,
+    render: (_, record) => <ActionsTaskTable taskId={record.id} />,
   },
 ];
 

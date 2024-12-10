@@ -6,7 +6,6 @@ import { ViewReportsTask } from "../../../../components/Components/ViewReportsTa
 import constantRoutesGlobal from "../../../../constants/routes/global";
 import { ITaskEntity } from "../../../../types/entity/task";
 import { ActionsWithReport } from "../../../ChallengeManager/Task/Details/Partials/ActionsWithReport";
-import ListSolutionTask from "../../../ChallengeManager/Task/Details/Partials/ListSolutionTask/ListSolutionTask";
 import taskerQueryKeys from "../../../../constants/queryKey/tasker/taskerQueryKey";
 import taskerService from "../../../../service/Tasker/taskerService";
 
@@ -126,7 +125,7 @@ const TaskDetailsPage = () => {
         </Title>
       </Divider>
 
-      <ListSolutionTask taskId={taskId} />
+      {/* <ListSolutionTask taskId={taskId} /> */}
 
       <Divider orientation="left" plain>
         <Title level={4} style={{ margin: "0" }}>
