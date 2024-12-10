@@ -1,6 +1,9 @@
 import axiosClient from "../../../axios/axiosClient";
 import constantTaskerApi from "../../../constants/api/tasker";
-import { IGetAllTaskParams } from "../../../types/request/tasker/task";
+import {
+  IGetAllTaskParams,
+  IGetDetailsTaskParams,
+} from "../../../types/request/tasker/task";
 import { ITaskSerivce } from "../../../types/services/tasker/task";
 
 const taskSerivce: ITaskSerivce = {
@@ -9,6 +12,11 @@ const taskSerivce: ITaskSerivce = {
     return axiosClient.get(
       `/${constantTaskerApi.task.getAll}?page=${page}&per_page=${perPage}`,
     );
+  },
+
+  getDetails: (params: IGetDetailsTaskParams) => {
+    const { taskId } = params;
+    return axiosClient.get(`/${constantTaskerApi.task.getDetails}/${taskId}`);
   },
 };
 

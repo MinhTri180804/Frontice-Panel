@@ -1,4 +1,4 @@
-type ITask = {
+export type ITaskOfTaskerEntity = {
   id: string;
   title: string;
   owner: {
@@ -18,12 +18,30 @@ type ITask = {
   expiredAt: number;
   created_at: number;
   updated_at: number;
+  reports:
+    | {
+        id: string;
+        reportBy: {
+          username: string;
+          firstname: string;
+          lastname: string;
+          image: string;
+          gold_account: boolean;
+          url: string;
+        };
+        reason: string;
+        created_at: number;
+        updated_at: number;
+      }[]
+    | null;
 };
 
 export type IGetAllTaskResponse = {
-  tasks: ITask[];
+  tasks: ITaskOfTaskerEntity[];
   total: number;
   currentPage: number;
   lastPage: number;
   perPage: number;
 };
+
+export type IGetDetailsTaskResponse = ITaskOfTaskerEntity;

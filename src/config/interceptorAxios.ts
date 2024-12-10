@@ -17,6 +17,7 @@ import { IBaseResponse } from "../types/base/response";
 import authService from "../service/authService";
 import axiosClient from "../axios/axiosClient";
 import constantRoutesAuth from "../constants/routes/authentication";
+import constantRoutesGlobal from "../constants/routes/global";
 
 const TIMEOUT_REQUEST = 15000;
 
@@ -115,7 +116,7 @@ const onErrorResponse = async (
 
       case 404:
         logOnDev("[!] [ERROR]: 404 from response status backend");
-        // window.location.href = `${constantRoutesGlobal.errorPage["404"]}`;
+        window.location.href = `${constantRoutesGlobal.errorPage["404"]}`;
         break;
 
       default:
