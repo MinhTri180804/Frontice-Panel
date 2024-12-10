@@ -1,5 +1,6 @@
 import { IBaseResponse } from "../../base/response";
 import {
+  ICreateTaskRequest,
   IGetAllTaskParams,
   IGetDetailsTaskParams,
 } from "../../request/tasker/task";
@@ -16,4 +17,6 @@ export type ITaskSerivce = {
   getDetails: (
     params: IGetDetailsTaskParams,
   ) => Promise<IBaseResponse<IGetDetailsTaskResponse>>;
+
+  create: (data: ICreateTaskRequest) => Promise<IBaseResponse<null>>;
 };
