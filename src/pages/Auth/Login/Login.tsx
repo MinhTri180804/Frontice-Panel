@@ -1,11 +1,13 @@
-import { Flex, Form, Button, Input, Typography } from "antd";
+import { Flex, Form, Button, Input, Typography, Row, Col } from "antd";
 import { FC, useEffect, useState } from "react";
 import styled from "@emotion/styled";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { BrandColorLogo } from "../../../assets/images/logos/locals";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { ILoginRequest } from "../../../types/request/login";
 import useLoginLogic from "./login.logic.ts";
+import FormItem from "antd/es/form/FormItem/index";
+import constantRoutesAuth from "../../../constants/routes/authentication.ts";
 
 type IRoleInPath = "challenge-manager" | "mentor" | "tasker";
 
@@ -28,7 +30,10 @@ const LoginFormWrapper = styled.div`
   align-items: center;
 `;
 
+const { Link } = Typography;
+
 const LoginPage: FC = () => {
+  const navigate = useNavigate();
   const location = useLocation();
   const roleInPath = location.pathname.split("/")[2] as IRoleInPath;
   const [roleValue, setRoleValue] = useState<string>("");
@@ -112,17 +117,49 @@ const LoginPage: FC = () => {
             />
           </Form.Item>
 
-          <Form.Item>
-            <Button
-              loading={mutationLogin.isPending}
-              size="large"
-              block
-              type="primary"
-              htmlType="submit"
-            >
-              Log in
-            </Button>
-          </Form.Item>
+          <Row gutter={12}>
+            <Col span={16}>
+              <Button
+                loading={mutationLogin.isPending}
+                size="large"
+                block
+                type="primary"
+                htmlType="submit"
+              >
+                Đăng nhập
+              </Button>
+            </Col>
+            <Col span={8}>
+              <Button
+                disabled={mutationLogin.isPending}
+                block
+                size="large"
+                onClick={() => navigate(-1)}
+              >
+                Quay lại
+              </Button>
+            </Col>
+          </Row>
+
+          {roleInPath === "tasker" && (
+            <FormItem>
+              <Flex justify="center">
+                <Link
+                  style={{ margin: "12px 0" }}
+                  onClick={() => {
+                    const newPath = location.pathname.replace(
+                      constantRoutesAuth.tasker.login,
+                      constantRoutesAuth.tasker.register,
+                    );
+
+                    navigate(newPath);
+                  }}
+                >
+                  Đăng kí tài khoản
+                </Link>
+              </Flex>
+            </FormItem>
+          )}
         </Form>
       </Flex>
     </LoginFormWrapper>

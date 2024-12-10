@@ -109,6 +109,10 @@ const onErrorResponse = async (
         }
         break;
 
+      case 403:
+        window.location.href = `/${constantRoutesAuth.root}/${constantRoutesAuth.tasker.root}/${constantRoutesAuth.tasker.loginNonApprove}`;
+        break;
+
       case 404:
         logOnDev("[!] [ERROR]: 404 from response status backend");
         // window.location.href = `${constantRoutesGlobal.errorPage["404"]}`;

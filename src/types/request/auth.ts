@@ -28,3 +28,23 @@ export type IChangePasswordRequest = {
   password: string;
   password_confirmation: string;
 };
+
+export type IRegisterTaskerRequest = {
+  username: string;
+  email: string;
+  password: string;
+  phone: string;
+  password_confirmation: string;
+  firstname: string;
+  lastname: string;
+  company: string;
+  role: "tasker";
+};
+
+export type IVerifyOtpRequest = {
+  otp: string;
+};
+
+export type IVerifyOtpParams = {
+  emailVerify: string;
+};

@@ -73,7 +73,13 @@ const UserCustomer: FC<IUserCustomerProps> = () => {
       <Dropdown menu={{ items }} placement="bottomRight">
         <Flex justify="start" align="center" gap={8}>
           <Avatar src={profile?.image} />
-          <Text>{profile?.fullname}</Text>
+          {profile?.role === "tasker" ? (
+            <Text>
+              {profile?.firstname} {profile.lastname}
+            </Text>
+          ) : (
+            <Text>{profile?.fullname}</Text>
+          )}
         </Flex>
       </Dropdown>
     </Space>

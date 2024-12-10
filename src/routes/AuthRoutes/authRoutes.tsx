@@ -6,6 +6,10 @@ import { OptionsRolePage } from "../../pages/Auth/Options";
 import { RegisterPage } from "../../pages/Auth/Register";
 import { notMatchRoute } from "../CommonRoutes";
 import { GuestOnlyWrapper } from "../../components/Wrapper/GuestOnly";
+import { VerifyOtpPage } from "../../pages/Auth/VerifyOtp";
+import { ForgotPasswordPage } from "../../pages/Auth/ForgotPassword";
+import { ResultRegisterSuccessPage } from "../../pages/Auth/ResultRegisterSuccess";
+import { ResultNonApprovePage } from "../../pages/Auth/ResultNonApprove";
 
 const extendAuthRoutes: RouteObject[] = [
   {
@@ -62,9 +66,20 @@ const extendAuthRoutes: RouteObject[] = [
         element: <RegisterPage />,
       },
       {
+        path: constantRoutesAuth.tasker.verifyOtp,
+        element: <VerifyOtpPage />,
+      },
+      {
         path: constantRoutesAuth.tasker.forgotPassword,
-        // TODO: Implement forgot password page for tasker
-        element: <div>this is forgot password page</div>,
+        element: <ForgotPasswordPage />,
+      },
+      {
+        path: constantRoutesAuth.tasker.registerSuccess,
+        element: <ResultRegisterSuccessPage />,
+      },
+      {
+        path: constantRoutesAuth.tasker.loginNonApprove,
+        element: <ResultNonApprovePage />,
       },
       notMatchRoute,
     ],
