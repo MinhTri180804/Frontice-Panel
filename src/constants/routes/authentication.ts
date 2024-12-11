@@ -20,6 +20,11 @@ const constantRoutesAuth = {
     root: "mentor",
     login: "login",
   },
+
+  adminRoot: {
+    root: "root",
+    login: "login",
+  },
 };
 
 export default constantRoutesAuth;

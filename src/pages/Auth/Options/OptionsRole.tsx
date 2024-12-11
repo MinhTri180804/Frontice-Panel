@@ -30,6 +30,10 @@ const OptionsRolePage: FC = () => {
       name: "Tasker",
       redirectTo: `/${constantRoutesAuth.root}/${constantRoutesAuth.tasker.root}`,
     },
+    {
+      name: "Root",
+      redirectTo: `/${constantRoutesAuth.root}/${constantRoutesAuth.adminRoot.root}`,
+    },
   ];
   return (
     <WrapperConent>

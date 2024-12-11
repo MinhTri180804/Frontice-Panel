@@ -1,16 +1,18 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { FC, useState } from "react";
 import challengeManagerService from "../../../../service/ChallengeManager/challengeManagerService";
 import { ITaskEntity } from "../../../../types/entity/task";
 import { Button, Flex, Table, TableProps, Typography } from "antd";
 import columnsTaskTable from "./TaskList.config";
-import { FilterOutlined, RedoOutlined } from "@ant-design/icons";
+import { RedoOutlined } from "@ant-design/icons";
 import { useSearchParams } from "react-router-dom";
 import { constantChallengeManagerQueryKey } from "../../../../constants/queryKey/challengeManager";
+import { toast } from "react-toastify";
 
 const { Title } = Typography;
 
 const TaskListPage: FC = () => {
+  const queryClient = useQueryClient();
   const [searchParams, setSearchParams] = useSearchParams();
   const [currentPage, setCurrentPage] = useState<string | number>(
     searchParams.get("page") || 1,
@@ -59,6 +61,19 @@ const TaskListPage: FC = () => {
     }
   };
 
+  const handleRefreshData = async () => {
+    return await toast.promise(
+      queryClient.refetchQueries({
+        queryKey: [constantChallengeManagerQueryKey.task.getAll],
+      }),
+      {
+        pending: "Đang thực hiện làm mới dữ liệu",
+        success: "Làm mới dữ liệu thành công",
+        error: "Làm mới dữ liệu thất bại",
+      },
+    );
+  };
+
   return (
     <Flex vertical gap={32}>
       <Flex
@@ -72,7 +87,7 @@ const TaskListPage: FC = () => {
       >
         <div>
           <Title level={3} style={{ margin: "0" }}>
-            Danh sách thử thách
+            Danh sách nhiệm vụ
           </Title>
         </div>
         <div>
@@ -82,22 +97,20 @@ const TaskListPage: FC = () => {
               variant="outlined"
               color="primary"
               icon={<RedoOutlined />}
-              disabled
-              // onClick={() => revalidateChallenges()}
-              // loading={isLoadingRefreshChallengebutton}
+              onClick={() => handleRefreshData()}
             >
               Làm mới
             </Button>
 
-            <Button
-              color="primary"
-              size="large"
-              icon={<FilterOutlined />}
-              disabled
-              // onClick={() => openDrawerFilter()}
-            >
-              Bộ lọc
-            </Button>
+            {/* <Button */}
+            {/*   color="primary" */}
+            {/*   size="large" */}
+            {/*   icon={<FilterOutlined />} */}
+            {/*   disabled */}
+            {/*   // onClick={() => openDrawerFilter()} */}
+            {/* > */}
+            {/*   Bộ lọc */}
+            {/* </Button> */}
           </Flex>
         </div>
       </Flex>

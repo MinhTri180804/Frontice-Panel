@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import { Navigate, useParams } from "react-router-dom";
 import constantRoutesGlobal from "../../constants/routes/global";
 import { useQuery } from "@tanstack/react-query";
@@ -8,13 +8,16 @@ import { constantChallengeManagerQueryKey } from "../../constants/queryKey/chall
 import { CardChallengeInformationTaskee } from "./Partials/CardChallengeInformationTaskee";
 import { generateItemDescription } from "./ProfileTaskee.util";
 import { TablesChallengeInformation } from "./Partials/TableChallengeInformation";
-import useAuthStore from "../../store/Auth/authStore";
+import globalService from "../../service/Global/globalService";
+import { ISolutionEntity } from "../../types/entity/solution";
 
 const { Title } = Typography;
 
 const ProfileTaskee: FC = () => {
   const { taskeeUsername } = useParams();
-  const roleAccount = useAuthStore((state) => state.role);
+  const [solutionsOfTaskee, setSolutionOfTaskee] = useState<ISolutionEntity[]>(
+    [],
+  );
 
   const { isFetching, data } = useQuery({
     queryKey: [constantChallengeManagerQueryKey.taskee, taskeeUsername],
@@ -26,6 +29,17 @@ const ProfileTaskee: FC = () => {
       });
 
       const responseData = response.data;
+      if (responseData) {
+        try {
+          const response = await globalService.getAllSolutionOfTaskee({
+            taskeeId: responseData.id,
+          });
+          const responseSolutionsData = response.data.solutions;
+          setSolutionOfTaskee(responseSolutionsData);
+        } catch (error) {
+          console.log(error);
+        }
+      }
       return responseData;
     },
   });
@@ -71,9 +85,10 @@ const ProfileTaskee: FC = () => {
         />
       </Flex>
 
-      {roleAccount !== "mentor" && roleAccount !== "tasker" && (
-        <TablesChallengeInformation />
-      )}
+      <TablesChallengeInformation
+        solutionData={solutionsOfTaskee}
+        isLoading={isFetching}
+      />
     </Flex>
   );
 };
