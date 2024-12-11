@@ -5,6 +5,7 @@ import { DashBoardLayout } from "../layout/Root";
 import { MentorRoutes } from "../routes/Mentor";
 import { RoleType } from "../types/base/role";
 import { TaskerRoutes } from "../routes/Tasker";
+import { RootRoutes } from "../routes/Root";
 
 const useConfigureRoutes = (
   role: RoleType | null,
@@ -25,6 +26,9 @@ const useConfigureRoutes = (
       case "tasker":
         // console.log("routes for tasker");
         return TaskerRoutes;
+
+      case "root":
+        return RootRoutes;
 
       default:
         return [];

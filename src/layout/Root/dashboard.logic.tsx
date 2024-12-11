@@ -6,6 +6,7 @@ import constantRoutesChallengeManager from "../../constants/routes/challengeMana
 import MenuItem from "antd/es/menu/MenuItem";
 import constantRoutesMentor from "../../constants/routes/mentor";
 import constantRoutesTasker from "../../constants/routes/tasker";
+import constantRoutesRoot from "../../constants/routes/root";
 type MenuItem = Required<MenuProps>["items"][number];
 
 const getItem: (
@@ -151,6 +152,89 @@ const menuOfTasker: MenuItem[] = [
   ]),
 ];
 
+const menuOfRoot: MenuItem[] = [
+  getItem("Người dùng", "user", <PieChartOutlined />, [
+    getItem(
+      "Tất cả",
+      "all",
+      undefined,
+      undefined,
+      `${constantRoutesRoot.user.root}/${constantRoutesRoot.user.all}`,
+    ),
+    getItem(
+      "Quản lí thử thách",
+      "challenge_manager",
+      undefined,
+      undefined,
+      `${constantRoutesRoot.user.root}/${constantRoutesRoot.user.challengeManage}`,
+    ),
+    getItem(
+      "Người hỗ trợ",
+      "mentor",
+      undefined,
+      undefined,
+      `${constantRoutesRoot.user.root}/${constantRoutesRoot.user.mentor}`,
+    ),
+    getItem(
+      "Nhà tuyển dụng",
+      "tasker",
+      undefined,
+      undefined,
+      `${constantRoutesRoot.user.root}/${constantRoutesRoot.user.tasker}`,
+    ),
+  ]),
+  getItem("Thử thách", "challenges", <PieChartOutlined />, [
+    getItem(
+      "Danh sách",
+      "challenges_list",
+      undefined,
+      undefined,
+      `${constantRoutesRoot.challenge.root}`,
+    ),
+    getItem(
+      "Tạo",
+      "create_challenge",
+      undefined,
+      undefined,
+      `${constantRoutesRoot.challenge.root}/${constantRoutesRoot.challenge.create}`,
+    ),
+  ]),
+
+  getItem("Tuyển dụng", "taskers", <PieChartOutlined />, [
+    getItem(
+      "Chờ được duyệt",
+      "tasker_request_approve",
+      undefined,
+      undefined,
+      `${constantRoutesRoot.tasker.root}/${constantRoutesRoot.tasker.requestApprove}`,
+    ),
+  ]),
+
+  getItem("Tài khoản", "account", <PieChartOutlined />, [
+    getItem(
+      "Trang cá nhân",
+      "account_profile",
+      undefined,
+      undefined,
+      `${constantRoutesRoot.profile.root}/${constantRoutesRoot.profile.me}`,
+    ),
+    getItem(
+      "Đổi mật khẩu",
+      "change_password",
+      undefined,
+      undefined,
+      `${constantRoutesRoot.profile.root}/${constantRoutesRoot.profile.changePassword}`,
+    ),
+    getItem(
+      "Cài đặt",
+      "account_profile-setting",
+      undefined,
+      undefined,
+      `${constantRoutesRoot.profile.root}/${constantRoutesRoot.profile.setting}`,
+    ),
+  ]),
+];
+
 const useDashboardLogic = (role: RoleType) => {
   const generatorDashboardMenuContent: () => MenuItem[] = () => {
     switch (role) {
@@ -158,8 +242,12 @@ const useDashboardLogic = (role: RoleType) => {
         return menuOfChallengeManager;
       case "mentor":
         return menuOfMentor;
-      default:
+      case "root":
+        return menuOfRoot;
+      case "tasker":
         return menuOfTasker;
+      default:
+        return [];
     }
   };
 
