@@ -19,6 +19,13 @@ export type IUpdateProfileMentorRequest = {
   image?: string;
 };
 
+export type IUpdateProfileChallengeManagerRequest = {
+  username?: string;
+  email?: string;
+  fullname?: string;
+  image?: string;
+};
+
 export type IUpdateProfileTaskerRequest = {
   username: string;
   email: string;

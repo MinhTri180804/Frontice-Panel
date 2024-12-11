@@ -9,7 +9,7 @@ import useLoginLogic from "./login.logic.ts";
 import FormItem from "antd/es/form/FormItem/index";
 import constantRoutesAuth from "../../../constants/routes/authentication.ts";
 
-type IRoleInPath = "challenge-manager" | "mentor" | "tasker";
+type IRoleInPath = "challenge-manager" | "mentor" | "tasker" | "root";
 
 const LogoWrapper = styled.div`
   width: 220px;
@@ -51,6 +51,10 @@ const LoginPage: FC = () => {
 
       case "challenge-manager":
         setRoleValue("Người quản lí thử thách");
+        break;
+
+      case "root":
+        setRoleValue("Người quản lí website");
         break;
 
       default:

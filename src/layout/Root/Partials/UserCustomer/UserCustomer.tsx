@@ -72,7 +72,12 @@ const UserCustomer: FC<IUserCustomerProps> = () => {
     <Space style={{ padding: "0px 32px", cursor: "pointer" }}>
       <Dropdown menu={{ items }} placement="bottomRight">
         <Flex justify="start" align="center" gap={8}>
-          <Avatar src={profile?.image} />
+          <Avatar
+            src={
+              profile?.image ||
+              "https://img.freepik.com/premium-vector/man-empty-avatar-casual-business-style-vector-photo-placeholder-social-networks-resumes_885953-434.jpg"
+            }
+          />
           {profile?.role === "tasker" ? (
             <Text>
               {profile?.firstname} {profile.lastname}

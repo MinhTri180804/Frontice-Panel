@@ -3,9 +3,8 @@ import constantRootQueryKeys from "../../../../constants/queryKey/root";
 import rootService from "../../../../service/Root/RootService";
 import { useState } from "react";
 import { IRootTaskerApprove } from "../../../../types/response/root/tasker";
-import { RedoOutlined, FilterOutlined } from "@ant-design/icons";
+import { RedoOutlined } from "@ant-design/icons";
 import { Flex, Button, Typography, Table, TableProps } from "antd";
-import columnsTaskTable from "../../../ChallengeManager/Task/List/TaskList.config";
 import { columnsRequestApproveTable } from "./RequestApprove.config";
 import { toast } from "react-toastify";
 

@@ -73,6 +73,30 @@ const menuOfChallengeManager: MenuItem[] = [
       `${DEFAULT_TASK_ROUTES}/${constantRoutesChallengeManager.pages.tasks.report}`,
     ),
   ]),
+
+  getItem("Tài khoản", "account", <PieChartOutlined />, [
+    getItem(
+      "Trang cá nhân",
+      "account_profile",
+      undefined,
+      undefined,
+      `${constantRoutesChallengeManager.pages.profile.root}/${constantRoutesChallengeManager.pages.profile.me}`,
+    ),
+    getItem(
+      "Đổi mật khẩu",
+      "change_password",
+      undefined,
+      undefined,
+      `${constantRoutesChallengeManager.pages.profile.root}/${constantRoutesChallengeManager.pages.profile.changePassword}`,
+    ),
+    getItem(
+      "Cài đặt",
+      "account_profile-setting",
+      undefined,
+      undefined,
+      `${constantRoutesChallengeManager.pages.profile.root}/${constantRoutesChallengeManager.pages.profile.setting}`,
+    ),
+  ]),
 ];
 
 const menuOfMentor: MenuItem[] = [

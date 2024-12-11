@@ -8,6 +8,7 @@ import {
   taskeeProfileRoute,
   taskerProfileRoute,
 } from "../CommonRoutes/commonRoutes";
+import MentorController from "../../pages/Mentor/Controller";
 
 const CHALLENGE_ROUTES = {
   PARENT: `${constantRoutesChallengeManager.pages.challenges.root}`,
@@ -38,6 +39,7 @@ const PROFILE_ROUTES = {
   PARENT: `${constantRoutesChallengeManager.pages.profile.root}`,
   ME: `${constantRoutesChallengeManager.pages.profile.me}`,
   SETTING: `${constantRoutesChallengeManager.pages.profile.setting}`,
+  CHANGE_PASSWORD: `${constantRoutesChallengeManager.pages.profile.changePassword}`,
 };
 
 const extendProfileRoutes: RouteObject[] = [
@@ -52,6 +54,10 @@ const extendProfileRoutes: RouteObject[] = [
   {
     path: PROFILE_ROUTES.SETTING,
     element: <ChallengeManagerController.Profile.Setting />,
+  },
+  {
+    path: PROFILE_ROUTES.CHANGE_PASSWORD,
+    element: <MentorController.Profile.ChangePassword />,
   },
 ];
 

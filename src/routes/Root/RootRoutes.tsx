@@ -1,9 +1,7 @@
 import { Navigate, RouteObject } from "react-router";
 import constantRoutesRoot from "../../constants/routes/root";
 import { RootController } from "../../pages/Root";
-import { element } from "prop-types";
 import { ChallengeManagerController } from "../../pages/ChallengeManager";
-import { toast } from "react-toastify";
 
 const USER_ROUTES = {
   ROOT: constantRoutesRoot.user.root,

@@ -1,33 +1,35 @@
 import { Divider, Table, Typography } from "antd";
+import { ISolutionEntity } from "../../../../types/entity/solution";
+import { FC } from "react";
+import { columnsSolutionList } from "./tableChallengeInformation.config";
 
 const { Title } = Typography;
-const TablesChallengeInformation = () => {
-  const isFetching = false;
+interface ITableChallengeInformationProps {
+  solutionData: ISolutionEntity[];
+  isLoading: boolean;
+}
+
+const TablesChallengeInformation: FC<ITableChallengeInformationProps> = ({
+  solutionData,
+  isLoading,
+}) => {
   return (
     <>
       <Divider orientation="left" plain>
         <Title level={4} style={{ margin: "0" }}>
-          Danh sách thử thách đã tham gia
+          Danh sách các giải pháp
         </Title>
       </Divider>
 
-      <Table columns={[]} dataSource={[]} loading={isFetching} />
-
-      <Divider orientation="left" plain>
-        <Title level={4} style={{ margin: "0" }}>
-          Danh sách thử thách chưa hoàn thành
-        </Title>
-      </Divider>
-
-      <Table columns={[]} dataSource={[]} loading={isFetching} />
-
-      <Divider orientation="left" plain>
-        <Title level={4} style={{ margin: "0" }}>
-          Danh sách thử thách đã hoàn thành
-        </Title>
-      </Divider>
-
-      <Table columns={[]} dataSource={[]} loading={isFetching} />
+      <Table
+        scroll={{ x: "max-content" }}
+        virtual
+        showHeader
+        sticky
+        columns={columnsSolutionList}
+        dataSource={solutionData}
+        loading={isLoading}
+      />
     </>
   );
 };

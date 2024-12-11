@@ -4,15 +4,17 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import constantRoutesChallengeManager from "../../../../constants/routes/challengeManager";
 import columnsSolutionList from "./SolutionList.config";
 import { ISolutionEntity } from "../../../../types/entity/solution";
-import { FilterOutlined, RedoOutlined } from "@ant-design/icons";
+import { RedoOutlined } from "@ant-design/icons";
 import challengeManagerService from "../../../../service/ChallengeManager/challengeManagerService";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { toast } from "react-toastify";
 
 type DataType = ISolutionEntity;
 
 const { Title } = Typography;
 
 const SolutionListPage: FC = () => {
+  const queryClient = useQueryClient();
   const [searchParams, setSearchParams] = useSearchParams();
   const [totalPage, setTotalPage] = useState<number | string>(0);
   const [currentPage, setCurrentPage] = useState<number | string>(
@@ -83,6 +85,19 @@ const SolutionListPage: FC = () => {
     },
   ];
 
+  const handleRefreshData = async () => {
+    return await toast.promise(
+      queryClient.refetchQueries({
+        queryKey: ["solution_list"],
+      }),
+      {
+        pending: "Đang thực hiện làm mới dữ liệu",
+        error: "Làm mới dữ liệu thất bại",
+        success: "Làm mới dự liệu thành công",
+      },
+    );
+  };
+
   return (
     <Flex gap={32} vertical>
       <Flex
@@ -106,23 +121,21 @@ const SolutionListPage: FC = () => {
               size="large"
               variant="outlined"
               color="primary"
-              disabled
               icon={<RedoOutlined />}
-              // onClick={() => revalidateChallenges()}
-              // loading={isLoadingRefreshChallengebutton}
+              onClick={() => handleRefreshData()}
             >
               Làm mới
             </Button>
 
-            <Button
-              color="primary"
-              size="large"
-              disabled
-              icon={<FilterOutlined />}
-              // onClick={() => openDrawerFilter()}
-            >
-              Bộ lọc
-            </Button>
+            {/* <Button */}
+            {/*   color="primary" */}
+            {/*   size="large" */}
+            {/*   disabled */}
+            {/*   icon={<FilterOutlined />} */}
+            {/*   // onClick={() => openDrawerFilter()} */}
+            {/* > */}
+            {/*   Bộ lọc */}
+            {/* </Button> */}
           </Flex>
         </div>
       </Flex>

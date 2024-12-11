@@ -36,6 +36,20 @@ const extendAuthRoutes: RouteObject[] = [
   },
 
   {
+    path: constantRoutesAuth.adminRoot.root,
+    children: [
+      {
+        index: true,
+        element: <Navigate to={constantRoutesAuth.adminRoot.login} />,
+      },
+      {
+        path: constantRoutesAuth.adminRoot.login,
+        element: <LoginPage />,
+      },
+    ],
+  },
+
+  {
     path: constantRoutesAuth.mentor.root,
     children: [
       {
