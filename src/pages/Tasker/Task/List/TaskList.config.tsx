@@ -114,7 +114,7 @@ const columns: TableProps<ITaskOfTaskerEntity>["columns"] = [
   },
   {
     fixed: "right",
-    width: 280,
+    width: 340,
     title: "Hành động",
     key: "actions",
     render: (_, record) => <ActionsTaskTable taskId={record.id} />,
