@@ -5,6 +5,7 @@ const constantRoutesChallengeManager = {
       root: "profile",
       me: "me",
       setting: "setting",
+      changePassword: "change-password",
     },
     challenges: {
       root: "challenges",

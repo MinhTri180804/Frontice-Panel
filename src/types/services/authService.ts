@@ -2,13 +2,17 @@ import { IBaseResponse } from "../base/response";
 import {
   IChangePasswordRequest,
   IRefreshTokenRequest,
+  IRegisterTaskerRequest,
   IRemoveFileRequest,
   IUpdateProfileMentorRequest,
   IUpdateProfileRequest,
+  IVerifyOtpParams,
+  IVerifyOtpRequest,
 } from "../request/auth";
 import { ILoginRequest } from "../request/login";
 import {
   IRefreshTokenResponse,
+  IRegisterTaskerResponse,
   IUpdateProfileResponse,
 } from "../response/auth";
 import { IInfoMeResponse } from "../response/info";
@@ -16,6 +20,13 @@ import { ILoginResponse } from "../response/login";
 
 export type IAuthService = {
   login: (data: ILoginRequest) => Promise<IBaseResponse<ILoginResponse>>;
+  registerTasker: (
+    data: IRegisterTaskerRequest,
+  ) => Promise<IBaseResponse<IRegisterTaskerResponse>>;
+  verifyOtp: (
+    data: IVerifyOtpRequest,
+    params: IVerifyOtpParams,
+  ) => Promise<IBaseResponse<null>>;
   infoMe: () => Promise<IBaseResponse<IInfoMeResponse>>;
   refreshToken: (
     data: IRefreshTokenRequest,

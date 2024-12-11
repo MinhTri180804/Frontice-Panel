@@ -12,4 +12,5 @@ export type ITaskeeEntity = {
   gold_registration_date: string;
   created_at: string;
   updated_at: string;
+  gold_account?: boolean;
 };

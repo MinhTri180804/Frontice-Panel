@@ -4,6 +4,8 @@ import { challengeManagementRoutes } from "../routes/ChallengeManager";
 import { DashBoardLayout } from "../layout/Root";
 import { MentorRoutes } from "../routes/Mentor";
 import { RoleType } from "../types/base/role";
+import { TaskerRoutes } from "../routes/Tasker";
+import { RootRoutes } from "../routes/Root";
 
 const useConfigureRoutes = (
   role: RoleType | null,
@@ -22,8 +24,11 @@ const useConfigureRoutes = (
         return MentorRoutes;
 
       case "tasker":
-        // TODO: Implement tasker routes
-        return [];
+        // console.log("routes for tasker");
+        return TaskerRoutes;
+
+      case "root":
+        return RootRoutes;
 
       default:
         return [];

@@ -3,7 +3,10 @@ import { constantAuthApi } from "../constants/api/auth";
 import {
   IChangePasswordRequest,
   IRefreshTokenRequest,
+  IRegisterTaskerRequest,
   IRemoveFileRequest,
+  IVerifyOtpParams,
+  IVerifyOtpRequest,
 } from "../types/request/auth";
 import { ILoginRequest } from "../types/request/login";
 import { IAuthService } from "../types/services/authService";
@@ -14,6 +17,21 @@ const authService: IAuthService = {
   login: (data: ILoginRequest) => {
     return axiosClient.post(
       `/${DEFAULT_URL_API}/${constantAuthApi.login}`,
+      data,
+    );
+  },
+
+  registerTasker: (data: IRegisterTaskerRequest) => {
+    return axiosClient.post(
+      `/${DEFAULT_URL_API}/${constantAuthApi.register}`,
+      data,
+    );
+  },
+
+  verifyOtp: (data: IVerifyOtpRequest, params: IVerifyOtpParams) => {
+    const { emailVerify } = params;
+    return axiosClient.post(
+      `/${DEFAULT_URL_API}/${constantAuthApi.verifyOtp}?email=${emailVerify}`,
       data,
     );
   },

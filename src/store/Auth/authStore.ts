@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { IMeInfo, IMentorInfoEntity } from "../../types/entity/meInfo";
+import { IMeInfo } from "../../types/entity/meInfo";
 import { RoleType } from "../../types/base/role";
 import {
   removeAccessToken,
@@ -8,13 +8,13 @@ import {
 
 type State = {
   isAuthenticated: boolean;
-  profile: IMeInfo | IMentorInfoEntity | null;
+  profile: IMeInfo | null;
   role: RoleType | null;
   isPending: boolean;
 };
 
 type Action = {
-  updateProfile: (profile: IMeInfo | IMentorInfoEntity | null) => void;
+  updateProfile: (profile: IMeInfo | null) => void;
   login: (profile: IMeInfo) => void;
   logout: () => void;
   setIsPending: (value: boolean) => void;
@@ -37,7 +37,7 @@ const useAuthStore = create<State & Action>((set) => ({
     set(() => ({
       profile: profile,
       isAuthenticated: true,
-      role: profile.adminRole,
+      role: (profile?.adminRole || profile?.role) as RoleType,
     })),
   logout: () => {
     removeAccessToken();

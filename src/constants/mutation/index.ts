@@ -6,6 +6,9 @@ const mutationKey = {
   uploadImageChallenge: "upload-image-challege",
   removeImageChallenge: "remove-image-challenge",
   changePassword: "change-password",
+  regitserTasker: "register-tasker",
+  verifyOtp: "verify-otp",
+  createTask: "create-task",
 };
 
 export default mutationKey;

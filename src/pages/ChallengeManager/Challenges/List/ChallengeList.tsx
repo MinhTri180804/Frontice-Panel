@@ -11,8 +11,12 @@ import { toast } from "react-toastify";
 import useDrawerChallengesFilterStore from "../../../../store/DrawerChallengesFilter/DrawerChallengesFilterStore";
 import DrawerFilterChallenges from "./Partials/DrawerFilter/DrawerFilterChallenges";
 import { ITypeOfChallenges } from "../../../../types/other/challenge";
+import useAuthStore from "../../../../store/Auth/authStore";
+import { AllChallengesTable } from "./Tables/AllChallenges";
 
 const ChallengeListPage: FC = () => {
+  const profile = useAuthStore((state) => state.profile);
+  console.log(profile?.role);
   const [searchParams, setSearchParams] = useSearchParams();
   const openDrawerFilter =
     useDrawerChallengesFilterStore.getState().openDrawerFilter;
@@ -116,14 +120,18 @@ const ChallengeListPage: FC = () => {
             </div>
           </Flex>
 
-          <Tabs
-            defaultActiveKey={typeOfChallenges}
-            activeKey={typeOfChallenges}
-            items={tabsItems}
-            type="card"
-            onChange={handleChangeTabs}
-            destroyInactiveTabPane={true}
-          />
+          {profile?.role === "root" ? (
+            <AllChallengesTable />
+          ) : (
+            <Tabs
+              defaultActiveKey={typeOfChallenges}
+              activeKey={typeOfChallenges}
+              items={tabsItems}
+              type="card"
+              onChange={handleChangeTabs}
+              destroyInactiveTabPane={true}
+            />
+          )}
         </Flex>
 
         <DrawerFilterChallenges />

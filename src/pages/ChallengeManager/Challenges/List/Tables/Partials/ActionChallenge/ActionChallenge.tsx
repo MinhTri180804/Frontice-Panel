@@ -97,7 +97,7 @@ const ActionChallenge: FC<IActionChallengeProps> = ({ challenge }) => {
           type="primary"
           onClick={() =>
             navigate(
-              `${constantRoutesChallengeManager.pages.challenges.details}/${challenge.id}`,
+              `/${constantRoutesChallengeManager.pages.challenges.root}/${constantRoutesChallengeManager.pages.challenges.details}/${challenge.id}`,
             )
           }
         >

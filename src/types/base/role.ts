@@ -1,1 +1,1 @@
-export type RoleType = "challenge" | "tasker" | "mentor";
+export type RoleType = "challenge" | "tasker" | "mentor" | "root";

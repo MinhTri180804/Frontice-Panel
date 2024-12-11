@@ -6,4 +6,7 @@ export const constantAuthApi = {
   updateProfile: "auth/update",
   removeFile: "delete",
   changePassword: "change-password",
+  register: "register",
+  forgotPassword: "forgotPassword/send",
+  verifyOtp: "verify",
 };

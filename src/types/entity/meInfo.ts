@@ -5,11 +5,16 @@ export type IMeInfo = {
   username: string;
   email: string;
   role: string;
-  fullname: string;
+  fullname?: string;
   firstLogin: boolean;
   image: string;
-  adminRole: RoleType;
+  adminRole?: RoleType;
   createdAt: number;
+  company?: string;
+  firstname?: string;
+  lastname?: string;
+  bio?: string;
+  phone?: string;
 };
 
 export type IMentorInfoEntity = IMeInfo;

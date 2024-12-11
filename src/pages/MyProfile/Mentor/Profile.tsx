@@ -12,6 +12,8 @@ import { MentorChangePassword } from "./Partials/ChangePassword";
 const MentorProfile = () => {
   const profile = useAuthStore((state) => state.profile);
 
+  console.log(profile?.adminRole);
+
   if (!profile) {
     return <Navigate to={constantRoutesGlobal.errorPage["404"]} replace />;
   }

@@ -7,3 +7,18 @@ export type IRefreshTokenResponse = IJwtToken & {
 };
 
 export type IUpdateProfileResponse = IMeInfo;
+
+export type IRegisterTaskerResponse = {
+  verify_url: string;
+  id: string;
+  username: string;
+  email: string;
+  role: string;
+  firstname: string;
+  lastname: string;
+  phone: string;
+  image: string;
+  bio: string;
+  company: string;
+  createdAt: number;
+};

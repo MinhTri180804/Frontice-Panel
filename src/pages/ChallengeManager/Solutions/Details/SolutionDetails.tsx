@@ -2,7 +2,7 @@ import { FC } from "react";
 import { ChallengeOverview } from "../../../../components/Components/ChallengeOverview";
 import { useQuery } from "@tanstack/react-query";
 import { constantChallengeManagerQueryKey } from "../../../../constants/queryKey/challengeManager";
-import { Navigate, useParams } from "react-router";
+import { Navigate, useNavigate, useParams } from "react-router";
 import constantRoutesGlobal from "../../../../constants/routes/global";
 import challengeManagerService from "../../../../service/ChallengeManager/challengeManagerService";
 import {
@@ -25,6 +25,7 @@ const defautlAvatar =
 
 const SolutionDetailsPage: FC = () => {
   const { solutionId } = useParams();
+  const navigate = useNavigate();
   const { data: solutionDetails, isFetching } = useQuery({
     queryKey: [constantChallengeManagerQueryKey.soltuion.details],
     queryFn: async () => {
@@ -65,7 +66,16 @@ const SolutionDetailsPage: FC = () => {
             <Text style={{ fontSize: "20px" }}>{solutionDetails?.liked}</Text>
           </Flex>
         </Card>
-        <Card loading={isFetching} style={{ width: "100%", cursor: "pointer" }}>
+        <Card
+          hoverable
+          onClick={() =>
+            navigate(
+              `/${constantRoutesGlobal.profileTaskee}/${solutionDetails?.taskee.username}`,
+            )
+          }
+          loading={isFetching}
+          style={{ width: "100%", cursor: "pointer" }}
+        >
           <Flex vertical justify="center" align="center" gap={12}>
             <Text style={{ fontSize: "18px", fontWeight: "bold" }}>
               Người thực hiện

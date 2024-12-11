@@ -1,6 +1,5 @@
 import { Button, Flex, TableProps } from "antd";
 import { ITaskeeEntity } from "../../../../../../../types/entity/taskee";
-import { openNewTab } from "../../../../../../../utils/helper";
 import { CheckOutlined, CloseOutlined } from "@ant-design/icons";
 import { FC } from "react";
 import { useNavigate } from "react-router-dom";
@@ -21,51 +20,23 @@ const challengerTableColumns: TableProps<ITaskeeEntity>["columns"] = [
     render: (_, record) => `${record.firstname} ${record.lastname}`,
   },
   {
-    title: "Điểm số",
-    key: "points",
-    dataIndex: "points",
-    render: (points) => <div style={{ textAlign: "center" }}>{points}</div>,
+    title: "Username",
+    key: "username",
+    dataIndex: "username",
+    render: (username: string) => (
+      <div style={{ textAlign: "start" }}>{username}</div>
+    ),
   },
   {
-    title: <div style={{ textAlign: "center" }}>Thông tin</div>,
-    key: "information",
-    render: (_, record) => {
-      const handleViewCv = () => {
-        openNewTab(record.cv);
-      };
-
-      const handleViewGithubProfile = () => {
-        openNewTab(record.github);
-      };
-
-      return (
-        <Flex justify="center" align="center">
-          <Button
-            variant="link"
-            color="primary"
-            onClick={handleViewCv}
-            disabled={!Boolean(record.cv)}
-          >
-            CV
-          </Button>
-          <Button
-            variant="link"
-            color="primary"
-            onClick={handleViewGithubProfile}
-            disabled={!Boolean(record.github)}
-          >
-            Github profile
-          </Button>
-        </Flex>
-      );
-    },
-  },
-  {
-    title: "Premium",
+    title: (
+      <Flex align="center" justify="center">
+        Premium
+      </Flex>
+    ),
     key: "premium",
     dataIndex: "gold_registration_date",
     render: (_, record) => {
-      return Boolean(record.gold_registration_date) ? (
+      return Boolean(record?.gold_account) ? (
         <div style={{ textAlign: "center" }}>
           <CheckOutlined />
         </div>
