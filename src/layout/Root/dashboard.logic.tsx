@@ -210,17 +210,44 @@ const menuOfRoot: MenuItem[] = [
   getItem("Thử thách", "challenges", <PieChartOutlined />, [
     getItem(
       "Danh sách",
-      "challenges_list",
+      "challenges-1",
       undefined,
       undefined,
-      `${constantRoutesRoot.challenge.root}`,
+      DEFAULT_CHALLENGE_ROUTES,
     ),
     getItem(
       "Tạo",
-      "create_challenge",
+      "chellenges-2",
       undefined,
       undefined,
-      `${constantRoutesRoot.challenge.root}/${constantRoutesRoot.challenge.create}`,
+      `${DEFAULT_CHALLENGE_ROUTES}/${constantRoutesChallengeManager.pages.challenges.create}`,
+    ),
+  ]),
+  getItem("Giải pháp", "solutions", <PieChartOutlined />, [
+    getItem(
+      "Danh sách",
+      "solutions-1",
+      undefined,
+      undefined,
+      DEFAULT_SOLUTION_ROUTES,
+    ),
+
+    getItem(
+      "Tố cáo",
+      "solutions-2",
+      undefined,
+      undefined,
+      `${DEFAULT_SOLUTION_ROUTES}/${constantRoutesChallengeManager.pages.solutions.report}`,
+    ),
+  ]),
+  getItem("Nhiệm vụ", "tasks", <PieChartOutlined />, [
+    getItem("Danh sách", "tasks-1", undefined, undefined, DEFAULT_TASK_ROUTES),
+    getItem(
+      "Tố cáo",
+      "tasks-2",
+      undefined,
+      undefined,
+      `${DEFAULT_TASK_ROUTES}/${constantRoutesChallengeManager.pages.tasks.report}`,
     ),
   ]),
 

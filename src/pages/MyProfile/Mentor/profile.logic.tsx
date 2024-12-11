@@ -19,7 +19,18 @@ const itemDescriptionMentorProfile: (
     {
       key: "role",
       label: "Chức vụ",
-      children: "ADMIN - Người hỗ trợ",
+      children:
+        dataProfile.adminRole === "mentor" ? (
+          <div>ADMIN - Người hỗ trợ</div>
+        ) : dataProfile.adminRole === "root" ? (
+          <div>ADMIN - Quản lí website</div>
+        ) : dataProfile.adminRole === "tasker" ? (
+          <div> Công ty tuyển dụng</div>
+        ) : dataProfile.adminRole === "challenge" ? (
+          <div>ADMIN - Quản lí thử thách</div>
+        ) : (
+          <div>Không xác định</div>
+        ),
     },
     {
       key: "username",
