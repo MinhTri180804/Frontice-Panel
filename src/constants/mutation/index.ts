@@ -10,6 +10,8 @@ const mutationKey = {
   verifyOtp: "verify-otp",
   createTask: "create-task",
   sendOTP: "send-otp",
+  createComment: "create-comment",
+  removeComment: "remove-comment",
 };
 
 export default mutationKey;

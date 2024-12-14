@@ -1,22 +1,22 @@
 import { useQuery } from "@tanstack/react-query";
-import { Button, Modal, Table, TableProps } from "antd";
+import { TableProps, Button, Modal, Table } from "antd";
 import { FC, useState } from "react";
-import { constantChallengeManagerQueryKey } from "../../../../constants/queryKey/challengeManager";
-import { ITaskSolutionEntity } from "../../../../types/entity/solution";
-import challengeManagerService from "../../../../service/ChallengeManager/challengeManagerService";
-import columnsTaskSolution from "./TaskSolutionModal.config";
-import { useNavigate } from "react-router";
-import constantRoutesChallengeManager from "../../../../constants/routes/challengeManager";
+import { useNavigate } from "react-router-dom";
+import { constantChallengeManagerQueryKey } from "../../../../../../constants/queryKey/challengeManager";
+import taskerService from "../../../../../../service/Tasker/taskerService";
+import { ITaskSolutionEntity } from "../../../../../../types/entity/taskSolution";
+import columnsTaskSolution from "./modalTaskSolution.config";
+import constantRoutesTasker from "../../../../../../constants/routes/tasker";
 
-interface ITaskSolutionModalProps {
+interface IModalTaskSolutionProps {
   taskId: string;
   isShow: boolean;
   handleChangeShow: (state: boolean) => void;
 }
 
-const TaskSolutionModal: FC<ITaskSolutionModalProps> = ({
-  isShow,
+const ModalTaskSolution: FC<IModalTaskSolutionProps> = ({
   taskId,
+  isShow,
   handleChangeShow,
 }) => {
   const [currentPage, setCurrentPage] = useState<number | string>(1);
@@ -33,11 +33,12 @@ const TaskSolutionModal: FC<ITaskSolutionModalProps> = ({
       constantChallengeManagerQueryKey.taskSolution.getAll,
     ],
     queryFn: async () => {
-      const response = await challengeManagerService.taskSolution.getByIdTask({
+      const response = await taskerService.taskSolution.getAllByTaskId({
         page: currentPage,
-        perPage: pageSize,
+        pageSize: pageSize,
         taskId: taskId,
       });
+
       const responseData = response.data;
       setTaskSolutions(responseData.solutions);
       setTotalPage(responseData.total);
@@ -67,7 +68,7 @@ const TaskSolutionModal: FC<ITaskSolutionModalProps> = ({
           color="primary"
           onClick={() =>
             navigate(
-              `${constantRoutesChallengeManager.pages.tasks.taskSolutionDetails}/${record.id}`,
+              `/${constantRoutesTasker.solution.root}/${constantRoutesTasker.solution.details}/${record.id}`,
             )
           }
         >
@@ -105,4 +106,4 @@ const TaskSolutionModal: FC<ITaskSolutionModalProps> = ({
   );
 };
 
-export default TaskSolutionModal;
+export default ModalTaskSolution;

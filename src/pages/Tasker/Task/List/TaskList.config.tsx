@@ -3,8 +3,8 @@ import { ITaskEntity } from "../../../../types/entity/task";
 import { Flex, Tag } from "antd";
 import { ViewExpiredTime } from "../../../../components/Components/ViewExpiredTime";
 import { ITaskOfTaskerEntity } from "../../../../types/response/tasker/task";
-import { ViewTaskSolution } from "../../../../components/Components/ViewTaskSolution";
 import { ActionsTaskTable } from "./Partials/ActionsTaskTable";
+import { ViewTaskSolution } from "./Partials/ViewTaskSolution";
 
 const columns: TableProps<ITaskOfTaskerEntity>["columns"] = [
   {
