@@ -129,7 +129,7 @@ const OtherChallengesTable: FC = () => {
                 type="primary"
                 onClick={() =>
                   navigate(
-                    `${constantRoutesChallengeManager.pages.challenges.details}/:${record.id}`,
+                    `${constantRoutesChallengeManager.pages.challenges.details}/${record.id}`,
                   )
                 }
               >

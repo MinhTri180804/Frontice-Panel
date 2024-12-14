@@ -41,7 +41,8 @@ const scrollToElement: (id: string) => void = (idElement) => {
   }
 };
 
-const calculateTimeLeft = (timestamp: number) => {
+const calculateTimeLeft = (timestamp: number | null | undefined) => {
+  if (timestamp === null || timestamp === undefined) return null;
   const targetTime = new Date(timestamp).getTime();
   const currentTime = new Date().getTime();
   const difference = targetTime - currentTime;
@@ -50,9 +51,14 @@ const calculateTimeLeft = (timestamp: number) => {
     return null;
   }
 
+  const days = Math.floor(difference / (1000 * 60 * 60 * 24));
   const hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
   const minutes = Math.floor((difference / (1000 * 60)) % 60);
   const seconds = Math.floor((difference / 1000) % 60);
+
+  if (days > 0) {
+    return { days, hours, minutes, seconds };
+  }
 
   return { hours, minutes, seconds };
 };
