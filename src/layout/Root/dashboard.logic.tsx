@@ -1,7 +1,15 @@
 import React from "react";
 import { RoleType } from "../../types/base/role";
 import type { MenuProps } from "antd";
-import { PieChartOutlined } from "@ant-design/icons";
+import {
+  AuditOutlined,
+  BookOutlined,
+  BulbOutlined,
+  GlobalOutlined,
+  PieChartOutlined,
+  TeamOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
 import constantRoutesChallengeManager from "../../constants/routes/challengeManager";
 import MenuItem from "antd/es/menu/MenuItem";
 import constantRoutesMentor from "../../constants/routes/mentor";
@@ -30,7 +38,7 @@ const DEFAULT_SOLUTION_ROUTES = `/${constantRoutesChallengeManager.pages.solutio
 const DEFAULT_TASK_ROUTES = `/${constantRoutesChallengeManager.pages.tasks.root}`;
 
 const menuOfChallengeManager: MenuItem[] = [
-  getItem("Thử thách", "challenges", <PieChartOutlined />, [
+  getItem("Thử thách", "challenges", <BookOutlined />, [
     getItem(
       "Danh sách",
       "challenges-1",
@@ -46,7 +54,7 @@ const menuOfChallengeManager: MenuItem[] = [
       `${DEFAULT_CHALLENGE_ROUTES}/${constantRoutesChallengeManager.pages.challenges.create}`,
     ),
   ]),
-  getItem("Giải pháp", "solutions", <PieChartOutlined />, [
+  getItem("Giải pháp", "solutions", <BulbOutlined />, [
     getItem(
       "Danh sách",
       "solutions-1",
@@ -63,7 +71,7 @@ const menuOfChallengeManager: MenuItem[] = [
       `${DEFAULT_SOLUTION_ROUTES}/${constantRoutesChallengeManager.pages.solutions.report}`,
     ),
   ]),
-  getItem("Nhiệm vụ", "tasks", <PieChartOutlined />, [
+  getItem("Nhiệm vụ", "tasks", <AuditOutlined />, [
     getItem("Danh sách", "tasks-1", undefined, undefined, DEFAULT_TASK_ROUTES),
     getItem(
       "Tố cáo",
@@ -74,7 +82,7 @@ const menuOfChallengeManager: MenuItem[] = [
     ),
   ]),
 
-  getItem("Tài khoản", "account", <PieChartOutlined />, [
+  getItem("Tài khoản", "account", <TeamOutlined />, [
     getItem(
       "Trang cá nhân",
       "account_profile",
@@ -100,7 +108,7 @@ const menuOfChallengeManager: MenuItem[] = [
 ];
 
 const menuOfMentor: MenuItem[] = [
-  getItem("Giải pháp", "solutions", <PieChartOutlined />, [
+  getItem("Giải pháp", "solutions", <BulbOutlined />, [
     getItem(
       "Danh sách",
       "solutions_list",
@@ -109,7 +117,7 @@ const menuOfMentor: MenuItem[] = [
       `${constantRoutesMentor.solution.root}/${constantRoutesMentor.solution.list}`,
     ),
   ]),
-  getItem("Tài khoản", "account", <PieChartOutlined />, [
+  getItem("Tài khoản", "account", <TeamOutlined />, [
     getItem(
       "Trang cá nhân",
       "account_profile",
@@ -207,7 +215,7 @@ const menuOfRoot: MenuItem[] = [
       `${constantRoutesRoot.user.root}/${constantRoutesRoot.user.tasker}`,
     ),
   ]),
-  getItem("Thử thách", "challenges", <PieChartOutlined />, [
+  getItem("Thử thách", "challenges", <BookOutlined />, [
     getItem(
       "Danh sách",
       "challenges-1",
@@ -223,7 +231,7 @@ const menuOfRoot: MenuItem[] = [
       `${DEFAULT_CHALLENGE_ROUTES}/${constantRoutesChallengeManager.pages.challenges.create}`,
     ),
   ]),
-  getItem("Giải pháp", "solutions", <PieChartOutlined />, [
+  getItem("Giải pháp", "solutions", <BulbOutlined />, [
     getItem(
       "Danh sách",
       "solutions-1",
@@ -240,7 +248,7 @@ const menuOfRoot: MenuItem[] = [
       `${DEFAULT_SOLUTION_ROUTES}/${constantRoutesChallengeManager.pages.solutions.report}`,
     ),
   ]),
-  getItem("Nhiệm vụ", "tasks", <PieChartOutlined />, [
+  getItem("Nhiệm vụ", "tasks", <AuditOutlined />, [
     getItem("Danh sách", "tasks-1", undefined, undefined, DEFAULT_TASK_ROUTES),
     getItem(
       "Tố cáo",
@@ -251,7 +259,7 @@ const menuOfRoot: MenuItem[] = [
     ),
   ]),
 
-  getItem("Tuyển dụng", "taskers", <PieChartOutlined />, [
+  getItem("Tuyển dụng", "taskers", <GlobalOutlined />, [
     getItem(
       "Chờ được duyệt",
       "tasker_request_approve",
@@ -261,7 +269,7 @@ const menuOfRoot: MenuItem[] = [
     ),
   ]),
 
-  getItem("Tài khoản", "account", <PieChartOutlined />, [
+  getItem("Tài khoản", "account", <UserOutlined />, [
     getItem(
       "Trang cá nhân",
       "account_profile",

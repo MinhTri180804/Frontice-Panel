@@ -116,7 +116,7 @@ const onErrorResponse = async (
 
       case 404:
         logOnDev("[!] [ERROR]: 404 from response status backend");
-        window.location.href = `${constantRoutesGlobal.errorPage["404"]}`;
+        window.location.href = `/${constantRoutesGlobal.errorPage["404"]}`;
         break;
 
       default:

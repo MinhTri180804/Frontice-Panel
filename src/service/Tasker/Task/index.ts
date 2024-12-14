@@ -2,6 +2,7 @@ import axiosClient from "../../../axios/axiosClient";
 import constantTaskerApi from "../../../constants/api/tasker";
 import {
   ICreateTaskRequest,
+  IDeleteTaskParams,
   IGetAllTaskParams,
   IGetDetailsTaskParams,
 } from "../../../types/request/tasker/task";
@@ -22,6 +23,11 @@ const taskSerivce: ITaskSerivce = {
 
   create: (data: ICreateTaskRequest) => {
     return axiosClient.post(`/${constantTaskerApi.task.create}`, data);
+  },
+
+  delete: (params: IDeleteTaskParams) => {
+    const { taskId } = params;
+    return axiosClient.delete(`/${constantTaskerApi.task.delete}/${taskId}`);
   },
 };
 

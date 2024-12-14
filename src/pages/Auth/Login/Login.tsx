@@ -153,7 +153,7 @@ const LoginPage: FC = () => {
                   onClick={() => {
                     const newPath = location.pathname.replace(
                       constantRoutesAuth.tasker.login,
-                      constantRoutesAuth.tasker.register,
+                      constantRoutesAuth.tasker.emailRegistration,
                     );
 
                     navigate(newPath);
