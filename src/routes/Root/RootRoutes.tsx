@@ -19,6 +19,10 @@ const USER_ROUTES = {
   CREATE_EMPLOYEE: constantRoutesRoot.user.createAccountEmployee,
 };
 
+const SUBSCRIPTION_ROUTES = {
+  ROOT: constantRoutesRoot.subscription.root,
+};
+
 const CHALLENGE_ROUTES = {
   PARENT: `${constantRoutesChallengeManager.pages.challenges.root}`,
   DETAILS: `${constantRoutesChallengeManager.pages.challenges.details}/:${constantDynamicRoute.challenge}`,
@@ -60,6 +64,13 @@ const extendTaskerRoutes: RouteObject[] = [
   {
     path: TASKER_ROUTES.REQUEST_APPROVE,
     element: <RootController.Tasker.RequestApprove />,
+  },
+];
+
+const extendSubscriptionRoutes: RouteObject[] = [
+  {
+    index: true,
+    element: <RootController.Subscription.List />,
   },
 ];
 
@@ -203,6 +214,11 @@ const RootRoutes: RouteObject[] = [
   {
     path: PROFILE_ROUTES.PARENT,
     children: [...extendProfileRoutes],
+  },
+
+  {
+    path: SUBSCRIPTION_ROUTES.ROOT,
+    children: extendSubscriptionRoutes,
   },
 
   taskeeProfileRoute,

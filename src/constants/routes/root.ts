@@ -24,6 +24,10 @@ const constantRoutesRoot = {
     setting: "setting",
     changePassword: "change-password",
   },
+
+  subscription: {
+    root: "subscription",
+  },
 };
 
 export default constantRoutesRoot;

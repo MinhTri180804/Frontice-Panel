@@ -116,6 +116,23 @@ const downloadFileWithBlob = async (url: string, filename: string) => {
   }
 };
 
+const formatCurrencyVND = (amount: number | string): string => {
+  if (isNaN(Number(amount))) return "0";
+
+  return amount
+    .toLocaleString("vi-VN", {
+      style: "currency",
+      currency: "VND",
+      minimumFractionDigits: 0,
+    })
+    .replace("₫", "")
+    .trim();
+};
+
+const parseCurrencyVND = (formatted: string): number => {
+  return Number(formatted.replace(/\./g, "").trim());
+};
+
 export {
   logOnDev,
   openNewTab,
@@ -124,4 +141,6 @@ export {
   checkRefreshTokenValidity,
   downloadFile,
   downloadFileWithBlob,
+  formatCurrencyVND,
+  parseCurrencyVND,
 };

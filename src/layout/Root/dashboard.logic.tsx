@@ -8,6 +8,7 @@ import {
   GlobalOutlined,
   PieChartOutlined,
   UserOutlined,
+  WalletOutlined,
 } from "@ant-design/icons";
 import constantRoutesChallengeManager from "../../constants/routes/challengeManager";
 import MenuItem from "antd/es/menu/MenuItem";
@@ -184,6 +185,13 @@ const menuOfTasker: MenuItem[] = [
 ];
 
 const menuOfRoot: MenuItem[] = [
+  getItem(
+    "Gói thành viên",
+    "subscription",
+    <WalletOutlined />,
+    undefined,
+    `${constantRoutesRoot.subscription.root}`,
+  ),
   getItem("Tài khoản", "account", <PieChartOutlined />, [
     getItem("Nhân viên", "employers", undefined, [
       getItem(

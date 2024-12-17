@@ -14,6 +14,7 @@ const mutationKey = {
   removeComment: "remove-comment",
   removeUser: "remove-user",
   createEmployeeUser: "create-emloyee-user",
+  updatePriceSubscription: "update-price-subscription",
 };
 
 export default mutationKey;
