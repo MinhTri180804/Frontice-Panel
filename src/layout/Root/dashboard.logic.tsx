@@ -7,7 +7,6 @@ import {
   BulbOutlined,
   GlobalOutlined,
   PieChartOutlined,
-  TeamOutlined,
   UserOutlined,
 } from "@ant-design/icons";
 import constantRoutesChallengeManager from "../../constants/routes/challengeManager";
@@ -82,7 +81,7 @@ const menuOfChallengeManager: MenuItem[] = [
     ),
   ]),
 
-  getItem("Tài khoản", "account", <TeamOutlined />, [
+  getItem("Cá nhân", "personal", <PieChartOutlined />, [
     getItem(
       "Trang cá nhân",
       "account_profile",
@@ -117,7 +116,7 @@ const menuOfMentor: MenuItem[] = [
       `${constantRoutesMentor.solution.root}/${constantRoutesMentor.solution.list}`,
     ),
   ]),
-  getItem("Tài khoản", "account", <TeamOutlined />, [
+  getItem("Cá nhân", "personal", <PieChartOutlined />, [
     getItem(
       "Trang cá nhân",
       "account_profile",
@@ -159,7 +158,7 @@ const menuOfTasker: MenuItem[] = [
       `${constantRoutesTasker.task.root}/${constantRoutesTasker.task.create}`,
     ),
   ]),
-  getItem("Tài khoản", "account", <PieChartOutlined />, [
+  getItem("Cá nhân", "personal", <UserOutlined />, [
     getItem(
       "Trang cá nhân",
       "account_profile",
@@ -185,27 +184,29 @@ const menuOfTasker: MenuItem[] = [
 ];
 
 const menuOfRoot: MenuItem[] = [
-  getItem("Người dùng", "user", <PieChartOutlined />, [
+  getItem("Tài khoản", "account", <PieChartOutlined />, [
+    getItem("Nhân viên", "employers", undefined, [
+      getItem(
+        "Danh sách",
+        "list",
+        undefined,
+        undefined,
+        `${constantRoutesRoot.user.root}/${constantRoutesRoot.user.employer}`,
+      ),
+      getItem(
+        "Tạo tài khoản",
+        "create",
+        undefined,
+        undefined,
+        `${constantRoutesRoot.user.root}/${constantRoutesRoot.user.employer}/${constantRoutesRoot.user.createAccountEmployee}`,
+      ),
+    ]),
     getItem(
-      "Tất cả",
-      "all",
-      undefined,
-      undefined,
-      `${constantRoutesRoot.user.root}/${constantRoutesRoot.user.all}`,
-    ),
-    getItem(
-      "Quản lí thử thách",
-      "challenge_manager",
-      undefined,
-      undefined,
-      `${constantRoutesRoot.user.root}/${constantRoutesRoot.user.challengeManage}`,
-    ),
-    getItem(
-      "Người hỗ trợ",
+      "Người dùng",
       "mentor",
       undefined,
       undefined,
-      `${constantRoutesRoot.user.root}/${constantRoutesRoot.user.mentor}`,
+      `${constantRoutesRoot.user.root}/${constantRoutesRoot.user.user}`,
     ),
     getItem(
       "Nhà tuyển dụng",
@@ -269,7 +270,7 @@ const menuOfRoot: MenuItem[] = [
     ),
   ]),
 
-  getItem("Tài khoản", "account", <UserOutlined />, [
+  getItem("Cá nhân", "personal", <UserOutlined />, [
     getItem(
       "Trang cá nhân",
       "account_profile",

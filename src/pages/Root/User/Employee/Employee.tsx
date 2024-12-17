@@ -2,16 +2,20 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import constantRootQueryKeys from "../../../../constants/queryKey/root";
 import rootService from "../../../../service/Root/RootService";
 import { useState } from "react";
-import { useSearchParams } from "react-router-dom";
-import { IUserTaskeeEntity } from "../../../../types/response/root/user";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { IUserEmployeeEntity } from "../../../../types/response/root/user";
 import { Button, Empty, Flex, Table, TableProps, Typography } from "antd";
-import { RedoOutlined } from "@ant-design/icons";
-import { columnsTaskeeTable } from "./taskeeUser.config";
+import { columnsEmloyeeTable } from "./employee.config";
+import useAuthStore from "../../../../store/Auth/authStore";
+import { PlusOutlined, RedoOutlined } from "@ant-design/icons";
+import constantRoutesRoot from "../../../../constants/routes/root";
 
 const { Title } = Typography;
 
-const TaskeeUserPage = () => {
+const EmployeeUserPage = () => {
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
+  const profile = useAuthStore((state) => state.profile);
   const [searchParams, setSearchParams] = useSearchParams();
   const [currentPage, setCurrentPage] = useState<string | number>(
     searchParams.get("page") || 1,
@@ -19,32 +23,37 @@ const TaskeeUserPage = () => {
   const [pageSize, setPageSize] = useState<string | number>(
     searchParams.get("limit") || 10,
   );
-  const [totalTaskee, setTotalTaskee] = useState<string | number>(0);
-  const [taskees, setTaskees] = useState<IUserTaskeeEntity[]>([]);
-
+  const [totalUser, setTotalUser] = useState<string | number>(0);
+  const [users, setUsers] = useState<IUserEmployeeEntity[]>([]);
   const { isFetching } = useQuery({
     queryKey: [
       constantRootQueryKeys.user.getAllUserByRole,
-      "taskees",
+      "admins",
       currentPage,
       pageSize,
     ],
     queryFn: async () => {
       try {
-        const response = await rootService.user.getAllUserTaskee({
+        const response = await rootService.user.getAllUserEmployee({
           page: currentPage,
           pageSize,
         });
 
         const responseData = response.data;
-        setTaskees(responseData.taskee);
-        setTotalTaskee(responseData.total);
+        setTotalUser(responseData.total);
+        setUsers(
+          responseData.admin.filter(
+            (user) => user.username !== profile?.username,
+          ),
+        );
+        return responseData;
       } catch (error) {
         console.log("error: ", error);
       }
     },
   });
-  const handleChangeTable: TableProps<IUserTaskeeEntity>["onChange"] = (
+
+  const handleChangeTable: TableProps<IUserEmployeeEntity>["onChange"] = (
     paginations,
   ) => {
     if (paginations?.current && paginations.current !== currentPage) {
@@ -68,7 +77,7 @@ const TaskeeUserPage = () => {
 
   const prefetchData = () => {
     queryClient.refetchQueries({
-      queryKey: [constantRootQueryKeys.user.getAllUserByRole, "taskees"],
+      queryKey: [constantRootQueryKeys.user.getAllUserByRole, "admins"],
     });
   };
 
@@ -85,7 +94,7 @@ const TaskeeUserPage = () => {
       >
         <div>
           <Title level={3} style={{ margin: "0" }}>
-            Danh sách tài khoản người dùng
+            Danh sách tài khoản nhân viên
           </Title>
         </div>
         <div>
@@ -99,20 +108,31 @@ const TaskeeUserPage = () => {
             >
               Làm mới
             </Button>
+
+            <Button
+              type="primary"
+              color="primary"
+              size="large"
+              icon={<PlusOutlined />}
+              onClick={() =>
+                navigate(constantRoutesRoot.user.createAccountEmployee)
+              }
+            >
+              Tạo tài khoản nhân viên mới
+            </Button>
           </Flex>
         </div>
       </Flex>
-
-      <Table<IUserTaskeeEntity>
+      <Table<IUserEmployeeEntity>
         rowKey={(record) => `${record.id}`}
-        dataSource={taskees}
+        dataSource={users}
         scroll={{ x: "max-content" }}
         loading={isFetching}
-        columns={columnsTaskeeTable}
+        columns={columnsEmloyeeTable}
         pagination={{
           pageSize: pageSize as number,
           current: currentPage as number,
-          total: totalTaskee as number,
+          total: totalUser as number,
           showSizeChanger: true,
         }}
         sticky
@@ -121,9 +141,7 @@ const TaskeeUserPage = () => {
         onChange={handleChangeTable}
         locale={{
           emptyText: (
-            <Empty
-              description={"Không tìm thấy tài khoản người dùng nào nào..."}
-            >
+            <Empty description={"Không tìm thấy tài khoản nào..."}>
               <Button variant="outlined" color="primary">
                 Tạo tài khoản nhân viên ngay
               </Button>
@@ -135,4 +153,4 @@ const TaskeeUserPage = () => {
   );
 };
 
-export default TaskeeUserPage;
+export default EmployeeUserPage;

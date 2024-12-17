@@ -1,10 +1,9 @@
 const constantRoutesRoot = {
   user: {
     root: "user",
-    all: "all",
-    taskee: "taskee",
-    mentor: "mentor",
-    challengeManage: "challenge-manager",
+    employer: "employers",
+    createAccountEmployee: "create",
+    user: "users",
     tasker: "tasker",
   },
 

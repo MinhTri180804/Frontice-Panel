@@ -13,11 +13,10 @@ import MentorController from "../../pages/Mentor/Controller";
 
 const USER_ROUTES = {
   ROOT: constantRoutesRoot.user.root,
-  CHALLENGE_MANAGER: constantRoutesRoot.user.challengeManage,
-  MENTOR: constantRoutesRoot.user.mentor,
+  EMPLOYE: constantRoutesRoot.user.employer,
   TASKER: constantRoutesRoot.user.tasker,
-  TASKEE: constantRoutesRoot.user.taskee,
-  ALL: constantRoutesRoot.user.all,
+  USER: constantRoutesRoot.user.user,
+  CREATE_EMPLOYEE: constantRoutesRoot.user.createAccountEmployee,
 };
 
 const CHALLENGE_ROUTES = {
@@ -67,27 +66,23 @@ const extendTaskerRoutes: RouteObject[] = [
 const extendUserRoutes: RouteObject[] = [
   {
     index: true,
-    element: <Navigate to={USER_ROUTES.ALL} replace />,
-  },
-  {
-    path: USER_ROUTES.CHALLENGE_MANAGER,
-    element: <RootController.User.ChallengeManager />,
-  },
-  {
-    path: USER_ROUTES.ALL,
-    element: <RootController.User.All />,
-  },
-  {
-    path: USER_ROUTES.MENTOR,
-    element: <RootController.User.Mentor />,
-  },
-  {
-    path: USER_ROUTES.TASKEE,
-    element: <RootController.User.Taskee />,
+    element: <Navigate to={constantRoutesRoot.user.employer} replace />,
   },
   {
     path: USER_ROUTES.TASKER,
     element: <RootController.User.Tasker />,
+  },
+  {
+    path: USER_ROUTES.EMPLOYE,
+    element: <RootController.User.Employee />,
+  },
+  {
+    path: USER_ROUTES.USER,
+    element: <RootController.User.Taskee />,
+  },
+  {
+    path: `${USER_ROUTES.EMPLOYE}/${USER_ROUTES.CREATE_EMPLOYEE}`,
+    element: <RootController.User.CreateEmployee />,
   },
 ];
 
