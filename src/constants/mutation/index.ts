@@ -12,6 +12,9 @@ const mutationKey = {
   sendOTP: "send-otp",
   createComment: "create-comment",
   removeComment: "remove-comment",
+  removeUser: "remove-user",
+  createEmployeeUser: "create-emloyee-user",
+  updatePriceSubscription: "update-price-subscription",
 };
 
 export default mutationKey;

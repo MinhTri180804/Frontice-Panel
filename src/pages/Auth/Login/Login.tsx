@@ -138,7 +138,11 @@ const LoginPage: FC = () => {
                 disabled={mutationLogin.isPending}
                 block
                 size="large"
-                onClick={() => navigate(-1)}
+                onClick={() =>
+                  navigate(
+                    `${constantRoutesAuth.root}/${constantRoutesAuth.options}`,
+                  )
+                }
               >
                 Quay lại
               </Button>
