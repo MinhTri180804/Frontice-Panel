@@ -1,15 +1,15 @@
-import { Navigate, RouteObject } from "react-router";
-import constantRoutesRoot from "../../constants/routes/root";
-import { RootController } from "../../pages/Root";
-import { ChallengeManagerController } from "../../pages/ChallengeManager";
-import constantRoutesChallengeManager from "../../constants/routes/challengeManager";
-import constantDynamicRoute from "../../constants/routes/dynamicRoute";
-import { notfoundRoute, notMatchRoute } from "../CommonRoutes";
+import { Navigate, RouteObject } from 'react-router';
+import constantRoutesRoot from '../../constants/routes/root';
+import { RootController } from '../../pages/Root';
+import { ChallengeManagerController } from '../../pages/ChallengeManager';
+import constantRoutesChallengeManager from '../../constants/routes/challengeManager';
+import constantDynamicRoute from '../../constants/routes/dynamicRoute';
+import { notfoundRoute, notMatchRoute } from '../CommonRoutes';
 import {
   taskeeProfileRoute,
   taskerProfileRoute,
-} from "../CommonRoutes/commonRoutes";
-import MentorController from "../../pages/Mentor/Controller";
+} from '../CommonRoutes/commonRoutes';
+import MentorController from '../../pages/Mentor/Controller';
 
 const USER_ROUTES = {
   ROOT: constantRoutesRoot.user.root,
@@ -17,6 +17,10 @@ const USER_ROUTES = {
   TASKER: constantRoutesRoot.user.tasker,
   USER: constantRoutesRoot.user.user,
   CREATE_EMPLOYEE: constantRoutesRoot.user.createAccountEmployee,
+};
+
+const STATISTIC_ROUTES = {
+  ROOT: constantRoutesRoot.statistic.root,
 };
 
 const SUBSCRIPTION_ROUTES = {
@@ -55,6 +59,13 @@ const TASKER_ROUTES = {
   ROOT: constantRoutesRoot.tasker.root,
   REQUEST_APPROVE: constantRoutesRoot.tasker.requestApprove,
 };
+
+const extendStatisticRoutes: RouteObject[] = [
+  {
+    index: true,
+    element: <RootController.Statistic />,
+  },
+];
 
 const extendTaskerRoutes: RouteObject[] = [
   {
@@ -219,6 +230,11 @@ const RootRoutes: RouteObject[] = [
   {
     path: SUBSCRIPTION_ROUTES.ROOT,
     children: extendSubscriptionRoutes,
+  },
+
+  {
+    path: STATISTIC_ROUTES.ROOT,
+    children: extendStatisticRoutes,
   },
 
   taskeeProfileRoute,

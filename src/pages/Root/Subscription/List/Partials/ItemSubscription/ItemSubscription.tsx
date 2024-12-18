@@ -80,7 +80,9 @@ const ItemSubscription: FC<IItemSubscriptionProps> = ({ subscriptionData }) => {
         <Card
           title={
             <Flex justify="space-between" align="center">
-              <Title level={5}>Gói {subscriptionData.name}</Title>
+              <Title style={{ margin: '0' }} level={5}>
+                Gói {subscriptionData.name}
+              </Title>
               <Button onClick={() => setShowModal(true)}>
                 Thay đổi giá tiền
               </Button>
@@ -100,6 +102,8 @@ const ItemSubscription: FC<IItemSubscriptionProps> = ({ subscriptionData }) => {
         onOk={handleOnOkModal}
         okButtonProps={{ loading: mutationUpdatePrice.isPending }}
         cancelButtonProps={{ disabled: mutationUpdatePrice.isPending }}
+        okText="Thay đổi"
+        cancelText="Hủy"
       >
         <Flex vertical gap={24}>
           <Flex vertical gap={12}>
