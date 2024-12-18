@@ -3,7 +3,15 @@ import { FC, useState } from "react";
 import { useParams } from "react-router-dom";
 import challengeManagerService from "../../service/ChallengeManager/challengeManagerService";
 import { constantChallengeManagerQueryKey } from "../../constants/queryKey/challengeManager";
-import { Card, Descriptions, Divider, Flex, Table, Typography } from "antd";
+import {
+  Card,
+  Descriptions,
+  Divider,
+  Empty,
+  Flex,
+  Table,
+  Typography,
+} from "antd";
 import { CardTaskerInformation } from "./Partials/CardTaskerInformation";
 import generateItemsDescriptionProfileTasker from "./ProfileTasker.util";
 import globalService from "../../service/Global/globalService";
@@ -80,14 +88,6 @@ const ProfileTasker: FC = () => {
 
       <Divider orientation="left" plain>
         <Title level={4} style={{ margin: "0" }}>
-          Danh sách các task đã đăng
-        </Title>
-      </Divider>
-
-      <Table columns={[]} dataSource={[]} loading={isFetching} />
-
-      <Divider orientation="left" plain>
-        <Title level={4} style={{ margin: "0" }}>
           Danh sách các task hiện tại
         </Title>
       </Divider>
@@ -101,6 +101,11 @@ const ProfileTasker: FC = () => {
         showHeader
         sticky
         virtual
+        locale={{
+          emptyText: (
+            <Empty description="Không có nhiệm vụ nào ở hiện tại..." />
+          ),
+        }}
       />
 
       <Divider orientation="left" plain>
@@ -117,6 +122,9 @@ const ProfileTasker: FC = () => {
         showHeader
         sticky
         virtual
+        locale={{
+          emptyText: <Empty description="Không có nhiệm vụ cũ nào..." />,
+        }}
       />
     </Flex>
   );
