@@ -1,15 +1,15 @@
-import { useQuery } from "@tanstack/react-query";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
-import taskerQueryKeys from "../../../../constants/queryKey/tasker/taskerQueryKey";
-import constantRoutesGlobal from "../../../../constants/routes/global";
-import taskerService from "../../../../service/Tasker/taskerService";
-import { Flex, Card, Avatar, Tag, Typography } from "antd";
-import { convertTimestampToVietnamTime } from "../../../../utils/convertTime";
-import { ActionsSolutionDetails } from "./Partials/ActionsSolutionDetails";
-import { TaskTaskerOverview } from "../../Task/Details/Partials/TaskTaskerOverview";
+import { useQuery } from '@tanstack/react-query';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
+import taskerQueryKeys from '../../../../constants/queryKey/tasker/taskerQueryKey';
+import constantRoutesGlobal from '../../../../constants/routes/global';
+import taskerService from '../../../../service/Tasker/taskerService';
+import { Flex, Card, Avatar, Tag, Typography } from 'antd';
+import { convertTimestampToVietnamTime } from '../../../../utils/convertTime';
+import { ActionsSolutionDetails } from './Partials/ActionsSolutionDetails';
+import { TaskTaskerOverview } from '../../Task/Details/Partials/TaskTaskerOverview';
 
 const defautlAvatar =
-  "https://static.vecteezy.com/system/resources/previews/009/292/244/non_2x/default-avatar-icon-of-social-media-user-vector.jpg";
+  'https://static.vecteezy.com/system/resources/previews/009/292/244/non_2x/default-avatar-icon-of-social-media-user-vector.jpg';
 
 const { Text, Title } = Typography;
 
@@ -18,7 +18,7 @@ const SolutionDetailsPage = () => {
   const navigate = useNavigate();
 
   if (!taskSolutionId) {
-    return <Navigate to={constantRoutesGlobal.errorPage["404"]} replace />;
+    return <Navigate to={constantRoutesGlobal.errorPage['404']} replace />;
   }
 
   const { isFetching, data: taskSolutionData } = useQuery({
@@ -31,7 +31,7 @@ const SolutionDetailsPage = () => {
         const responseData = response.data;
         return responseData;
       } catch (error) {
-        console.log("[ERROR TASK SOLUTION DETAILS]: ", error);
+        console.log('[ERROR TASK SOLUTION DETAILS]: ', error);
       }
     },
   });
@@ -50,28 +50,28 @@ const SolutionDetailsPage = () => {
           hoverable
           onClick={() =>
             navigate(
-              `/${constantRoutesGlobal.profileTaskee}/${taskSolutionData?.taskee.username}`,
+              `/${constantRoutesGlobal.profileTaskee}/${taskSolutionData?.taskee.username}`
             )
           }
           loading={isFetching}
-          style={{ width: "100%", cursor: "pointer" }}
+          style={{ width: '100%', cursor: 'pointer' }}
         >
           <Flex vertical justify="center" align="center" gap={12}>
-            <Text style={{ fontSize: "18px", fontWeight: "bold" }}>
+            <Text style={{ fontSize: '18px', fontWeight: 'bold' }}>
               Người thực hiện
             </Text>
 
             <Flex justify="center" align="center" gap={12} vertical>
               <Avatar
                 src={taskSolutionData?.taskee.image || defautlAvatar}
-                size={"large"}
+                size={'large'}
               />
               <Flex vertical justify="center" align="center" gap={8}>
                 <Text>
-                  {taskSolutionData?.taskee.firstname}{" "}
+                  {taskSolutionData?.taskee.firstname}{' '}
                   {taskSolutionData?.taskee.lastname}
                 </Text>
-                <Text style={{ fontSize: "14px", color: "grey" }}>
+                <Text style={{ fontSize: '14px', color: 'grey' }}>
                   {taskSolutionData?.taskee.gold_account && (
                     <Tag color="gold">Premium</Tag>
                   )}
@@ -94,7 +94,7 @@ const SolutionDetailsPage = () => {
             <Title level={5}>Thời gian nộp</Title>
             <Text>
               {convertTimestampToVietnamTime(
-                taskSolutionData?.submitedAt as number,
+                taskSolutionData?.submitedAt as number
               )}
             </Text>
           </Flex>

@@ -1,7 +1,6 @@
-import { Flex, Button } from "antd";
-import { openNewTab } from "../../../../../../utils/helper";
-import { FC, useState } from "react";
-import { FeedbackTaskSolution } from "../Feedback";
+import { Button, Flex } from 'antd';
+import { FC } from 'react';
+import { openNewTab } from '../../../../../../utils/helper';
 
 interface IActionsSolutionDetailsProps {
   liveGithub: string | null;
@@ -12,9 +11,9 @@ interface IActionsSolutionDetailsProps {
 const ActionsSolutionDetails: FC<IActionsSolutionDetailsProps> = ({
   liveGithub,
   github,
-  taskSolutionId,
+  // taskSolutionId,
 }) => {
-  const [isShow, setIsShow] = useState<boolean>(false);
+  // const [isShow, setIsShow] = useState<boolean>(false);
   return (
     <>
       <Flex gap={24}>
@@ -22,7 +21,7 @@ const ActionsSolutionDetails: FC<IActionsSolutionDetailsProps> = ({
           size="large"
           variant="solid"
           color="primary"
-          style={{ width: "100%" }}
+          style={{ width: '100%' }}
           disabled={!Boolean(liveGithub)}
           onClick={() => openNewTab(liveGithub as string)}
         >
@@ -32,25 +31,25 @@ const ActionsSolutionDetails: FC<IActionsSolutionDetailsProps> = ({
           size="large"
           variant="outlined"
           color="primary"
-          style={{ width: "100%" }}
+          style={{ width: '100%' }}
           disabled={!Boolean(github)}
           onClick={() => openNewTab(github as string)}
         >
           Xem mã nguồn
         </Button>
-        <Button
+        {/* <Button
           size="large"
-          style={{ width: "100%" }}
+          style={{ width: '100%' }}
           onClick={() => setIsShow(true)}
         >
           Phản hồi và xem
-        </Button>
+        </Button> */}
       </Flex>
-      <FeedbackTaskSolution
+      {/* <FeedbackTaskSolution
         isShow={isShow}
         onClose={() => setIsShow(false)}
         taskSolutionId={taskSolutionId}
-      />
+      /> */}
     </>
   );
 };
