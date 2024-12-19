@@ -1,11 +1,11 @@
-import { Flex, Button } from "antd";
-import { useNavigate } from "react-router";
-import constantRoutesTasker from "../../../../../../constants/routes/tasker";
-import { FC } from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { toast } from "react-toastify";
-import taskerService from "../../../../../../service/Tasker/taskerService";
-import taskerQueryKeys from "../../../../../../constants/queryKey/tasker/taskerQueryKey";
+import { Flex, Button } from 'antd';
+import { useNavigate } from 'react-router';
+import constantRoutesTasker from '../../../../../../constants/routes/tasker';
+import { FC } from 'react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { toast } from 'react-toastify';
+import taskerService from '../../../../../../service/Tasker/taskerService';
+import taskerQueryKeys from '../../../../../../constants/queryKey/tasker/taskerQueryKey';
 
 type IActionsTaskTableProps = {
   taskId: string;
@@ -15,7 +15,7 @@ const ActionsTaskTable: FC<IActionsTaskTableProps> = ({ taskId }) => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const mutationRemoveTask = useMutation({
-    mutationKey: ["remove-task"],
+    mutationKey: ['remove-task'],
     mutationFn: async () => await taskerService.task.delete({ taskId }),
   });
 
@@ -27,10 +27,10 @@ const ActionsTaskTable: FC<IActionsTaskTableProps> = ({ taskId }) => {
         });
       }),
       {
-        pending: "Đang thực hiện xóa nhiệm vụ",
-        success: "Xóa nhiệm vụ thành công",
-        error: "Xóa nhiệm vụ thất bại",
-      },
+        pending: 'Đang thực hiện xóa nhiệm vụ',
+        success: 'Xóa nhiệm vụ thành công',
+        error: 'Xóa nhiệm vụ thất bại',
+      }
     );
   };
 
@@ -44,13 +44,6 @@ const ActionsTaskTable: FC<IActionsTaskTableProps> = ({ taskId }) => {
         }
       >
         Xem chi tiết
-      </Button>
-      <Button
-        onClick={() =>
-          navigate(`${constantRoutesTasker.task.update}/${taskId}`)
-        }
-      >
-        Chỉnh sửa
       </Button>
       <Button
         variant="outlined"
