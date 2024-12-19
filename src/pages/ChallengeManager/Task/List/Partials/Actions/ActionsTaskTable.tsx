@@ -17,7 +17,7 @@ const ActionTaskTable: FC<IActionTaskTableProps> = ({ taskId }) => {
         color="primary"
         onClick={() =>
           navigate(
-            `${constantRoutesChallengeManager.pages.tasks.details}/${taskId}`
+            `/${constantRoutesChallengeManager.pages.tasks.root}/${constantRoutesChallengeManager.pages.tasks.details}/${taskId}`
           )
         }
       >
