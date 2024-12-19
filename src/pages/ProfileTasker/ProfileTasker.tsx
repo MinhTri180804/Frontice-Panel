@@ -1,8 +1,8 @@
-import { useQuery } from "@tanstack/react-query";
-import { FC, useState } from "react";
-import { useParams } from "react-router-dom";
-import challengeManagerService from "../../service/ChallengeManager/challengeManagerService";
-import { constantChallengeManagerQueryKey } from "../../constants/queryKey/challengeManager";
+import { useQuery } from '@tanstack/react-query';
+import { FC, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import challengeManagerService from '../../service/ChallengeManager/challengeManagerService';
+import { constantChallengeManagerQueryKey } from '../../constants/queryKey/challengeManager';
 import {
   Card,
   Descriptions,
@@ -11,12 +11,12 @@ import {
   Flex,
   Table,
   Typography,
-} from "antd";
-import { CardTaskerInformation } from "./Partials/CardTaskerInformation";
-import generateItemsDescriptionProfileTasker from "./ProfileTasker.util";
-import globalService from "../../service/Global/globalService";
-import { ITaskEntity } from "../../types/entity/task";
-import columnsTaskTable from "../ChallengeManager/Task/List/TaskList.config";
+} from 'antd';
+import { CardTaskerInformation } from './Partials/CardTaskerInformation';
+import generateItemsDescriptionProfileTasker from './ProfileTasker.util';
+import globalService from '../../service/Global/globalService';
+import { ITaskEntity } from '../../types/entity/task';
+import columnsTaskTable from '../ChallengeManager/Task/List/TaskList.config';
 
 const { Title } = Typography;
 
@@ -72,22 +72,22 @@ const ProfileTasker: FC = () => {
         <CardTaskerInformation
           isLoading={isFetching}
           title="Số lượng task"
-          value={0}
+          value={oldTaskOfTasker.length + newTaskOfTasker.length}
         />
         <CardTaskerInformation
           isLoading={isFetching}
           title="Task còn thời gian"
-          value={0}
+          value={newTaskOfTasker.length}
         />
         <CardTaskerInformation
           isLoading={isFetching}
           title="Task hết thời gian"
-          value={0}
+          value={oldTaskOfTasker.length}
         />
       </Flex>
 
       <Divider orientation="left" plain>
-        <Title level={4} style={{ margin: "0" }}>
+        <Title level={4} style={{ margin: '0' }}>
           Danh sách các task hiện tại
         </Title>
       </Divider>
@@ -97,7 +97,7 @@ const ProfileTasker: FC = () => {
         loading={isFetching}
         dataSource={newTaskOfTasker}
         columns={columnsTaskTable}
-        scroll={{ x: "max-content" }}
+        scroll={{ x: 'max-content' }}
         showHeader
         sticky
         virtual
@@ -109,7 +109,7 @@ const ProfileTasker: FC = () => {
       />
 
       <Divider orientation="left" plain>
-        <Title level={4} style={{ margin: "0" }}>
+        <Title level={4} style={{ margin: '0' }}>
           Danh sách các task cũ
         </Title>
       </Divider>
@@ -118,7 +118,7 @@ const ProfileTasker: FC = () => {
         loading={isFetching}
         dataSource={oldTaskOfTasker}
         columns={columnsTaskTable}
-        scroll={{ x: "max-content" }}
+        scroll={{ x: 'max-content' }}
         showHeader
         sticky
         virtual
